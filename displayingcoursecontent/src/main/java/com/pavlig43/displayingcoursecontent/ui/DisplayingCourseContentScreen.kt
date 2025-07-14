@@ -19,21 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-@Composable
-fun DisplayingCourseContentScreen(modifier: Modifier = Modifier) {
-
-    DisplayingCourseContentScreen(
-        viewModel = viewModel(),
-        modifier = modifier
-    )
-
-}
 
 @Composable
-private fun DisplayingCourseContentScreen(
-    viewModel: DisplayingCourseContentViewModel,
+fun DisplayingCourseContentScreen(
     modifier: Modifier = Modifier
 ) {
+    val viewModel: DisplayingCourseContentViewModel = viewModel()
     val courseState by viewModel.courseState.collectAsState()
     Column(
         modifier = modifier.fillMaxSize(),
