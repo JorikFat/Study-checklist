@@ -3,6 +3,8 @@ package com.pavlig43.courceediting.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -25,7 +27,7 @@ fun CourseEditingScreen(
     val viewModel:CourseEditingViewModel = viewModel()
     val courseState by viewModel.courseState.collectAsState()
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -33,12 +35,14 @@ fun CourseEditingScreen(
         TextField(
             value = courseState.name,
             onValueChange = viewModel::onChangeCourseName,
-            placeholder = { Text("Название курса") }
+            placeholder = { Text("Название курса") },
+            modifier = Modifier.fillMaxWidth()
         )
         HorizontalDivider()
         LessonsList(
             lessons = courseState.lessons,
-            onChangeLessonName = viewModel::onChangeLessonName
+            onChangeLessonName = viewModel::onChangeLessonName,
+            modifier = Modifier.fillMaxWidth()
         )
         Button(viewModel::onSave) {
             Text("Сохранить")
@@ -62,7 +66,8 @@ private fun LessonsList(
         items(lessons, key = { it.index}){ lesson->
             TextField(
                 value = lesson.name,
-                onValueChange = {onChangeLessonName(lesson.index,it)}
+                onValueChange = {onChangeLessonName(lesson.index,it)},
+                modifier = Modifier.fillMaxWidth()
 
             )
         }
