@@ -1,4 +1,4 @@
-package com.pavlig43.displayingcoursecontent.ui
+package dev.jorik.study_checklist.course_content.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

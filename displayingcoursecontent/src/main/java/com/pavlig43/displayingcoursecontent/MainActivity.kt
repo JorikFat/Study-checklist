@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.pavlig43.displayingcoursecontent.ui.DisplayingCourseContentScreen
+import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentScreen
 import com.pavlig43.displayingcoursecontent.ui.theme.Study_checklistTheme
 
 class MainActivity : ComponentActivity() {
