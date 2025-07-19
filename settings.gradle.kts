@@ -29,5 +29,9 @@ include(
     ":features:courses-list:sample",
     ":features:courses-list:impl"
 )
+include(
+    ":features:course-content:sample",
+    ":features:course-content:impl"
+)
 include(":course-edit")
 include(":overview")

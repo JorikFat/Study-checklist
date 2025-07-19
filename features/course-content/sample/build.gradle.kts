@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.pavlig43.displayingcoursecontent"
+        applicationId = "com.pavlig43.sample"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.features.courseContent.impl)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -55,6 +56,4 @@ dependencies {
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation(project(":course-content"))
 }
