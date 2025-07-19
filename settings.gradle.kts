@@ -22,9 +22,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Study_checklist"
 include(":app")
-include(":displayingcoursecontent")
-include(":courceediting")
-include(":course-content")
+include(":overview")
 include(
     ":features:courses-list:sample",
     ":features:courses-list:impl"
@@ -33,5 +31,7 @@ include(
     ":features:course-content:sample",
     ":features:course-content:impl"
 )
-include(":course-edit")
-include(":overview")
+include(
+    ":features:course-edit:sample",
+    ":features:course-edit:impl"
+)
