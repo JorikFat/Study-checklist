@@ -1,4 +1,4 @@
-package com.pavlig43.courceediting.ui
+package ru.pavlig.course_edit.ui
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

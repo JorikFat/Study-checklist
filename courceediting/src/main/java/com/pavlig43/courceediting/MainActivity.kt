@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.pavlig43.courceediting.ui.CourseEditingScreen
+import ru.pavlig.course_edit.ui.CourseEditingScreen
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +18,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditingScreen(modifier = Modifier.padding(innerPadding))
+                    CourseEditingScreen(
+                        modifier = Modifier.padding(
+                            innerPadding
+                        )
+                    )
                 }
             }
         }

@@ -1,3 +1,4 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         google {
@@ -25,3 +26,4 @@ include(":courses")
 include(":displayingcoursecontent")
 include(":courceediting")
 include(":course-content")
+include(":course-edit")
