@@ -1,4 +1,4 @@
-package com.pavlig43.courceediting.ui
+package ru.pavlig.course_edit.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun CourseEditingScreen(
     modifier: Modifier = Modifier) {
-    val viewModel:CourseEditingViewModel = viewModel()
+    val viewModel: CourseEditingViewModel = viewModel()
     val courseState by viewModel.courseState.collectAsState()
     Column(
         modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),

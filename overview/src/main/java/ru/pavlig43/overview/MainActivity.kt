@@ -1,4 +1,4 @@
-package com.pavlig43.courceediting
+package ru.pavlig43.overview
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import ru.pavlig.course_edit.ui.CourseEditingScreen
-import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
+import ru.pavlig43.overview.ui.OverViewScreen
+import ru.pavlig43.overview.ui.theme.Study_checklistTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,10 +18,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditingScreen(
-                        modifier = Modifier.padding(
-                            innerPadding
-                        )
+                    OverViewScreen(
+                        onDestination = {},
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
