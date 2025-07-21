@@ -1,18 +1,26 @@
 [versions]
 agp = "8.8.2"
-kotlin = "1.9.24"
+kotlin = "2.0.20"
 coreKtx = "1.16.0"
+detekt = "1.23.8"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.1"
 material = "1.12.0"
 activity = "1.10.1"
+ksp = "2.0.20-1.0.25"
+room = "2.7.0"
 constraintlayout = "2.2.1"
 lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 viewmodelCompose = "2.9.0"
+
+java = "21"
+compileSdk = "35"
+minSdk = "26"
+targetSdk = "35"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,9 +43,33 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+#room
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-kts = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+#build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+
+#detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+#build-logic
+pavlig43-application = { id = "pavlig43.android.application" }
+pavlig43-compose = { id = "pavlig43.android.compose" }
+pavlig43-android-library = { id = "pavlig43.android.library" }
+pavlig43-android-room = { id = "pavlig43.android.room" }
+pavlig43-jvm-library = { id = "pavlig43.jvm.library" }
+pavlig43-detekt = { id = "pavlig43.detekt" }
 
