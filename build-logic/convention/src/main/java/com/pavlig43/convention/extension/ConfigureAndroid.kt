@@ -30,21 +30,12 @@ internal val Project.androidExtension: AndroidExtensions
         )
 
 internal fun Project.configureAndroid() {
-    androidExtension.apply {
-        compileSdk = libs.versions.compileSdk.get().toInt()
-        lint {
-            checkDependencies = true
-        }
-        defaultConfig {
-            minSdk = libs.versions.minSdk.get().toInt()
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-
-        }
-        compileOptions {
-            sourceCompatibility = projectJavaVersion
-            targetCompatibility = projectJavaVersion
-        }
+//        compileOptions {
+//            sourceCompatibility = projectJavaVersion
+//            targetCompatibility = projectJavaVersion
+//        }
+        configureKotlinAndroid()
         dependencies{
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -53,4 +44,3 @@ internal fun Project.configureAndroid() {
 
     }
 
-}

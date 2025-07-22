@@ -19,4 +19,11 @@ internal fun DependencyHandlerScope.debugImplementation(dependency: Provider<Min
 internal fun DependencyHandlerScope.detektPlugins(dependency: Provider<MinimalExternalModuleDependency>){
     add("detektPlugins",dependency)
 }
+internal fun DependencyHandlerScope.testImplementation(dependency: Provider<MinimalExternalModuleDependency>){
+    add("testImplementation",dependency)
+}
+
+internal fun DependencyHandlerScope.androidTestImplementation(dependency: Provider<MinimalExternalModuleDependency>){
+    add("androidTestImplementation",dependency)
+}
 

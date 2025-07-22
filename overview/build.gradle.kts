@@ -12,7 +12,3 @@ android {
         versionName = "1.0"
     }
 }
-dependencies {
-
-
-}

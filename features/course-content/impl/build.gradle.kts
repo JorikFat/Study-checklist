@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.pavlig43.android.library)
-    alias(libs.plugins.pavlig43.compose)
+    alias(libs.plugins.pavlig43.feature)
 }
 
 android {
@@ -8,9 +7,3 @@ android {
 
 }
 
-dependencies {
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-}

@@ -13,5 +13,5 @@ val Project.libs: LibrariesForLibs
 internal val Project.projectJavaVersion: JavaVersion
     get() = JavaVersion.toVersion(libs.versions.java.get().toInt())
 
-internal val Project.jvmTarget
+internal val Project.projectJvmTarget
     get() = JvmTarget.fromTarget(libs.versions.java.get())

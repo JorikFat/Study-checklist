@@ -9,6 +9,7 @@ private val projectJavaVersion: JavaVersion = JavaVersion.toVersion(libs.version
 java {
     sourceCompatibility = projectJavaVersion
     targetCompatibility = projectJavaVersion
+
 }
 kotlin {
     compilerOptions {
@@ -52,14 +53,22 @@ gradlePlugin {
             implementationClass = "AndroidRoomConventionPlugin"
         }
 
-        register("jvmLibrary") {
+        register("JvmLibraryPlugin") {
             id = libs.plugins.pavlig43.jvm.library.get().pluginId
-            implementationClass = "JvmLibraryConventionPlugin"
+            implementationClass = "JvmLibraryPlugin"
         }
 
         register("detekt") {
             id = libs.plugins.pavlig43.detekt.get().pluginId
-            implementationClass = "DetektConventionPlugin"
+            implementationClass = "DetektPlugin"
+        }
+        register("testFeature"){
+            id = libs.plugins.pavlig43.test.feature.get().pluginId
+            implementationClass = "TestFeaturePlugin"
+        }
+        register("featurePlugin"){
+         id = libs.plugins.pavlig43.feature.get().pluginId
+         implementationClass = "FeaturePlugin"
         }
     }
 }
