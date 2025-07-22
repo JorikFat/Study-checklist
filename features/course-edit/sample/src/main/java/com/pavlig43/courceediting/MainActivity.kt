@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import ru.pavlig.course_edit.ui.CourseEditingScreen
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
+import org.koin.androidx.compose.KoinAndroidContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,13 +18,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditingScreen(
-                        modifier = Modifier.padding(
-                            innerPadding
+                KoinAndroidContext {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        CourseEditingScreen(
+                            modifier = Modifier.padding(
+                                innerPadding
+                            )
                         )
-                    )
+                    }
                 }
+
             }
         }
     }

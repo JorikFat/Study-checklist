@@ -51,8 +51,10 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 
 androidx-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 
-##koin
-#koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+#koin
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 #room
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
@@ -91,6 +93,7 @@ pavlig43-feature = {id = "pavlig43.feature"}
 pavlig43-application = { id = "pavlig43.android.application" }
 pavlig43-compose = { id = "pavlig43.android.compose" }
 pavlig43-android-library = { id = "pavlig43.android.library" }
+pavlig43-koin = {id = "pavlig43.koin"}
 pavlig43-android-room = { id = "pavlig43.android.room" }
 pavlig43-jvm-library = { id = "pavlig43.jvm.library" }
 pavlig43-test-feature = {id = "pavlig43.test.feature"}
