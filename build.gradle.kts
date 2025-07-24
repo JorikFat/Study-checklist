@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.pavlig43.jvm.library) apply false
     alias(libs.plugins.pavlig43.test.feature) apply false
     alias(libs.plugins.pavlig43.feature) apply false
+    alias(libs.plugins.pavlig43.koin) apply false
 
 
 }

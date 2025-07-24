@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class CourseEditingViewModel : ViewModel() {
+internal class CourseEditingViewModel : ViewModel() {
 
     private val _courseState = MutableStateFlow(Course())
     val courseState = _courseState.asStateFlow()

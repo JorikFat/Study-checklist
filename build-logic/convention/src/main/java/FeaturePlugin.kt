@@ -9,6 +9,7 @@ class FeaturePlugin:Plugin<Project> {
             apply(plugin = libs.plugins.pavlig43.android.library.get().pluginId)
             apply(plugin = libs.plugins.pavlig43.compose.get().pluginId)
             apply(plugin = libs.plugins.pavlig43.test.feature.get().pluginId)
+            apply(plugin = libs.plugins.pavlig43.koin.get().pluginId)
         }
     }
 }

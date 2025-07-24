@@ -17,14 +17,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun DisplayingCourseContentScreen(
     modifier: Modifier = Modifier
 ) {
-    val viewModel: DisplayingCourseContentViewModel = viewModel()
+    val viewModel: DisplayingCourseContentViewModel = koinViewModel()
     val courseState by viewModel.courseState.collectAsState()
     Column(
         modifier = modifier.fillMaxSize(),

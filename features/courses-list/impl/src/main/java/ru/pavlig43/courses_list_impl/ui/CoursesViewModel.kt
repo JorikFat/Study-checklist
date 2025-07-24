@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import ru.pavlig43.courses_list_impl.data.Course
 
-class CoursesViewModel : ViewModel() {
+internal class CoursesViewModel : ViewModel() {
 
     val courses = flow {
         emit(
