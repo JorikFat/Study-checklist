@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:8.8.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+    implementation(libs.gradlePlugin.android)
+    implementation(libs.gradlePlugin.kotlin)
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
