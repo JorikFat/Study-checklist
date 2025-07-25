@@ -10,6 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import ru.pavlig.course_edit.ui.CourseEditingScreen
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
+import ru.pavlig.course_edit.ui.Course
+import ru.pavlig.course_edit.ui.Lesson
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +21,7 @@ class MainActivity : ComponentActivity() {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CourseEditingScreen(
+                        course = sampleCourse,
                         modifier = Modifier.padding(
                             innerPadding
                         )
@@ -28,4 +31,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+private val sampleCourse = Course(
+    name = "SOLID",
+    lessons = listOf(
+        "SRP",
+        "OCP",
+        "LSP",
+        "ISP",
+        "DIP",
+    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
+)
+
 

@@ -23,8 +23,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun CourseEditingScreen(
+    course: Course?,
     modifier: Modifier = Modifier) {
-    val viewModel: CourseEditingViewModel = viewModel()
+    val viewModel: CourseEditingViewModel = viewModel{CourseEditingViewModel(course?:Course())}
     val courseState by viewModel.courseState.collectAsState()
     Column(
         modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),

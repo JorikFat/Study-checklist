@@ -5,9 +5,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class CourseEditingViewModel : ViewModel() {
+class CourseEditingViewModel(
+    course: Course
+) : ViewModel() {
 
-    private val _courseState = MutableStateFlow(Course())
+    private val _courseState = MutableStateFlow(course)
     val courseState = _courseState.asStateFlow()
 
     fun onChangeCourseName(name: String) {
@@ -34,18 +36,14 @@ class CourseEditingViewModel : ViewModel() {
 }
 
 data class Course(
-    val name: String = "SOLID",
+    val name: String = "",
     val lessons: List<Lesson> = listOf(
-        "SRP",
-        "OCP",
-        "LSP",
-        "ISP",
-        "DIP",
-    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
+        Lesson(0,"")
+    )
 )
 
 data class Lesson(
     val index: Int,
-    val name: String
+    val name: String = ""
 )
 
