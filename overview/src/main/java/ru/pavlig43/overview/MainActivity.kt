@@ -10,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import ru.pavlig43.overview.navigation.NavigationHost
 import ru.pavlig43.overview.navigation.destination.Destination
-import ru.pavlig43.overview.ui.OverViewScreen
 import ru.pavlig43.overview.ui.theme.Study_checklistTheme
 
 class MainActivity : ComponentActivity() {
