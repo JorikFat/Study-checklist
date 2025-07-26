@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.kotlin.plugin.serialization) apply false
 
     //    build-logic
     alias(libs.plugins.pavlig43.application) apply false

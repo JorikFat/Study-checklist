@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun CourseEditingScreen(
-    course: Course?,
+    course: Course? = null,
     modifier: Modifier = Modifier) {
     val viewModel: CourseEditingViewModel = viewModel{CourseEditingViewModel(course?:Course())}
     val courseState by viewModel.courseState.collectAsState()
