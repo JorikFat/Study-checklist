@@ -1,9 +1,21 @@
-package ru.pavlig43.overview.navigation
+package ru.pavlig43.overview.navigation.destination
 
-sealed class Destination(val title: String) {
+import kotlinx.serialization.Serializable
+import ru.pavlig.course_edit.ui.Course
+
+@Serializable
+internal sealed class Destination(val title: String) {
+    
+    @Serializable
     data object Courses : Destination("Курсы")
+
+    @Serializable
     data object Content : Destination("Содержание")
+
+    @Serializable
     data object Edit : Destination("Редактирование")
+
+    @Serializable
     data object Create : Destination("Создание")
 
     companion object {
@@ -14,6 +26,5 @@ sealed class Destination(val title: String) {
             Create
         )
     }
-
 }
 

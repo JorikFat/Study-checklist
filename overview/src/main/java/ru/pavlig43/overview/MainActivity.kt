@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import ru.pavlig43.courses_list_impl.ui.CoursesScreen
+import ru.pavlig43.overview.navigation.NavigationHost
 import ru.pavlig43.overview.ui.OverViewScreen
 import ru.pavlig43.overview.ui.theme.Study_checklistTheme
 
@@ -18,10 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    OverViewScreen(
-                        onDestination = {},
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CoursesScreen(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    NavigationHost(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
                 }
             }
         }
