@@ -5,7 +5,7 @@ import ru.pavlig.course_edit.ui.Course
 
 @Serializable
 internal sealed class Destination(val title: String) {
-    
+
     @Serializable
     data object Courses : Destination("Курсы")
 

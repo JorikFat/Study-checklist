@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
-import ru.pavlig43.courses_list_impl.ui.CoursesScreen
 import ru.pavlig43.overview.ui.OverViewScreen
 
 @Serializable

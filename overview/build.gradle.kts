@@ -15,8 +15,9 @@ android {
 
 }
 dependencies {
-    implementation(libs.navigation.compose)
+
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.navigation.compose)
 
     implementation(projects.features.coursesList.impl)
     implementation(projects.features.courseEdit.impl)
