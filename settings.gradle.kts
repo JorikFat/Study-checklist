@@ -23,16 +23,16 @@ dependencyResolutionManagement {
 
 rootProject.name = "Study_checklist"
 include(":app")
-include(":overview")
+include(":overview")//TODO: rename to prototype
 include(
     ":features:courses-list:sample",
-    ":features:courses-list:impl"
+    ":features:courses-list:impl"//TODO: rename to lib
 )
 include(
     ":features:course-content:sample",
-    ":features:course-content:impl"
+    ":features:course-content:impl"//TODO: rename to lib
 )
 include(
     ":features:course-edit:sample",
-    ":features:course-edit:impl"
+    ":features:course-edit:impl"//TODO: rename to lib
 )
