@@ -26,6 +26,8 @@ class CourseEditActivity : ComponentActivity() {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CourseEditingScreen(
+//                        name = null,
+                        name = "",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -36,10 +38,10 @@ class CourseEditActivity : ComponentActivity() {
 
 @Composable
 private fun CourseEditingScreen(
+    name: String? = null,
     modifier: Modifier = Modifier
 ) {
-//    val course: Course = sampleCourse
-    val course: Course = Course()
+    val course: Course = if(name == null) Course() else sampleCourse
     val viewModel = viewModel { CourseEditingViewModel(course) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
