@@ -30,7 +30,7 @@ include(
 )
 include(
     ":features:course-content:sample",
-    ":features:course-content:impl"//TODO: rename to lib
+    ":features:course-content:lib"
 )
 include(
     ":features:course-edit:sample",

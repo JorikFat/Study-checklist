@@ -21,5 +21,5 @@ dependencies {
 
     implementation(projects.features.coursesList.lib)
     implementation(projects.features.courseEdit.impl)
-    implementation(projects.features.courseContent.impl)
+    implementation(projects.features.courseContent.lib)
 }

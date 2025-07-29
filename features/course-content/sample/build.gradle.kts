@@ -16,5 +16,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.features.courseContent.impl)
+    implementation(projects.features.courseContent.lib)
 }
