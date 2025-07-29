@@ -4,6 +4,8 @@ import kotlinx.serialization.Serializable
 import ru.pavlig.course_edit.ui.Course
 
 @Serializable
+data object Overview
+@Serializable
 internal sealed class Destination(val title: String) {
 
     @Serializable
