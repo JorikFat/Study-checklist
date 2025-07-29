@@ -7,13 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import ru.pavlig.course_edit.ui.CourseEditingScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
 import ru.pavlig.course_edit.ui.Course
+import ru.pavlig.course_edit.ui.CourseEditingLayout
+import ru.pavlig.course_edit.ui.CourseEditingViewModel
 import ru.pavlig.course_edit.ui.Lesson
 
-class MainActivity : ComponentActivity() {
+class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,15 +26,29 @@ class MainActivity : ComponentActivity() {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CourseEditingScreen(
-                        course = sampleCourse,
-                        modifier = Modifier.padding(
-                            innerPadding
-                        )
+//                        name = null,
+                        name = "",
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+private fun CourseEditingScreen(
+    name: String? = null,
+    modifier: Modifier = Modifier
+) {
+    val course: Course = if(name == null) Course() else sampleCourse
+    val viewModel = viewModel { CourseEditingViewModel(course) }
+    val courseState by viewModel.courseState.collectAsState()
+    CourseEditingLayout(
+        course = courseState,
+        viewModel = viewModel,
+        modifier = modifier,
+    )
 }
 
 private val sampleCourse = Course(
