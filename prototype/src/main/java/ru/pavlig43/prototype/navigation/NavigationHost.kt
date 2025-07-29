@@ -1,4 +1,4 @@
-package ru.pavlig43.overview.navigation
+package ru.pavlig43.prototype.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,9 +14,9 @@ import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
 import ru.pavlig.course_edit.ui.Lesson
 import ru.pavlig43.courses_list_impl.ui.CoursesScreen
-import ru.pavlig43.overview.navigation.destination.Destination
-import ru.pavlig43.overview.navigation.destination.Overview
-import ru.pavlig43.overview.ui.OverViewScreen
+import ru.pavlig43.prototype.navigation.destination.Destination
+import ru.pavlig43.prototype.navigation.destination.Overview
+import ru.pavlig43.prototype.ui.OverViewScreen
 
 @Composable
 fun NavigationHost(modifier: Modifier = Modifier) {

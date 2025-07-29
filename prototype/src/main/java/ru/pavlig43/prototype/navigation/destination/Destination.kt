@@ -1,7 +1,6 @@
-package ru.pavlig43.overview.navigation.destination
+package ru.pavlig43.prototype.navigation.destination
 
 import kotlinx.serialization.Serializable
-import ru.pavlig.course_edit.ui.Course
 
 @Serializable
 data object Overview

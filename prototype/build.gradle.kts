@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    namespace = "ru.pavlig43.overview"
+    namespace = "ru.pavlig43.prototype"
 
     defaultConfig {
-        applicationId = "ru.pavlig43.overview"
+        applicationId = "ru.pavlig43.prototype"
         versionCode = 1
         versionName = "1.0"
     }

@@ -1,4 +1,4 @@
-package ru.pavlig43.overview.ui
+package ru.pavlig43.prototype.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.pavlig43.overview.navigation.destination.Destination
+import ru.pavlig43.prototype.navigation.destination.Destination
 
 @Composable
 internal fun OverViewScreen(
