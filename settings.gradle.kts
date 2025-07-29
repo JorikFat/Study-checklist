@@ -34,5 +34,5 @@ include(
 )
 include(
     ":features:course-edit:sample",
-    ":features:course-edit:impl"//TODO: rename to lib
+    ":features:course-edit:lib"
 )
