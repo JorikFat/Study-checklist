@@ -26,7 +26,7 @@ include(":app")
 include(":overview")//TODO: rename to prototype
 include(
     ":features:courses-list:sample",
-    ":features:courses-list:impl"//TODO: rename to lib
+    ":features:courses-list:lib"
 )
 include(
     ":features:course-content:sample",

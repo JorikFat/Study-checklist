@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.navigation.compose)
 
-    implementation(projects.features.coursesList.impl)
+    implementation(projects.features.coursesList.lib)
     implementation(projects.features.courseEdit.impl)
     implementation(projects.features.courseContent.impl)
 }
