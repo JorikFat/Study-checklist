@@ -13,20 +13,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-
 
 @Composable
-fun CourseEditingScreen(
-    course: Course? = null,
-    modifier: Modifier = Modifier) {
-    val viewModel: CourseEditingViewModel = viewModel{CourseEditingViewModel(course?:Course())}
-    val courseState by viewModel.courseState.collectAsState()
+fun CourseEditingLayout(
+    course: Course,
+    viewModel: CourseEditingViewModel,
+    modifier: Modifier = Modifier
+){
     Column(
         modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -34,14 +30,14 @@ fun CourseEditingScreen(
     ) {
 
         TextField(
-            value = courseState.name,
+            value = course.name,
             onValueChange = viewModel::onChangeCourseName,
             placeholder = { Text("Название курса") },
             modifier = Modifier.fillMaxWidth()
         )
         HorizontalDivider()
         LessonsList(
-            lessons = courseState.lessons,
+            lessons = course.lessons,
             onChangeLessonName = viewModel::onChangeLessonName,
             modifier = Modifier.fillMaxWidth()
         )
