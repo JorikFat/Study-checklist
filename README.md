@@ -14,7 +14,7 @@
  - Прислать pull-request;
 
 ### Структура модулей
-<img width="895" height="366" alt="image" src="https://github.com/user-attachments/assets/ffe632fb-d912-41c6-8e31-e7ddbb8d60f5" />
+<img width="852" height="569" alt="image" src="https://github.com/user-attachments/assets/773dd15a-14ba-46e5-9459-fc131b8e7524" />
 
 
 ## Цель
