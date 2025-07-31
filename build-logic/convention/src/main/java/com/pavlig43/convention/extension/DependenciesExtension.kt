@@ -11,7 +11,7 @@ internal fun DependencyHandlerScope.implementation(dependency: Provider<MinimalE
 //    add("debugImplementation",dependency)
 //}
 
-internal fun DependencyHandlerScope.debugImplementation(dependency: Provider<MinimalExternalModuleDependency>){
+internal fun DependencyHandlerScope.debugImplementation(dependency: Any){
     add("debugImplementation",dependency)
 }
 

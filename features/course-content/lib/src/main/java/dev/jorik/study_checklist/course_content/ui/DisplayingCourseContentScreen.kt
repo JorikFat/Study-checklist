@@ -10,12 +10,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -26,16 +28,26 @@ fun DisplayingCourseContentScreen(
 ) {
     val viewModel: DisplayingCourseContentViewModel = viewModel()
     val courseState by viewModel.courseState.collectAsState()
+    DisplayCourseContentBody(
+        courseContent = courseState,
+        onCheckedChange = viewModel::onCheckedChange,
+    )
+}
+@Composable
+private fun DisplayCourseContentBody(
+    courseContent: CourseContent,
+    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    modifier: Modifier = Modifier){
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(courseState.name)
+        Text(courseContent.name)
         HorizontalDivider()
         LessonsList(
-            lessons = courseState.lessons,
-            onCheckedChange = viewModel::onCheckedChange
+            lessons = courseContent.lessons,
+            onCheckedChange = onCheckedChange
         )
 
     }
@@ -77,6 +89,18 @@ private fun LessonRow(
             onCheckedChange = { onCheckedChange(lesson.index, it) }
         )
         Text(lesson.name)
+    }
+
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DisplayCoursePreview() {
+    MaterialTheme {
+        DisplayCourseContentBody(
+            courseContent = CourseContent(),
+            onCheckedChange = {_,_->}
+        )
     }
 
 }

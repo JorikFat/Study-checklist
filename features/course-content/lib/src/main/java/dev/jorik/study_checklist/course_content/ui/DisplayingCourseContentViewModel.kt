@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class DisplayingCourseContentViewModel:ViewModel() {
-    private val _courseState = MutableStateFlow(Course())
-    val courseState = _courseState.asStateFlow()
+    private val _courseContentState = MutableStateFlow(CourseContent())
+    val courseState = _courseContentState.asStateFlow()
 
 
     fun onCheckedChange(index: Int, isChecked: Boolean) {
-        _courseState.update { course ->
+        _courseContentState.update { course ->
             course.copy(
                 lessons = course.lessons.map { lesson ->
                     if (lesson.index == index) {
@@ -26,7 +26,7 @@ class DisplayingCourseContentViewModel:ViewModel() {
 
 }
 
-data class Course(
+data class CourseContent(
     val name: String = "SOLID",
     val lessons: List<Lesson> = listOf(
         "SRP",
