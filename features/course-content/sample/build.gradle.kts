@@ -10,7 +10,7 @@ android {
         applicationId = "com.pavlig43.sample"
         versionCode = 1
         versionName = "1.0"
-
+        setProperty("archivesBaseName", "StudyChecklist_content-sample v${versionName} [${versionCode}]")
     }
     
 }
