@@ -11,6 +11,7 @@ android {
         applicationId = "ru.pavlig43.prototype"
         versionCode = 1
         versionName = "1.0"
+        setProperty("archivesBaseName", "StudyChecklist_prototype v${versionName} [${versionCode}]")
     }
 
 }

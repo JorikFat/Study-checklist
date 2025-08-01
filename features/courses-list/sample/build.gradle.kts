@@ -10,6 +10,7 @@ android {
         applicationId = "ru.pavlig43.courses_list_sample"
         versionCode = 1
         versionName = "1.0"
+        setProperty("archivesBaseName", "StudyChecklist_list-sample v${versionName} [${versionCode}]")
     }
 
 
