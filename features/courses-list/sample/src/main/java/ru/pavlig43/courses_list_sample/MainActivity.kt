@@ -18,7 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CoursesScreen(Modifier.padding(innerPadding))
+                    CoursesScreen(
+                        onEditScreen = {},
+                        onContentScreen = {},
+                        modifier = Modifier.padding(innerPadding))
                 }
             }
         }
