@@ -13,8 +13,8 @@ jobs:
         with: {java-version: 21}
       - name: Build APK
         run: ./gradlew assembleDebug
-      # - name: Upload APK
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: StudyChecklist_prototype-debug.apk
-          # path: prototype/build/outputs/apk/release/app-release-unsigned.apk #need fetch build versions
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: StudyChecklist_prototype-debug.apk
+          path: prototype/build/outputs/apk/debug/*.apk
