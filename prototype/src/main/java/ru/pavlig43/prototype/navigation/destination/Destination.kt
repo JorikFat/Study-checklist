@@ -11,20 +11,20 @@ internal sealed class Destination(val title: String) {
     data object Courses : Destination("Курсы")
 
     @Serializable
-    data object Content : Destination("Содержание")
+    data class Content(val id:Int = 0) : Destination("Содержание")
 
     @Serializable
-    data object Edit : Destination("Редактирование")
+    data class Edit(val id:Int = 0) : Destination("Редактирование")
 
     @Serializable
-    data object Create : Destination("Создание")
+    data class Create(val id:Int= 0) : Destination("Создание")
 
     companion object {
         fun allDestinations(): List<Destination> = listOf(
             Courses,
-            Content,
-            Edit,
-            Create
+            Content(),
+            Edit(),
+            Create()
         )
     }
 }

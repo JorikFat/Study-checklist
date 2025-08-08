@@ -7,3 +7,6 @@ android {
     namespace = "ru.pavlig.course_edit"
 
 }
+dependencies{
+    implementation(projects.features.courses)
+}

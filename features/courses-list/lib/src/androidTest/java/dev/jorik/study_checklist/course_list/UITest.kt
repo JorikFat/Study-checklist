@@ -14,7 +14,7 @@ class UITest {
     @Test
     fun showStubCourses() {
         composeTestRule.setContent {
-            CoursesScreen()
+            CoursesScreen({},{})
         }
 
         composeTestRule.onNodeWithText("SOLID").assertIsDisplayed()

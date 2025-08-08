@@ -24,13 +24,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun DisplayingCourseContentScreen(
+    id:Int,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: DisplayingCourseContentViewModel = viewModel()
-    val courseState by viewModel.courseState.collectAsState()
+    val viewModel: DisplayingCourseContentViewModel = viewModel{DisplayingCourseContentViewModel(id)}
+    val courseState by viewModel.courseContent.collectAsState()
     DisplayCourseContentBody(
         courseContent = courseState,
         onCheckedChange = viewModel::onCheckedChange,
+        modifier = modifier
     )
 }
 @Composable

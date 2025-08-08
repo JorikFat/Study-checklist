@@ -8,11 +8,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentScreen
-import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
-import ru.pavlig.course_edit.ui.Lesson
 import ru.pavlig43.courses_list_impl.ui.CoursesScreen
 import ru.pavlig43.prototype.navigation.destination.Destination
 import ru.pavlig43.prototype.navigation.destination.Overview
@@ -26,25 +25,30 @@ fun NavigationHost(modifier: Modifier = Modifier) {
             OverViewScreen(
                 onDestination = {destination->
                     when(destination){
-                        Destination.Content -> navController.navigate(Destination.Content)
+                        is Destination.Content -> navController.navigate(Destination.Content(destination.id))
                         Destination.Courses -> navController.navigate(Destination.Courses)
-                        Destination.Create -> navController.navigate(Destination.Create)
-                        Destination.Edit -> navController.navigate(Destination.Edit)
+                        is Destination.Create -> navController.navigate(Destination.Create(destination.id))
+                        is Destination.Edit -> navController.navigate(Destination.Edit(destination.id))
                     }
                 }
             )
         }
         composable<Destination.Courses> {
-            CoursesScreen()
+            CoursesScreen(
+                onEditScreen = {navController.navigate(Destination.Edit(it))},
+                onContentScreen = {navController.navigate(Destination.Content(it))}
+            )
         }
         composable<Destination.Edit> {
-            CourseEditingScreen("")
+            val id = it.toRoute<Destination.Edit>().id
+            CourseEditingScreen(id,{navController.popBackStack()})
         }
         composable<Destination.Content> {
-            DisplayingCourseContentScreen()
+            val id = it.toRoute<Destination.Content>().id
+            DisplayingCourseContentScreen(id)
         }
         composable<Destination.Create> {
-            CourseEditingScreen()
+            CourseEditingScreen(0,{navController.popBackStack()})
         }
 
     }
@@ -53,26 +57,17 @@ fun NavigationHost(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CourseEditingScreen(
-    name: String? = null,
+    id:Int,
+    onCloseScreen:()->Unit,
     modifier: Modifier = Modifier
 ) {
-    val course: Course = if(name == null) Course() else sampleCourse
-    val viewModel = viewModel { CourseEditingViewModel(course) }
+    val viewModel = viewModel { CourseEditingViewModel(id) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
         viewModel = viewModel,
+        onCloseScreen = onCloseScreen,
         modifier = modifier,
     )
 }
 
-private val sampleCourse = Course(
-    name = "SOLID",
-    lessons = listOf(
-        "SRP",
-        "OCP",
-        "LSP",
-        "ISP",
-        "DIP",
-    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
-)

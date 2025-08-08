@@ -22,11 +22,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CourseEditingLayout(
     course: Course,
+    onCloseScreen: () -> Unit,
     viewModel: CourseEditingViewModel,
     modifier: Modifier = Modifier
-){
+) {
     Column(
-        modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -43,22 +46,29 @@ fun CourseEditingLayout(
             onChangeLessonName = viewModel::onChangeLessonName,
             modifier = Modifier.fillMaxWidth()
         )
-        Button(viewModel::onSave) {
+        Button({
+            viewModel.onSave()
+            onCloseScreen()
+        }) {
             Text("Сохранить")
         }
 
     }
 
 }
+
 @Composable
 private fun CourseEditingBody(
     course: Course,
-    onChangeCourseName:(String)->Unit,
+    onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
-    onSave:()->Unit,
-    modifier: Modifier = Modifier){
+    onSave: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = modifier.fillMaxSize().padding(horizontal = 8.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -85,36 +95,38 @@ private fun CourseEditingBody(
 
 @Composable
 private fun LessonsList(
-    lessons:List<Lesson>,
-    onChangeLessonName:(index:Int,value:String)->Unit,
-    modifier: Modifier = Modifier) {
+    lessons: List<Lesson>,
+    onChangeLessonName: (index: Int, value: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val lazyListState = rememberLazyListState()
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(lessons, key = { it.index}){ lesson->
+        items(lessons, key = { it.index }) { lesson ->
             TextField(
                 value = lesson.name,
-                onValueChange = {onChangeLessonName(lesson.index,it)},
+                onValueChange = { onChangeLessonName(lesson.index, it) },
                 modifier = Modifier.fillMaxWidth()
 
             )
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
-private fun CourseEditingPreview(){
+private fun CourseEditingPreview() {
     MaterialTheme {
         CourseEditingBody(
             course = Course(
                 name = "Preview Course",
-                lessons = List(3){Lesson(it,"Preview Lesson $it")}
+                lessons = List(3) { Lesson(it, "Preview Lesson $it") }
             ),
 
             onChangeCourseName = {},
-            onChangeLessonName = {_,_ ->},
+            onChangeLessonName = { _, _ -> },
             onSave = {},
         )
     }
