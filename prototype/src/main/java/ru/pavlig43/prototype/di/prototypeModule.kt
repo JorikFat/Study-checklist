@@ -7,7 +7,7 @@ import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
-val prototypeModule = module {
+internal val prototypeModule = module {
 
     viewModel { CoursesViewModel() }
     viewModel { DisplayingCourseContentViewModel() }

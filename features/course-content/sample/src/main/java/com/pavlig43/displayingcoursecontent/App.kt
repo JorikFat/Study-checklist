@@ -1,7 +1,7 @@
 package com.pavlig43.displayingcoursecontent
 
 import android.app.Application
-import com.pavlig43.displayingcoursecontent.di.coursesContentLibModule
+import com.pavlig43.displayingcoursecontent.di.coursesContentModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +14,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(coursesContentLibModule)
+            modules(coursesContentModule)
         }
 
     }
