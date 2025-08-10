@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Study_checklist">
         <activity
-            android:name="com.pavlig43.displayingcoursecontent.MainActivity"
+            android:name="com.pavlig43.displayingcoursecontent.CourseContentActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Study_checklist">
