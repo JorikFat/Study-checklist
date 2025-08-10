@@ -13,28 +13,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-
 
 @Composable
-fun DisplayingCourseContentScreen(
-    modifier: Modifier = Modifier
-) {
-    val viewModel: DisplayingCourseContentViewModel = viewModel()
-    val courseState by viewModel.courseState.collectAsState()
-    DisplayCourseContentBody(
-        courseContent = courseState,
-        onCheckedChange = viewModel::onCheckedChange,
-    )
-}
-@Composable
-private fun DisplayCourseContentBody(
+fun DisplayCourseContentLayout(
     courseContent: CourseContent,
     onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
     modifier: Modifier = Modifier){
@@ -97,7 +82,7 @@ private fun LessonRow(
 @Composable
 private fun DisplayCoursePreview() {
     MaterialTheme {
-        DisplayCourseContentBody(
+        DisplayCourseContentLayout(
             courseContent = CourseContent(),
             onCheckedChange = {_,_->}
         )

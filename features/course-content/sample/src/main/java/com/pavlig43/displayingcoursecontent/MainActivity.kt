@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentScreen
+import com.pavlig43.displayingcoursecontent.ui.DisplayingCourseContentScreen
 import com.pavlig43.displayingcoursecontent.ui.theme.Study_checklistTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     DisplayingCourseContentScreen(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }

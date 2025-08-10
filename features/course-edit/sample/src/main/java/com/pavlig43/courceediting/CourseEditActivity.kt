@@ -7,16 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pavlig43.courceediting.ui.CourseEditingScreen
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
-import ru.pavlig.course_edit.ui.Course
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.CourseEditingViewModel
-import ru.pavlig.course_edit.ui.Lesson
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,30 +29,6 @@ class CourseEditActivity : ComponentActivity() {
     }
 }
 
-@Composable
-private fun CourseEditingScreen(
-    name: String? = null,
-    modifier: Modifier = Modifier
-) {
-    val course: Course = if(name == null) Course() else sampleCourse
-    val viewModel = viewModel { CourseEditingViewModel(course) }
-    val courseState by viewModel.courseState.collectAsState()
-    CourseEditingLayout(
-        course = courseState,
-        viewModel = viewModel,
-        modifier = modifier,
-    )
-}
 
-private val sampleCourse = Course(
-    name = "SOLID",
-    lessons = listOf(
-        "SRP",
-        "OCP",
-        "LSP",
-        "ISP",
-        "DIP",
-    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
-)
 
 

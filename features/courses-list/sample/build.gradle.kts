@@ -1,6 +1,9 @@
+import com.pavlig43.convention.extension.libs
+
 plugins {
     alias(libs.plugins.pavlig43.application)
     alias(libs.plugins.pavlig43.compose)
+    alias(libs.plugins.koin)
 }
 
 android {
