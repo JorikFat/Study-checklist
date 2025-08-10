@@ -8,30 +8,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.Course
 
 @Composable
-fun CoursesScreen(
-    modifier: Modifier = Modifier,
-    viewModel:CoursesViewModel
-) {
-
-    val courses by viewModel.courses.collectAsState()
-
-    CoursesScreen(
-        courses = courses,
-        modifier = modifier
-    )
-
-    }
-
-@Composable
-private fun CoursesScreen(
+fun CoursesLayout(
     courses: List<Course>,
     modifier: Modifier = Modifier) {
     Column(modifier
@@ -61,9 +44,8 @@ private fun CourseCard(
 }
 @Preview(showBackground = true)
 @Composable
-fun CoursesScreenPreview(modifier: Modifier = Modifier) {
+fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
     MaterialTheme {
-        CoursesScreen(courseList)
+        CoursesLayout(courseList)
     }
-
 }
