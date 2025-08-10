@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import org.koin.compose.viewmodel.koinViewModel
 import ru.pavlig43.courses_list_impl.ui.CoursesScreen
 import ru.pavlig43.courses_list_sample.ui.theme.Study_checklistTheme
 
@@ -18,7 +19,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CoursesScreen(Modifier.padding(innerPadding))
+                    CoursesScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        viewModel = koinViewModel()
+                    )
                 }
             }
         }

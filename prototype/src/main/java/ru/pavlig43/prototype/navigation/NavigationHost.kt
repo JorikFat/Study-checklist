@@ -5,10 +5,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavArgument
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentScreen
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
@@ -35,13 +39,13 @@ fun NavigationHost(modifier: Modifier = Modifier) {
             )
         }
         composable<Destination.Courses> {
-            CoursesScreen()
+            CoursesScreen(viewModel = koinViewModel())
         }
         composable<Destination.Edit> {
             CourseEditingScreen("")
         }
         composable<Destination.Content> {
-            DisplayingCourseContentScreen()
+            DisplayingCourseContentScreen(viewModel = koinViewModel())
         }
         composable<Destination.Create> {
             CourseEditingScreen()
@@ -57,7 +61,7 @@ private fun CourseEditingScreen(
     modifier: Modifier = Modifier
 ) {
     val course: Course = if(name == null) Course() else sampleCourse
-    val viewModel = viewModel { CourseEditingViewModel(course) }
+    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(course) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,

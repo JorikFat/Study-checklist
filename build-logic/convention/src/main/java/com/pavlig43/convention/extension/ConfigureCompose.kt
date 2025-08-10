@@ -20,7 +20,7 @@ internal fun Project.configureCompose(commonExtension: CommonExtension<*,*,*,*,*
             implementation(libs.androidx.material3)
 
             //TODO удалить после добавления koinViewModel
-            implementation(libs.androidx.viewmodel.compose)
+//            implementation(libs.androidx.viewmodel.compose)
 
             debugImplementation(libs.androidx.ui.tooling)
             debugImplementation(libs.androidx.ui.test.manifest)

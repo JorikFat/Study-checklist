@@ -13,6 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.ParametersDefinition
+import org.koin.core.parameter.parametersOf
 import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
@@ -42,7 +45,7 @@ private fun CourseEditingScreen(
     modifier: Modifier = Modifier
 ) {
     val course: Course = if(name == null) Course() else sampleCourse
-    val viewModel = viewModel { CourseEditingViewModel(course) }
+    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(course) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,

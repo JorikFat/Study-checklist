@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.pavlig43.application)
     alias(libs.plugins.pavlig43.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.koin)
 }
 
 android {

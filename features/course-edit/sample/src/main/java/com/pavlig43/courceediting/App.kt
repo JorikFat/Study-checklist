@@ -1,10 +1,10 @@
-package ru.pavlig43.courses_list_sample
+package com.pavlig43.courceediting
 
 import android.app.Application
+import com.pavlig43.courceediting.di.courseEditModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import ru.pavlig43.courses_list_sample.di.coursesListLibModule
 
 class App : Application() {
 
@@ -14,7 +14,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(coursesListLibModule)
+            modules(courseEditModule)
         }
 
     }
