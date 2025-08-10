@@ -16,6 +16,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.features.coursesList.impl)
+    implementation(projects.features.coursesList.lib)
 
 }

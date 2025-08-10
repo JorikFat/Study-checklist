@@ -15,6 +15,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.features.courseEdit.impl)
+    implementation(projects.features.courseEdit.lib)
 
 }

@@ -1,4 +1,4 @@
-package ru.pavlig43.overview.ui.theme
+package ru.pavlig43.prototype.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

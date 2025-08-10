@@ -1,4 +1,4 @@
-package ru.pavlig43.overview.ui.theme
+package ru.pavlig43.prototype.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
