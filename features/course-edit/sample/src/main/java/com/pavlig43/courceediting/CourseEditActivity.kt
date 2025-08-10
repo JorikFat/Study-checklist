@@ -56,7 +56,7 @@ class CourseEditActivity : ComponentActivity() {
 }
 
 @Composable
-fun CourseEditingScreen(
+private fun CourseEditingScreen(
     modifier: Modifier = Modifier,
     name: String? = null
 ) {

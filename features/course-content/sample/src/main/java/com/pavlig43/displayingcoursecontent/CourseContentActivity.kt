@@ -46,7 +46,7 @@ class CourseContentActivity : ComponentActivity() {
 }
 
 @Composable
-fun CourseContentScreen(
+private fun CourseContentScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: DisplayingCourseContentViewModel = koinViewModel()
