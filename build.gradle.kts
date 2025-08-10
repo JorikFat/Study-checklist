@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.pavlig43.test.feature) apply false
     alias(libs.plugins.pavlig43.feature) apply false
 
+    alias(libs.plugins.koin) apply false
 
 }
 allprojects.onEach { project ->

@@ -70,5 +70,11 @@ gradlePlugin {
          id = libs.plugins.pavlig43.feature.get().pluginId
          implementationClass = "FeaturePlugin"
         }
+
+        register("koinPlugin") {
+            id = libs.plugins.koin.get().pluginId
+            implementationClass = "KoinPlugin"
+        }
+
     }
 }
