@@ -31,14 +31,14 @@ fun DisplayingCourseContentScreen(
     val courseState by viewModel.courseContent.collectAsState()
     DisplayCourseContentBody(
         course = courseState,
-        onCheckedChange = viewModel::onCheckedChange,
+        toggleLesson = viewModel::toggleLesson,
         modifier = modifier
     )
 }
 @Composable
 private fun DisplayCourseContentBody(
     course: CourseViewState,
-    onCheckedChange: (index: Int) -> Unit,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier){
     Column(
         modifier = modifier.fillMaxSize(),
@@ -49,7 +49,7 @@ private fun DisplayCourseContentBody(
         HorizontalDivider()
         LessonsList(
             lessons = course.lessons,
-            onCheckedChange = onCheckedChange
+            toggleLesson = toggleLesson
         )
 
     }
@@ -59,7 +59,7 @@ private fun DisplayCourseContentBody(
 @Composable
 private fun LessonsList(
     lessons: List<LessonViewState>,
-    onCheckedChange: (index: Int) -> Unit,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -70,7 +70,7 @@ private fun LessonsList(
         items(lessons, key = { it.index }) { lesson ->
             LessonRow(
                 lesson = lesson,
-                onCheckedChange = onCheckedChange
+                toggleLesson = toggleLesson
             )
         }
     }
@@ -79,7 +79,7 @@ private fun LessonsList(
 @Composable
 private fun LessonRow(
     lesson: LessonViewState,
-    onCheckedChange: (index: Int) -> Unit,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -88,7 +88,7 @@ private fun LessonRow(
     ) {
         Checkbox(
             checked = lesson.isChecked,
-            onCheckedChange = { onCheckedChange(lesson.index) }
+            onCheckedChange = { toggleLesson(lesson.index) }
         )
         Text(lesson.name)
     }
@@ -101,7 +101,7 @@ private fun DisplayCoursePreview() {
     MaterialTheme {
         DisplayCourseContentBody(
             course = CourseViewState(),
-            onCheckedChange = {_,->}
+            toggleLesson = { _,->}
         )
     }
 

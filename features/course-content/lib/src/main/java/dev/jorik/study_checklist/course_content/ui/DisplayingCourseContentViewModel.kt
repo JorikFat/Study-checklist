@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.stateIn
 class DisplayingCourseContentViewModel(
    private val id: Int
 ) : ViewModel() {
-    val courseContent = CourseInteractor.courseMenuList.map {lst-> (lst.find { it.id == id }?:Course()).toViewState() }
+    val courseContent = CourseInteractor.courseMenuList
+        .map {lst-> (lst.find { it.id == id }?:Course()).toViewState() }
             .stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
@@ -20,7 +21,7 @@ class DisplayingCourseContentViewModel(
     )
 
 
-    fun onCheckedChange(lessonId: Int){
+    fun toggleLesson(lessonId: Int){
         CourseInteractor.toggleLesson(
             courseId = id,
             lessonId = lessonId
