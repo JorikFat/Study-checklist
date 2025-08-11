@@ -36,7 +36,7 @@ class CourseEditActivity : ComponentActivity() {
 private fun CourseEditingScreen(
     modifier: Modifier = Modifier
 ) {
-    val viewModel = viewModel { CourseEditingViewModel(0) }
+    val viewModel = viewModel { CourseEditingViewModel(-1) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,

@@ -30,25 +30,25 @@ fun DisplayingCourseContentScreen(
     val viewModel: DisplayingCourseContentViewModel = viewModel{DisplayingCourseContentViewModel(id)}
     val courseState by viewModel.courseContent.collectAsState()
     DisplayCourseContentBody(
-        courseContent = courseState,
+        course = courseState,
         onCheckedChange = viewModel::onCheckedChange,
         modifier = modifier
     )
 }
 @Composable
 private fun DisplayCourseContentBody(
-    courseContent: CourseContent,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    course: CourseViewState,
+    onCheckedChange: (index: Int) -> Unit,
     modifier: Modifier = Modifier){
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(courseContent.name)
+        Text(course.name)
         HorizontalDivider()
         LessonsList(
-            lessons = courseContent.lessons,
+            lessons = course.lessons,
             onCheckedChange = onCheckedChange
         )
 
@@ -58,8 +58,8 @@ private fun DisplayCourseContentBody(
 
 @Composable
 private fun LessonsList(
-    lessons: List<Lesson>,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lessons: List<LessonViewState>,
+    onCheckedChange: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -78,8 +78,8 @@ private fun LessonsList(
 
 @Composable
 private fun LessonRow(
-    lesson: Lesson,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lesson: LessonViewState,
+    onCheckedChange: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -88,7 +88,7 @@ private fun LessonRow(
     ) {
         Checkbox(
             checked = lesson.isChecked,
-            onCheckedChange = { onCheckedChange(lesson.index, it) }
+            onCheckedChange = { onCheckedChange(lesson.index) }
         )
         Text(lesson.name)
     }
@@ -100,8 +100,8 @@ private fun LessonRow(
 private fun DisplayCoursePreview() {
     MaterialTheme {
         DisplayCourseContentBody(
-            courseContent = CourseContent(),
-            onCheckedChange = {_,_->}
+            course = CourseViewState(),
+            onCheckedChange = {_,->}
         )
     }
 

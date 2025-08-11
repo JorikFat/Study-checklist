@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CourseEditingLayout(
-    course: Course,
+    course: CourseDraftViewState,
     onCloseScreen: () -> Unit,
     viewModel: CourseEditingViewModel,
     modifier: Modifier = Modifier
@@ -59,7 +59,7 @@ fun CourseEditingLayout(
 
 @Composable
 private fun CourseEditingBody(
-    course: Course,
+    course: CourseDraftViewState,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onSave: () -> Unit,
@@ -95,7 +95,7 @@ private fun CourseEditingBody(
 
 @Composable
 private fun LessonsList(
-    lessons: List<Lesson>,
+    lessons: List<String>,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -104,10 +104,10 @@ private fun LessonsList(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(lessons, key = { it.index }) { lesson ->
+        itemsIndexed(lessons) { id, name ->
             TextField(
-                value = lesson.name,
-                onValueChange = { onChangeLessonName(lesson.index, it) },
+                value = name,
+                onValueChange = { onChangeLessonName(id, it) },
                 modifier = Modifier.fillMaxWidth()
 
             )
@@ -120,9 +120,9 @@ private fun LessonsList(
 private fun CourseEditingPreview() {
     MaterialTheme {
         CourseEditingBody(
-            course = Course(
+            course = CourseDraftViewState(
                 name = "Preview Course",
-                lessons = List(3) { Lesson(it, "Preview Lesson $it") }
+                lessons = List(3) { "Preview Lesson $it" }
             ),
 
             onChangeCourseName = {},

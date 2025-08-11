@@ -1,40 +1,49 @@
 package com.example.courses
 
-import com.example.courses.data.CourseMenuItemData
-import com.example.courses.data.courseList
-import kotlinx.coroutines.flow.Flow
+import com.example.courses.models.Course
+import com.example.courses.models.stubCourses
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
 object CourseInteractor {
-    private val _courseMenuList = MutableStateFlow<List<CourseMenuItemData>>(courseList)
+    private val _courseMenuList = MutableStateFlow<List<Course>>(stubCourses)
     val courseMenuList = _courseMenuList.asStateFlow()
 
-    fun courseById(id: Int): Flow<CourseMenuItemData> {
-        return _courseMenuList.map { lst -> lst.find { it.id == id }?:lst.first{it.id == 1} }
-    }
-
-    fun getCourseById(id: Int): CourseMenuItemData {
-        return _courseMenuList.value.find { it.id == id } ?: CourseMenuItemData()
+    fun getCourseById(id: Int): Course {
+        return _courseMenuList.value.find { it.id == id } ?: Course()
     }
 
 
-    fun createCourse(course: CourseMenuItemData) {
+    fun createCourse(course: Course) {
         val lastIndex = _courseMenuList.value.maxOfOrNull { it.id }
-        updateCourseList { it.add(course.copy(id = lastIndex?.plus(1) ?: 1)) }
+        updateCourseList { it.add(course.copy(id = lastIndex?.plus(1) ?: 0)) }
     }
 
-    fun updateCourse(course: CourseMenuItemData) {
+    fun updateCourse(course: Course) {
         updateCourseList { lst ->
             lst.removeIf { course.id == it.id }
             lst.add(course)
         }
     }
+    fun toggleLesson(courseId: Int, lessonId: Int){
+        val course = _courseMenuList.value.first { it.id == courseId}
+        val updatedLessons = course.lessons.map { lesson ->
+            if (lesson.id == lessonId) {
+                lesson.copy(isChecked = !lesson.isChecked)
+            } else {
+                lesson
+            }
+        }
+        val updatedCourse = course.copy(
+            lessons = updatedLessons
+        )
+        updateCourse(updatedCourse)
+    }
 
 
-    private fun updateCourseList(action: (MutableList<CourseMenuItemData>) -> Unit) {
+
+    private fun updateCourseList(action: (MutableList<Course>) -> Unit) {
         val updatedList = _courseMenuList.value.toMutableList()
         action(updatedList)
         _courseMenuList.update { updatedList }

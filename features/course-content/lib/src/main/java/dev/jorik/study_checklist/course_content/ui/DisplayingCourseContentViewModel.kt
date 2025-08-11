@@ -3,83 +3,61 @@ package dev.jorik.study_checklist.course_content.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.courses.CourseInteractor
-import com.example.courses.data.CourseMenuItemData
-import com.example.courses.data.LessonData
+import com.example.courses.models.Course
+import com.example.courses.models.Lesson
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class DisplayingCourseContentViewModel(
-    id: Int
+   private val id: Int
 ) : ViewModel() {
-    val courseContent = CourseInteractor.courseById(id).map { it.mapToCourseContent() }.stateIn(
+    val courseContent = CourseInteractor.courseMenuList.map {lst-> (lst.find { it.id == id }?:Course()).toViewState() }
+            .stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
-        CourseContent()
+        CourseViewState()
     )
 
 
-
-    fun onCheckedChange(index: Int, isChecked: Boolean) {
-        val updatedLessons = courseContent.value.lessons.map { lesson ->
-            if (lesson.index == index) {
-                lesson.copy(isChecked = isChecked)
-            } else {
-                lesson
-            }
-        }
-        val updatedCourse = courseContent.value.copy(
-            lessons = updatedLessons
+    fun onCheckedChange(lessonId: Int){
+        CourseInteractor.toggleLesson(
+            courseId = id,
+            lessonId = lessonId
         )
-        CourseInteractor.updateCourse(updatedCourse.mapToCourseMenuItemData())
-
     }
 
 }
 
-private fun CourseMenuItemData.mapToCourseContent(): CourseContent {
-    return CourseContent(
+private fun Course.toViewState(): CourseViewState {
+    return CourseViewState(
         id = id,
         name = displayName,
         lessons = lessons.map { it.mapToLesson() }
     )
 }
 
-private fun LessonData.mapToLesson(): Lesson {
-    return Lesson(
+private fun Lesson.mapToLesson(): LessonViewState {
+    return LessonViewState(
         index = id,
         name = name,
         isChecked = isChecked
     )
 }
-private fun CourseContent.mapToCourseMenuItemData(): CourseMenuItemData {
-    return CourseMenuItemData(
-        id = id,
-        displayName = name,
-        lessons = lessons.map { it.toLessonData() }
-    )
-}
-private fun Lesson.toLessonData(): LessonData {
-    return LessonData(
-        id = index,
-        name = name,
-        isChecked = isChecked
-    )
-}
 
-data class CourseContent(
+data class CourseViewState(
     val id: Int = 0,
     val name: String = "SOLID",
-    val lessons: List<Lesson> = listOf(
+    val lessons: List<LessonViewState> = listOf(
         "SRP",
         "OCP",
         "LSP",
         "ISP",
         "DIP",
-    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
+    ).mapIndexed { index, lesson -> LessonViewState(index, lesson) }
 )
 
-data class Lesson(
+data class LessonViewState(
     val index: Int,
     val name: String,
     val isChecked: Boolean = false

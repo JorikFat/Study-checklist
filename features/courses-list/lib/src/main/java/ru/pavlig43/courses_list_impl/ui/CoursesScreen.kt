@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ru.pavlig43.courses_list_impl.data.Course
+import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
 @Composable
 fun CoursesScreen(
@@ -41,7 +41,7 @@ fun CoursesScreen(
 
 @Composable
 private fun CoursesScreen(
-    courses: List<Course>,
+    courses: List<CourseItemViewState>,
     onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -93,7 +93,7 @@ private fun ActionDropMenu(
 
 @Composable
 private fun CourseCard(
-    course: Course,
+    course: CourseItemViewState,
     onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -117,7 +117,7 @@ private fun CourseCard(
 
 private val courseList =
     listOf("SOLID", "Clean Architecture", "Design Patterns").mapIndexed { id, name ->
-        Course(
+        CourseItemViewState(
             id,
             name
         )

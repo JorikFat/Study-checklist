@@ -3,15 +3,15 @@ package ru.pavlig43.courses_list_impl.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.courses.CourseInteractor
-import com.example.courses.data.CourseMenuItemData
+import com.example.courses.models.Course
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import ru.pavlig43.courses_list_impl.data.Course
+import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
 class CoursesViewModel : ViewModel() {
     val courses = CourseInteractor.courseMenuList.map { lst ->
-        lst.map { it.mapToCourse() }.sortedBy { it.id }
+        lst.map { it.toViewState() }.sortedBy { it.id }
     }.stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
@@ -20,8 +20,8 @@ class CoursesViewModel : ViewModel() {
 
 }
 
-private fun CourseMenuItemData.mapToCourse(): Course {
-    return Course(
+private fun Course.toViewState(): CourseItemViewState {
+    return CourseItemViewState(
         id = id,
         displayName = displayName
     )
