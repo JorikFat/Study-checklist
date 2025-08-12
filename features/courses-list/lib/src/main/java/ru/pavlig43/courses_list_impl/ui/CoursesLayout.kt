@@ -21,13 +21,11 @@ fun CoursesLayout(
     modifier: Modifier = Modifier) {
 
     if (courses.isEmpty()) {
-        Box(Modifier.fillMaxSize().padding(24.dp)) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "У вас ничего не добавлено",
-                textAlign = TextAlign.Center
-            )
-        }
+        Text(
+            modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 64.dp),
+            text = "У вас ничего не добавлено",
+            textAlign = TextAlign.Center
+        )
     } else {
         Column(modifier
             .fillMaxSize()
