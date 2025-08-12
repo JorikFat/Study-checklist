@@ -1,5 +1,6 @@
 package ru.pavlig43.courses_list_impl.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.Course
@@ -17,18 +19,28 @@ import ru.pavlig43.courses_list_impl.data.Course
 fun CoursesLayout(
     courses: List<Course>,
     modifier: Modifier = Modifier) {
-    Column(modifier
-        .fillMaxSize()
-        .padding(24.dp)) {
-        courses.forEach {course->
-            CourseCard(
-                course = course,
-                modifier = Modifier.fillMaxWidth()
+
+    if (courses.isEmpty()) {
+        Box(Modifier.fillMaxSize().padding(24.dp)) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "У вас ничего не добавлено",
+                textAlign = TextAlign.Center
             )
         }
+    } else {
+        Column(modifier
+            .fillMaxSize()
+            .padding(24.dp)) {
+            courses.forEach {course->
+                CourseCard(
+                    course = course,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
+        }
     }
-
 }
 
 
@@ -46,6 +58,6 @@ private fun CourseCard(
 @Composable
 fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
     MaterialTheme {
-        CoursesLayout(courseList)
+        CoursesLayout(emptyList())
     }
 }
