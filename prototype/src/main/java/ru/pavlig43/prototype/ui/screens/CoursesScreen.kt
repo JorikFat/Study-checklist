@@ -18,7 +18,10 @@ fun CoursesScreen(
 
     CoursesLayout(
         courses = courses,
-        modifier = modifier
+        modifier = modifier,
+        onAddButtonClick = {},
+        onCourseCardClick = {},
+        onBackButtonClick = {}
     )
 
 }
