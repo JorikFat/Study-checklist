@@ -49,8 +49,8 @@ class CoursesListSample : ComponentActivity() {
 @Composable
 private fun CoursesScreen(
     modifier: Modifier = Modifier,
-    viewModel: CoursesViewModel = koinViewModel()
 ) {
+    val viewModel: CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
 
     CoursesLayout(
