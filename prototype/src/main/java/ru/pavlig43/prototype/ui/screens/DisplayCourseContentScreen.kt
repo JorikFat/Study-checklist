@@ -18,5 +18,7 @@ fun DisplayingCourseContentScreen(
     DisplayCourseContentLayout(
         courseContent = courseState,
         onCheckedChange = viewModel::onCheckedChange,
+        onEditButtonClick = {},
+        onBackButtonClick = {}
     )
 }
