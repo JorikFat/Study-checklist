@@ -1,6 +1,8 @@
 package ru.pavlig43.courses_list_impl.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -19,42 +22,38 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.Course
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun CoursesLayout(
     courses: List<Course>,
     onAddButtonClick: () -> Unit,
     onCourseCardClick: (Course) -> Unit,
-    onBackButtonClick: () -> Unit,
+    onCourseCardLongClick: (Course) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Список курсов") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onBackButtonClick
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "back"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onAddButtonClick) {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = "add"
-                        )
-                    }
-                }
+                title = { Text("Список курсов") }
             )
+        },
+        floatingActionButton = {
+            IconButton(
+                onClick = onAddButtonClick,
+                colors = IconButtonColors(
+                    containerColor = Color.Blue,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Blue,
+                    disabledContentColor = Color.White
+                )
+            ) {
+                Icon(Icons.Default.Add, "")
+            }
         }
     ) { paddingValues ->
         Column(
@@ -68,10 +67,12 @@ fun CoursesLayout(
                     course = course,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onCourseCardClick(course) }
+                        .combinedClickable(
+                            onClick = { onCourseCardClick(course) },
+                            onLongClick = { onCourseCardLongClick(course) }
+                        )
                 )
             }
-
         }
     }
 }
@@ -97,7 +98,7 @@ fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
             courseList,
             onAddButtonClick = {},
             onCourseCardClick = {},
-            onBackButtonClick = {}
+            onCourseCardLongClick = {}
         )
     }
 }

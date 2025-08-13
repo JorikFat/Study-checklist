@@ -21,7 +21,7 @@ fun CoursesScreen(
         modifier = modifier,
         onAddButtonClick = {},
         onCourseCardClick = {},
-        onBackButtonClick = {}
+        onCourseCardLongClick = {}
     )
 
 }
