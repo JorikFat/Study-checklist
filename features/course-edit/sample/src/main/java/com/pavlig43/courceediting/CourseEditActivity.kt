@@ -19,10 +19,9 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
-import ru.pavlig.course_edit.ui.Course
+import ru.pavlig.course_edit.ui.CourseDraftViewState
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
-import ru.pavlig.course_edit.ui.Lesson
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +32,8 @@ class CourseEditActivity : ComponentActivity() {
                 androidContext(application)
                 modules(
                     module {
-                        viewModel { (course: Course) ->
-                            CourseEditingViewModel(course)
+                        viewModel {
+                            CourseEditingViewModel(-1)
                         }
                     }
                 )
@@ -44,8 +43,17 @@ class CourseEditActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditingScreen(
-                        modifier = Modifier.padding(innerPadding)
+                    val courseState = CourseDraftViewState(
+                        name = "SAMPLE Course NAME",
+                        lessons = List(5){"Lesson $it"}
+                    )
+                    CourseEditingLayout(
+                        course = courseState,
+                        onChangeCourseName = {},
+                        onChangeLessonName = {_,_ ->},
+                        onSave = {},
+                        onCloseScreen = {},
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -53,20 +61,6 @@ class CourseEditActivity : ComponentActivity() {
     }
 }
 
-@Composable
-private fun CourseEditingScreen(
-    modifier: Modifier = Modifier
-) {
-    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(course) }
-    val courseState by viewModel.courseState.collectAsState()
-    CourseEditingLayout(
-        course = courseState,
-        onChangeCourseName = viewModel::onChangeCourseName,
-        onChangeLessonName = viewModel::onChangeLessonName,
-        onSave = viewModel::onSave,
-        onCloseScreen = {},
-        modifier = modifier,
-    )
-}
+
 
 

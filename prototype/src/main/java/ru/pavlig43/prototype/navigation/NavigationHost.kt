@@ -9,13 +9,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentScreen
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
-import ru.pavlig43.courses_list_impl.ui.CoursesScreen
 import ru.pavlig43.prototype.navigation.destination.Destination
 import ru.pavlig43.prototype.navigation.destination.Overview
-import ru.pavlig43.prototype.ui.OverViewScreen
+import ru.pavlig43.prototype.ui.screens.CourseEditingScreen
+import ru.pavlig43.prototype.ui.screens.CoursesScreen
+import ru.pavlig43.prototype.ui.screens.DisplayingCourseContentScreen
+import ru.pavlig43.prototype.ui.screens.OverViewScreen
 
 @Composable
 fun NavigationHost(modifier: Modifier = Modifier) {
@@ -55,21 +56,4 @@ fun NavigationHost(modifier: Modifier = Modifier) {
 
 }
 
-@Composable
-private fun CourseEditingScreen(
-    id:Int,
-    onCloseScreen:()->Unit,
-    modifier: Modifier = Modifier
-) {
-    val viewModel = viewModel { CourseEditingViewModel(id) }
-    val courseState by viewModel.courseState.collectAsState()
-    CourseEditingLayout(
-        course = courseState,
-        onChangeCourseName = viewModel::onChangeCourseName,
-        onChangeLessonName = viewModel::onChangeLessonName,
-        onSave = viewModel::onSave,
-        onCloseScreen = onCloseScreen,
-        modifier = modifier,
-    )
-}
 

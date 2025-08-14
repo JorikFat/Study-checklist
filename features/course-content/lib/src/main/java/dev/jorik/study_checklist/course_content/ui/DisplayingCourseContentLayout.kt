@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-private fun DisplayCourseContentLayout(
+fun DisplayCourseContentLayout(
     course: CourseViewState,
     toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier){
@@ -82,7 +82,7 @@ private fun LessonRow(
 @Composable
 private fun DisplayCoursePreview() {
     MaterialTheme {
-        DisplayCourseContentLayout((
+        DisplayCourseContentLayout(
             course = CourseViewState(),
             toggleLesson = { _,->}
         )
