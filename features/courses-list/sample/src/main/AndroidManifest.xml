@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Study_checklist">
         <activity
-            android:name=".CoursesListSample"
+            android:name=".CoursesListActivity"
             android:exported="true"
             android:theme="@style/Theme.Study_checklist">
             <intent-filter>
