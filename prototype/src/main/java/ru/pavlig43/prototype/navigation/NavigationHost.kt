@@ -1,16 +1,11 @@
 package ru.pavlig43.prototype.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.CourseEditingViewModel
 import ru.pavlig43.prototype.navigation.destination.Destination
 import ru.pavlig43.prototype.navigation.destination.Overview
 import ru.pavlig43.prototype.ui.screens.CourseEditingScreen

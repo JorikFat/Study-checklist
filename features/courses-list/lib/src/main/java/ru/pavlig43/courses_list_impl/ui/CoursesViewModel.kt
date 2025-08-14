@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
-class CoursesViewModel : ViewModel() {
-    val courses = CourseInteractor.courseMenuList.map { lst ->
+class CoursesViewModel(
+    courseInteractor: CourseInteractor
+) : ViewModel() {
+    val courses = courseInteractor.courseMenuList.map { lst ->
         lst.map { it.toViewState() }.sortedBy { it.id }
     }.stateIn(
         viewModelScope,

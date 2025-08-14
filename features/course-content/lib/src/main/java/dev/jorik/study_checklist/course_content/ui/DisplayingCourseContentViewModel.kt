@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class DisplayingCourseContentViewModel(
-   private val id: Int
+   private val id: Int,
+    private val courseInteractor: CourseInteractor,
 ) : ViewModel() {
-    val courseState = CourseInteractor.courseMenuList
+    val courseState = courseInteractor.courseMenuList
         .map {lst-> (lst.find { it.id == id }?:Course()).toViewState() }
             .stateIn(
         viewModelScope,
@@ -22,7 +23,7 @@ class DisplayingCourseContentViewModel(
 
 
     fun toggleLesson(lessonId: Int){
-        CourseInteractor.toggleLesson(
+        courseInteractor.toggleLesson(
             courseId = id,
             lessonId = lessonId
         )

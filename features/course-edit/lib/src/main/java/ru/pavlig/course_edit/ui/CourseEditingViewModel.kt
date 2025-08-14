@@ -12,9 +12,10 @@ import kotlinx.coroutines.flow.update
 
 class CourseEditingViewModel(
     private val id: Int,
+    private val courseInteractor: CourseInteractor
 ) : ViewModel() {
 
-    private val _courseState = MutableStateFlow(CourseInteractor.getCourseById(id) )
+    private val _courseState = MutableStateFlow(courseInteractor.getCourseById(id) )
     val courseState = _courseState.map { it.toViewState() }
         .stateIn(
             viewModelScope,
@@ -40,9 +41,9 @@ class CourseEditingViewModel(
 
     fun onSave() {
         if (id == -1) {
-            CourseInteractor.createCourse(_courseState.value)
+            courseInteractor.createCourse(_courseState.value)
         } else {
-            CourseInteractor.updateCourse(_courseState.value)
+            courseInteractor.updateCourse(_courseState.value)
         }
     }
 

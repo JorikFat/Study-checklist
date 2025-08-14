@@ -1,13 +1,12 @@
 package com.example.courses
 
 import com.example.courses.models.Course
-import com.example.courses.models.stubCourses
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-object CourseInteractor {
-    private val _courseMenuList = MutableStateFlow<List<Course>>(stubCourses)
+class CourseInteractor(initCourses:List<Course> = emptyList()) {
+    private val _courseMenuList = MutableStateFlow<List<Course>>(initCourses)
     val courseMenuList = _courseMenuList.asStateFlow()
 
     fun getCourseById(id: Int): Course {
