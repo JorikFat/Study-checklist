@@ -14,7 +14,7 @@ class CourseEditingViewModel(
     private val id: Int,
 ) : ViewModel() {
 
-    private val _courseState = MutableStateFlow(Course())
+    private val _courseState = MutableStateFlow(CourseInteractor.getCourseById(id) )
     val courseState = _courseState.map { it.toViewState() }
         .stateIn(
             viewModelScope,
@@ -26,14 +26,6 @@ class CourseEditingViewModel(
         _courseState.update { it.copy(displayName = name) }
     }
 
-    init {
-        getInitCourse()
-    }
-
-    private fun getInitCourse() {
-        if (id == -1) return
-        _courseState.update { CourseInteractor.getCourseById(id) }
-    }
 
     fun onChangeLessonName(index: Int, value: String) {
         _courseState.update { course ->
@@ -70,4 +62,5 @@ data class CourseDraftViewState(
     val lessons: List<String> = emptyList()
 
 )
+
 

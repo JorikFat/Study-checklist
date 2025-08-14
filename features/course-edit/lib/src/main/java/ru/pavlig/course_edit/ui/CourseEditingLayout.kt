@@ -22,8 +22,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CourseEditingLayout(
     course: CourseDraftViewState,
+    onChangeCourseName: (String) -> Unit,
+    onChangeLessonName: (index: Int, value: String) -> Unit,
+    onSave: () -> Unit,
     onCloseScreen: () -> Unit,
-    viewModel: CourseEditingViewModel,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -36,18 +38,18 @@ fun CourseEditingLayout(
 
         TextField(
             value = course.name,
-            onValueChange = viewModel::onChangeCourseName,
+            onValueChange = onChangeCourseName,
             placeholder = { Text("Название курса") },
             modifier = Modifier.fillMaxWidth()
         )
         HorizontalDivider()
         LessonsList(
             lessons = course.lessons,
-            onChangeLessonName = viewModel::onChangeLessonName,
+            onChangeLessonName = onChangeLessonName,
             modifier = Modifier.fillMaxWidth()
         )
         Button({
-            viewModel.onSave()
+            onSave()
             onCloseScreen()
         }) {
             Text("Сохранить")

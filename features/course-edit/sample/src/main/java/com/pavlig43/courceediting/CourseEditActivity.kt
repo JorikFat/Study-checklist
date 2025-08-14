@@ -40,8 +40,10 @@ private fun CourseEditingScreen(
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onSave = viewModel::onSave,
         onCloseScreen = {},
-        viewModel = viewModel,
         modifier = modifier,
     )
 }

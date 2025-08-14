@@ -48,7 +48,7 @@ fun NavigationHost(modifier: Modifier = Modifier) {
             DisplayingCourseContentScreen(id)
         }
         composable<Destination.Create> {
-            CourseEditingScreen(0,{navController.popBackStack()})
+            CourseEditingScreen(-1,{navController.popBackStack()})
         }
 
     }
@@ -65,7 +65,9 @@ private fun CourseEditingScreen(
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
-        viewModel = viewModel,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onSave = viewModel::onSave,
         onCloseScreen = onCloseScreen,
         modifier = modifier,
     )
