@@ -20,6 +20,7 @@ import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 import ru.pavlig43.courses_list_sample.ui.theme.Study_checklistTheme
 
+
 class CoursesListSample : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class CoursesListSample : ComponentActivity() {
             androidContext(application)
             modules(
                 module {
+
                     viewModel { CoursesViewModel() }
                 }
             )
