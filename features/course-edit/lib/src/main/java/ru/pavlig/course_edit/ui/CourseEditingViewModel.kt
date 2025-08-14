@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 
 class CourseEditingViewModel(
     private val id: Int,
-    private val courseInteractor: CourseInteractor
+    private val courseInteractor: CourseInteractor = CourseInteractor()
 ) : ViewModel() {
 
     private val _courseState = MutableStateFlow(courseInteractor.getCourseById(id) )
