@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.pavlig43.application)
     alias(libs.plugins.pavlig43.compose)
+    alias(libs.plugins.koin)
 }
 
 android {
@@ -10,7 +11,7 @@ android {
         applicationId = "com.pavlig43.sample"
         versionCode = 1
         versionName = "1.0"
-
+        setProperty("archivesBaseName", "StudyChecklist_content-sample v${versionName} [${versionCode}]")
     }
     
 }

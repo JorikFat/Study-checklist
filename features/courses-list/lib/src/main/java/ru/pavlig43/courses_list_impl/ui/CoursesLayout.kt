@@ -1,7 +1,5 @@
 package ru.pavlig43.courses_list_impl.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,11 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.pavlig43.courses_list_impl.data.Course
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
@@ -26,7 +23,7 @@ fun CoursesScreen(
     val viewModel: CoursesViewModel = viewModel()
     val courses by viewModel.courses.collectAsState()
 
-    CoursesScreen(
+    CoursesLayout(
         courses = courses,
         onEditScreen = onEditScreen,
         onContentScreen=onContentScreen,
@@ -36,7 +33,7 @@ fun CoursesScreen(
 }
 
 @Composable
-private fun CoursesScreen(
+private fun CoursesLayout(
     courses: List<CourseItemViewState>,
     onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
@@ -92,9 +89,9 @@ private val courseList =
 
 @Preview(showBackground = true)
 @Composable
-fun CoursesScreenPreview(modifier: Modifier = Modifier) {
+fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
     MaterialTheme {
-        CoursesScreen(
+        CoursesLayout(
             onContentScreen = {},
             onEditScreen = {},
             courses = courseList,)

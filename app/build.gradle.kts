@@ -13,6 +13,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        setProperty("archivesBaseName", "StudyChecklist v${versionName} [${versionCode}]")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -11,14 +11,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.parameter.parametersOf
+import org.koin.dsl.module
+import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
+import ru.pavlig.course_edit.ui.Lesson
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(savedInstanceState == null){
+            startKoin {
+                androidLogger()
+                androidContext(application)
+                modules(
+                    module {
+                        viewModel { (course: Course) ->
+                            CourseEditingViewModel(course)
+                        }
+                    }
+                )
+            }
+        }
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
@@ -36,7 +57,7 @@ class CourseEditActivity : ComponentActivity() {
 private fun CourseEditingScreen(
     modifier: Modifier = Modifier
 ) {
-    val viewModel = viewModel { CourseEditingViewModel(-1) }
+    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(course) }
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
