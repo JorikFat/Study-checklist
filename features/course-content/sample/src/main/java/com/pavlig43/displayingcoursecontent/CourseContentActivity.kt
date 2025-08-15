@@ -55,7 +55,9 @@ private fun CourseContentScreen(
     DisplayCourseContentLayout(
         courseContent = courseState,
         onCheckedChange = viewModel::onCheckedChange,
-        modifier = modifier
+        modifier = modifier,
+        onEditButtonClick = {},
+        onBackButtonClick = {}
     )
 }
 

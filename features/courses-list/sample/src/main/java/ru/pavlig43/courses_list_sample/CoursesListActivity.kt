@@ -21,10 +21,11 @@ import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 import ru.pavlig43.courses_list_sample.ui.theme.Study_checklistTheme
 
-class CoursesListSample : ComponentActivity() {
+class CoursesListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        if (savedInstanceState == null)
         startKoin {
             androidLogger()
             androidContext(application)
@@ -55,6 +56,9 @@ private fun CoursesScreen(
 
     CoursesLayout(
         courses = courses,
-        modifier = modifier
+        modifier = modifier,
+        onAddButtonClick = {},
+        onCourseCardClick = {},
+        onCourseCardLongClick = {}
     )
 }
