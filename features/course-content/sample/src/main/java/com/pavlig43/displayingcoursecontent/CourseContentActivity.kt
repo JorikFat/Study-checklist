@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 class CourseContentActivity : ComponentActivity() {
@@ -28,23 +30,30 @@ class CourseContentActivity : ComponentActivity() {
                 androidLogger()
                 androidContext(application)
                 modules(module {
-                    viewModel { DisplayingCourseContentViewModel(-1) }
+                    viewModel {(id:Int)-> DisplayingCourseContentViewModel(id) }
                 })
             }
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val viewModel: DisplayingCourseContentViewModel = koinViewModel()
-                    val courseState by viewModel.courseState.collectAsState()
-                    DisplayCourseContentLayout(
-                        course = courseState,
-                        toggleLesson = viewModel::toggleLesson,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    DisplayCourseContentScreen(Modifier.padding(innerPadding))
                 }
             }
         }
     }
+}
+
+@Composable
+fun DisplayCourseContentScreen(
+    modifier: Modifier = Modifier,
+    viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(0) },
+) {
+    val courseState by viewModel.courseState.collectAsState()
+    DisplayCourseContentLayout(
+        course = courseState,
+        toggleLesson = viewModel::toggleLesson,
+        modifier = modifier
+    )
 }
 

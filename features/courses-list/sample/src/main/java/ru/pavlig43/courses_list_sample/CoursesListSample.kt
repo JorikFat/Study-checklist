@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,17 +39,26 @@ class CoursesListSample : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val viewModel: CoursesViewModel = koinViewModel()
-                    val courses by viewModel.courses.collectAsState()
-                    CoursesLayout(
-                        courses = courses,
-                        onContentScreen = {},
-                        onEditScreen = {},
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CoursesScreen(Modifier.padding(innerPadding))
                 }
             }
         }
     }
+}
+@Composable
+private fun CoursesScreen(
+    modifier: Modifier = Modifier,
+    onContentScreen: (Int) -> Unit = {},
+    onEditScreen: (Int) -> Unit = {},
+    viewModel: CoursesViewModel = koinViewModel(),
+
+){
+    val courses by viewModel.courses.collectAsState()
+    CoursesLayout(
+        courses = courses,
+        onContentScreen = onContentScreen,
+        onEditScreen = onEditScreen,
+        modifier = modifier
+    )
 }
 

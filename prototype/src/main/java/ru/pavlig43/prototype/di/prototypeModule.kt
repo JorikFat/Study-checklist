@@ -8,9 +8,11 @@ import ru.pavlig.course_edit.ui.CourseEditingViewModel
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
 internal val prototypeModule = module {
-    single{CourseInteractor()}
+    single {
+        CourseInteractor()
+    }
     viewModel { CoursesViewModel(get()) }
-    viewModel { (courseId:Int) ->DisplayingCourseContentViewModel(courseId,get()) }
-    viewModel { (courseId: Int) -> CourseEditingViewModel(courseId,get()) }
+    viewModel { (courseId: Int) -> DisplayingCourseContentViewModel(courseId, get()) }
+    viewModel { (courseId: Int) -> CourseEditingViewModel(courseId, get()) }
 
 }

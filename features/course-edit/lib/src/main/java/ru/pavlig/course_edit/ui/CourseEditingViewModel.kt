@@ -15,7 +15,7 @@ class CourseEditingViewModel(
     private val courseInteractor: CourseInteractor = CourseInteractor()
 ) : ViewModel() {
 
-    private val _courseState = MutableStateFlow(courseInteractor.getCourseById(id) )
+    private val _courseState = MutableStateFlow(courseInteractor.findCourseById(id)?:Course() )
     val courseState = _courseState.map { it.toViewState() }
         .stateIn(
             viewModelScope,

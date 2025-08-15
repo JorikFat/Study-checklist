@@ -50,10 +50,10 @@ private fun LessonsList(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(lessons, key = { it.index }) { lesson ->
+        items(lessons.size){index->
             LessonRow(
-                lesson = lesson,
-                toggleLesson = toggleLesson
+                lesson = lessons[index],
+                toggleLesson = {toggleLesson(index)}
             )
         }
     }
@@ -62,7 +62,7 @@ private fun LessonsList(
 @Composable
 private fun LessonRow(
     lesson: LessonViewState,
-    toggleLesson: (index: Int) -> Unit,
+    toggleLesson: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -71,7 +71,7 @@ private fun LessonRow(
     ) {
         Checkbox(
             checked = lesson.isChecked,
-            onCheckedChange = { toggleLesson(lesson.index) }
+            onCheckedChange = { toggleLesson() }
         )
         Text(lesson.name)
     }

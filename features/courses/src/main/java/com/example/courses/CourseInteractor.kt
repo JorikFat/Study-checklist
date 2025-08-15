@@ -9,8 +9,8 @@ class CourseInteractor(initCourses:List<Course> = emptyList()) {
     private val _courseMenuList = MutableStateFlow<List<Course>>(initCourses)
     val courseMenuList = _courseMenuList.asStateFlow()
 
-    fun getCourseById(id: Int): Course {
-        return _courseMenuList.value.find { it.id == id } ?: Course()
+    fun findCourseById(id: Int): Course? {
+        return _courseMenuList.value.find { it.id == id }
     }
 
 
