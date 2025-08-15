@@ -19,10 +19,8 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
-import ru.pavlig.course_edit.ui.Course
 import ru.pavlig.course_edit.ui.CourseEditingLayout
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
-import ru.pavlig.course_edit.ui.Lesson
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +31,8 @@ class CourseEditActivity : ComponentActivity() {
                 androidContext(application)
                 modules(
                     module {
-                        viewModel { (course: Course) ->
-                            CourseEditingViewModel(course)
+                        viewModel {(id:Int)->
+                            CourseEditingViewModel(id)
                         }
                     }
                 )
@@ -44,11 +42,7 @@ class CourseEditActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditingScreen(
-//                        name = null,
-                        name = "",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CourseEditScreen(Modifier.padding(innerPadding))
                 }
             }
         }
@@ -56,30 +50,21 @@ class CourseEditActivity : ComponentActivity() {
 }
 
 @Composable
-private fun CourseEditingScreen(
+private fun CourseEditScreen(
     modifier: Modifier = Modifier,
-    name: String? = null
-) {
-    val course: Course = if(name == null) Course() else sampleCourse
-    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(course) }
+    onClosedScreen: () -> Unit = {},
+    viewModel: CourseEditingViewModel = koinViewModel{parametersOf(0)},
+    ) {
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
-        viewModel = viewModel,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onSave = viewModel::onSave,
+        onCloseScreen = onClosedScreen,
         modifier = modifier,
     )
 }
-
-private val sampleCourse = Course(
-    name = "SOLID",
-    lessons = listOf(
-        "SRP",
-        "OCP",
-        "LSP",
-        "ISP",
-        "DIP",
-    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
-)
 
 
 

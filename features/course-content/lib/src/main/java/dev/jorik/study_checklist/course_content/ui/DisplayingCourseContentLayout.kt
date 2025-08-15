@@ -20,19 +20,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DisplayCourseContentLayout(
-    courseContent: CourseContent,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    course: CourseViewState,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier){
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(courseContent.name)
+        Text(course.name)
         HorizontalDivider()
         LessonsList(
-            lessons = courseContent.lessons,
-            onCheckedChange = onCheckedChange
+            lessons = course.lessons,
+            toggleLesson = toggleLesson
         )
 
     }
@@ -41,8 +41,8 @@ fun DisplayCourseContentLayout(
 
 @Composable
 private fun LessonsList(
-    lessons: List<Lesson>,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lessons: List<LessonViewState>,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -50,10 +50,10 @@ private fun LessonsList(
         modifier = modifier,
         state = lazyListState
     ) {
-        items(lessons, key = { it.index }) { lesson ->
+        items(lessons.size){index->
             LessonRow(
-                lesson = lesson,
-                onCheckedChange = onCheckedChange
+                lesson = lessons[index],
+                toggleLesson = {toggleLesson(index)}
             )
         }
     }
@@ -61,8 +61,8 @@ private fun LessonsList(
 
 @Composable
 private fun LessonRow(
-    lesson: Lesson,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lesson: LessonViewState,
+    toggleLesson: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -71,7 +71,7 @@ private fun LessonRow(
     ) {
         Checkbox(
             checked = lesson.isChecked,
-            onCheckedChange = { onCheckedChange(lesson.index, it) }
+            onCheckedChange = { toggleLesson() }
         )
         Text(lesson.name)
     }
@@ -83,8 +83,8 @@ private fun LessonRow(
 private fun DisplayCoursePreview() {
     MaterialTheme {
         DisplayCourseContentLayout(
-            courseContent = CourseContent(),
-            onCheckedChange = {_,_->}
+            course = CourseViewState(),
+            toggleLesson = { _,->}
         )
     }
 

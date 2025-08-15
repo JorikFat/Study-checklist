@@ -21,6 +21,7 @@ import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 import ru.pavlig43.courses_list_sample.ui.theme.Study_checklistTheme
 
+
 class CoursesListSample : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class CoursesListSample : ComponentActivity() {
             androidContext(application)
             modules(
                 module {
+
                     viewModel { CoursesViewModel() }
                 }
             )
@@ -37,24 +39,26 @@ class CoursesListSample : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CoursesScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CoursesScreen(Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
-
 @Composable
 private fun CoursesScreen(
     modifier: Modifier = Modifier,
-) {
-    val viewModel: CoursesViewModel = koinViewModel()
-    val courses by viewModel.courses.collectAsState()
+    onContentScreen: (Int) -> Unit = {},
+    onEditScreen: (Int) -> Unit = {},
+    viewModel: CoursesViewModel = koinViewModel(),
 
+){
+    val courses by viewModel.courses.collectAsState()
     CoursesLayout(
         courses = courses,
+        onContentScreen = onContentScreen,
+        onEditScreen = onEditScreen,
         modifier = modifier
     )
 }
+

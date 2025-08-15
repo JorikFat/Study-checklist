@@ -19,6 +19,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 class CourseContentActivity : ComponentActivity() {
@@ -29,16 +30,14 @@ class CourseContentActivity : ComponentActivity() {
                 androidLogger()
                 androidContext(application)
                 modules(module {
-                    viewModel { DisplayingCourseContentViewModel() }
+                    viewModel {(id:Int)-> DisplayingCourseContentViewModel(id) }
                 })
             }
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseContentScreen(
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    DisplayCourseContentScreen(Modifier.padding(innerPadding))
                 }
             }
         }
@@ -46,15 +45,14 @@ class CourseContentActivity : ComponentActivity() {
 }
 
 @Composable
-private fun CourseContentScreen(
+fun DisplayCourseContentScreen(
     modifier: Modifier = Modifier,
+    viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(0) },
 ) {
-    val viewModel: DisplayingCourseContentViewModel = koinViewModel()
     val courseState by viewModel.courseState.collectAsState()
-
     DisplayCourseContentLayout(
-        courseContent = courseState,
-        onCheckedChange = viewModel::onCheckedChange,
+        course = courseState,
+        toggleLesson = viewModel::toggleLesson,
         modifier = modifier
     )
 }

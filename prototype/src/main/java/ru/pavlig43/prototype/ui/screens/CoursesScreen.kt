@@ -10,6 +10,8 @@ import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
 @Composable
 fun CoursesScreen(
+    onEditScreen: (Int) -> Unit,
+    onContentScreen: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CoursesViewModel = koinViewModel()
 ) {
@@ -18,6 +20,8 @@ fun CoursesScreen(
 
     CoursesLayout(
         courses = courses,
+        onEditScreen = onEditScreen,
+        onContentScreen = onContentScreen,
         modifier = modifier
     )
 

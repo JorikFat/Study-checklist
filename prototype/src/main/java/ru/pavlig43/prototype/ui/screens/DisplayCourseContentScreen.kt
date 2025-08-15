@@ -6,17 +6,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import dev.jorik.study_checklist.course_content.ui.DisplayCourseContentLayout
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentViewModel
-import org.koin.compose.viewmodel.koinViewModel
+import org.koin.androidx.compose.koinViewModel
+
+import org.koin.core.parameter.parametersOf
+
 
 @Composable
 fun DisplayingCourseContentScreen(
+    courseId:Int,
     modifier: Modifier = Modifier,
-    viewModel: DisplayingCourseContentViewModel = koinViewModel()
+    viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(courseId) }
 ) {
 
-    val courseState by viewModel.courseState.collectAsState()
+    val course by viewModel.courseState.collectAsState()
     DisplayCourseContentLayout(
-        courseContent = courseState,
-        onCheckedChange = viewModel::onCheckedChange,
+        course = course,
+        toggleLesson = viewModel::toggleLesson,
+        modifier = modifier
     )
 }
