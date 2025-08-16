@@ -14,7 +14,7 @@ class DisplayingCourseContentViewModel(
     private val courseInteractor: CourseInteractor = CourseInteractor(),
 ) : ViewModel() {
     val courseState = courseInteractor.courseMenuList
-        .map {lst-> (lst.find { it.id == id }?:Course()).toViewState() }
+        .map {lst-> lst.first { it.id == id }.toViewState() }
             .stateIn(
         viewModelScope,
         SharingStarted.Eagerly,

@@ -53,8 +53,8 @@ class CourseEditActivity : ComponentActivity() {
 private fun CourseEditScreen(
     modifier: Modifier = Modifier,
     onClosedScreen: () -> Unit = {},
-    viewModel: CourseEditingViewModel = koinViewModel{parametersOf(0)},
     ) {
+    val viewModel: CourseEditingViewModel = koinViewModel{parametersOf(0)}
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,

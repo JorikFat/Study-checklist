@@ -50,9 +50,8 @@ private fun CoursesScreen(
     modifier: Modifier = Modifier,
     onContentScreen: (Int) -> Unit = {},
     onEditScreen: (Int) -> Unit = {},
-    viewModel: CoursesViewModel = koinViewModel(),
-
 ){
+    val viewModel: CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
     CoursesLayout(
         courses = courses,

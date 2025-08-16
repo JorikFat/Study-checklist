@@ -44,7 +44,7 @@ fun CourseEditingLayout(
         )
         HorizontalDivider()
         LessonsList(
-            lessons = course.lessons,
+            lessons = course.lessons.map { it.name },
             onChangeLessonName = onChangeLessonName,
             modifier = Modifier.fillMaxWidth()
         )
@@ -57,41 +57,6 @@ fun CourseEditingLayout(
 
     }
 
-}
-
-@Composable
-private fun CourseEditingBody(
-    course: CourseDraftViewState,
-    onChangeCourseName: (String) -> Unit,
-    onChangeLessonName: (index: Int, value: String) -> Unit,
-    onSave: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-
-        TextField(
-            value = course.name,
-            onValueChange = onChangeCourseName,
-            placeholder = { Text("Название курса") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        HorizontalDivider()
-        LessonsList(
-            lessons = course.lessons,
-            onChangeLessonName = onChangeLessonName,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Button(onSave) {
-            Text("Сохранить")
-        }
-
-    }
 }
 
 
@@ -121,15 +86,17 @@ private fun LessonsList(
 @Composable
 private fun CourseEditingPreview() {
     MaterialTheme {
-        CourseEditingBody(
+        CourseEditingLayout(
             course = CourseDraftViewState(
                 name = "Preview Course",
-                lessons = List(3) { "Preview Lesson $it" }
+                lessons = List(3) { LessonDraftViewState(it, "Preview Lesson $it", false) }
             ),
 
             onChangeCourseName = {},
             onChangeLessonName = { _, _ -> },
             onSave = {},
+            onCloseScreen = {},
+
         )
     }
 

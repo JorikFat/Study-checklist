@@ -11,15 +11,4 @@ data class Lesson(
     val isChecked:Boolean = false
 )
 
-private val stubLessons: List<Lesson> = listOf(
-    "SRP",
-    "OCP",
-    "LSP",
-    "ISP",
-    "DIP",
-).mapIndexed { index, lesson -> Lesson(index, lesson) }
-internal val stubCourses = listOf(
-    Course(0,"SOLID", stubLessons),
-    Course(1,"Clean Architecture"),
-    Course(2,"Design Patterns")
-)
+

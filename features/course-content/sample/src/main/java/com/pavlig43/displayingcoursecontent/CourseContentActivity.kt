@@ -47,8 +47,8 @@ class CourseContentActivity : ComponentActivity() {
 @Composable
 fun DisplayCourseContentScreen(
     modifier: Modifier = Modifier,
-    viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(0) },
 ) {
+    val viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(0) }
     val courseState by viewModel.courseState.collectAsState()
     DisplayCourseContentLayout(
         course = courseState,
