@@ -21,7 +21,12 @@ fun CourseEditingScreen(
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
-        viewModel = viewModel,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onAddLesson = viewModel::onAddLesson,
+        onDeleteLesson = viewModel::onDeleteLesson,
+        onSave = viewModel::onSave,
+        onNavigateBack = {},
         modifier = modifier,
     )
 }
