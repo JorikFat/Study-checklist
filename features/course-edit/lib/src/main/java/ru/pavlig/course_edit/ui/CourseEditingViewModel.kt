@@ -35,7 +35,7 @@ class CourseEditingViewModel(
             course.copy(
                 lessons = course.lessons.plus(
                     Lesson(
-                        index = course.lessons.lastIndex + 1,
+                        index = course.lessons.maxOf { it.index } + 1,
                         name = ""
                     )
                 )
