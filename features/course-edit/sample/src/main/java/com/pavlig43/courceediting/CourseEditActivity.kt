@@ -47,7 +47,8 @@ class CourseEditActivity : ComponentActivity() {
                     CourseEditingScreen(
 //                        name = null,
                         name = "",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        onNavigateBack = {}
                     )
                 }
             }
@@ -58,6 +59,7 @@ class CourseEditActivity : ComponentActivity() {
 @Composable
 private fun CourseEditingScreen(
     modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit,
     name: String? = null
 ) {
     val course: Course = if(name == null) Course() else sampleCourse
@@ -65,7 +67,12 @@ private fun CourseEditingScreen(
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
-        viewModel = viewModel,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onAddLesson = viewModel::onAddLesson,
+        onDeleteLesson = viewModel::onDeleteLesson,
+        onSave = viewModel::onSave,
+        onNavigateBack = onNavigateBack,
         modifier = modifier,
     )
 }

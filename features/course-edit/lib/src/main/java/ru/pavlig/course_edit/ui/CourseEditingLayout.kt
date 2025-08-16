@@ -28,29 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun CourseEditingLayout(
-    course: Course,
-    viewModel: CourseEditingViewModel,
-    modifier: Modifier = Modifier
-) {
-
-    CourseEditingBody(
-        course = course,
-        onChangeCourseName = viewModel::onChangeCourseName,
-        onChangeLessonName = viewModel::onChangeLessonName,
-        onAddLesson = viewModel::onAddLesson,
-        onDeleteLesson = viewModel::onDeleteLesson,
-        onSave = viewModel::onSave,
-        onNavigateBack = {},
-        modifier = modifier
-    )
-
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CourseEditingBody(
+fun CourseEditingLayout(
     course: Course,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
@@ -168,7 +148,7 @@ private fun LessonItem(
 @Composable
 private fun CourseEditingPreview() {
     MaterialTheme {
-        CourseEditingBody(
+        CourseEditingLayout(
             course = Course(
                 name = "Preview Course",
                 lessons = List(3) { Lesson(it, "Preview Lesson $it") }
