@@ -25,8 +25,7 @@ class CoursesListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        if (savedInstanceState == null)
-        startKoin {
+        if (savedInstanceState == null) startKoin {
             androidLogger()
             androidContext(application)
             modules(
