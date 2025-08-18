@@ -75,13 +75,13 @@ private fun LessonDraftViewState.toLesson(): Lesson {
 data class CourseDraftViewState(
     val id: Int = 0,
     val name: String = "",
-    val lessons: List<LessonDraftViewState> = emptyList()
+    val lessons: List<LessonDraftViewState> = listOf(LessonDraftViewState())
 
 )
 data class LessonDraftViewState(
-    val id: Int,
-    val name: String,
-    val isChecked: Boolean
+    val id: Int = 0,
+    val name: String = "",
+    val isChecked: Boolean = false
 )
 
 
