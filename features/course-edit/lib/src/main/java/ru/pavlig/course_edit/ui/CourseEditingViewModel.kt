@@ -29,6 +29,30 @@ class CourseEditingViewModel(
             )
         }
     }
+
+    fun onAddLesson() {
+        _courseState.update { course ->
+            course.copy(
+                lessons = course.lessons.plus(
+                    Lesson(
+                        index = course.lessons.maxOf { it.index } + 1,
+                        name = ""
+                    )
+                )
+            )
+        }
+    }
+
+    fun onDeleteLesson(index: Int) {
+        _courseState.update { course ->
+            course.copy(
+                lessons = course.lessons.minus(
+                    course.lessons[index]
+                )
+            )
+        }
+    }
+
     fun onSave(){
 
     }
