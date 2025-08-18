@@ -43,10 +43,12 @@ class CourseEditingViewModel(
         }
     }
 
-    fun onDeleteLesson(lesson: Lesson) {
+    fun onDeleteLesson(index: Int) {
         _courseState.update { course ->
             course.copy(
-                lessons = course.lessons.minus(lesson)
+                lessons = course.lessons.minus(
+                    course.lessons[index]
+                )
             )
         }
     }

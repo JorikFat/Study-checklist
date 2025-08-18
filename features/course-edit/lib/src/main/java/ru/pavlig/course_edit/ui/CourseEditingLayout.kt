@@ -35,7 +35,7 @@ fun CourseEditingLayout(
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onAddLesson: () -> Unit,
-    onDeleteLesson: (Lesson) -> Unit,
+    onDeleteLesson: (index: Int) -> Unit,
     onSave: () -> Unit,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
@@ -43,7 +43,6 @@ fun CourseEditingLayout(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.padding(vertical = 8.dp),
                 title = {
                     TextField(
                         value = course.name,
@@ -96,7 +95,7 @@ fun CourseEditingLayout(
 private fun LessonsList(
     lessons: List<Lesson>,
     onChangeLessonName: (index: Int, value: String) -> Unit,
-    onDeleteLesson: (Lesson) -> Unit,
+    onDeleteLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -108,9 +107,9 @@ private fun LessonsList(
         items(lessons, key = { it.index }) { lesson ->
             LessonItem(
                 modifier = Modifier.fillMaxWidth(),
-                lesson = lesson,
-                onChangeLessonName = onChangeLessonName,
-                onDeleteLesson = onDeleteLesson
+                lessonName = lesson.name,
+                onChangeLessonName = { value -> onChangeLessonName(lesson.index, value) },
+                onDeleteLesson = { onDeleteLesson(lesson.index) }
             )
         }
     }
@@ -119,21 +118,21 @@ private fun LessonsList(
 @Composable
 private fun LessonItem(
     modifier: Modifier = Modifier,
-    lesson: Lesson,
-    onChangeLessonName: (index: Int, value: String) -> Unit,
-    onDeleteLesson: (Lesson) -> Unit
+    lessonName: String,
+    onChangeLessonName: (value: String) -> Unit,
+    onDeleteLesson: () -> Unit
 ) {
 
     Row(modifier) {
         TextField(
-            value = lesson.name,
-            onValueChange = { onChangeLessonName(lesson.index, it) },
+            value = lessonName,
+            onValueChange = { onChangeLessonName(it) },
             modifier = Modifier.weight(1f)
         )
 
         IconButton(
             modifier = Modifier.weight(0.2f),
-            onClick = { onDeleteLesson(lesson) }
+            onClick = onDeleteLesson
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
