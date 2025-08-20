@@ -8,12 +8,14 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.kotlin.plugin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.androidx.room) apply false
 
     //    build-logic
     alias(libs.plugins.pavlig43.application) apply false
     alias(libs.plugins.pavlig43.compose) apply false
     alias(libs.plugins.pavlig43.android.library) apply false
-    alias(libs.plugins.pavlig43.android.room) apply false
+    alias(libs.plugins.room) apply false
     alias(libs.plugins.pavlig43.jvm.library) apply false
     alias(libs.plugins.pavlig43.test.feature) apply false
     alias(libs.plugins.pavlig43.feature) apply false
