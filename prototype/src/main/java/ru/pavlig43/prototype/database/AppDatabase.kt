@@ -11,7 +11,6 @@ import ru.pavlig43.prototype.database.entities.LessonEntity
     entities = [
         CourseEntity::class,
         LessonEntity::class,
-        CourseContentEntity::class
     ],
     version = 1
 )

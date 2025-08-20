@@ -13,7 +13,7 @@ interface DAO {
     @Query("select * from CourseEntity")
     suspend fun getCourses(): List<CourseEntity>
 
-    @Query("select * from CourseEntity join LessonEntity on `index` = courseId where `index` like :courseId")
+    @Query("select * from CourseEntity join LessonEntity on LessonEntity.courseId = CourseEntity.`index` where CourseEntity.`index` like :courseId")
     suspend fun getCourseWithLessons(courseId: Int): CourseContentEntity
 
 
