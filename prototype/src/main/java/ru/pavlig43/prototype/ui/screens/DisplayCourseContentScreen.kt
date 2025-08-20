@@ -11,8 +11,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun DisplayingCourseContentScreen(
     modifier: Modifier = Modifier,
-    viewModel: DisplayingCourseContentViewModel = koinViewModel()
 ) {
+
+    val viewModel: DisplayingCourseContentViewModel = koinViewModel()
 
     val courseState by viewModel.courseState.collectAsState()
     DisplayCourseContentLayout(
