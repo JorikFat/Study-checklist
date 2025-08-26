@@ -32,4 +32,23 @@ class UITest {
         composeTestRule.onNodeWithText("Clean Architecture").assertIsDisplayed()
         composeTestRule.onNodeWithText("Design Patterns").assertIsDisplayed()
     }
+
+    @Test
+    fun showStubCourses2() {
+        composeTestRule.setContent {
+            CoursesLayout(
+                courses = listOf(
+                    CourseItemViewState(0, "Dagger2"),
+                    CourseItemViewState(1, "Kotlin Coroutines"),
+                    CourseItemViewState(2, "Custom View"),
+                ),
+                onEditScreen = {},
+                onContentScreen = {},
+            )
+        }
+
+        composeTestRule.onNodeWithText("Dagger2").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Kotlin Coroutines").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Custom View").assertIsDisplayed()
+    }
 }
