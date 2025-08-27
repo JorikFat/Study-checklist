@@ -1,15 +1,21 @@
 package ru.pavlig.course_edit.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.courses.CourseInteractor
+import com.example.courses.models.Course
+import com.example.courses.models.Lesson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class CourseEditingViewModel(
-    course: Course
+    private val id: Int,
+    private val courseInteractor: CourseInteractor
 ) : ViewModel() {
 
-    private val _courseState = MutableStateFlow(course)
+    private val _courseState = MutableStateFlow(
+        courseInteractor.findCourseById(id)?.toViewState() ?: CourseDraftViewState()
+    )
     val courseState = _courseState.asStateFlow()
 
     fun onChangeCourseName(name: String) {
@@ -19,8 +25,8 @@ class CourseEditingViewModel(
     fun onChangeLessonName(index: Int, value: String) {
         _courseState.update { course ->
             course.copy(
-                lessons = course.lessons.map { lesson ->
-                    if (lesson.index == index) {
+                lessons = course.lessons.mapIndexed { lessonIndex, lesson ->
+                    if (lessonIndex == index) {
                         lesson.copy(name = value)
                     } else {
                         lesson
@@ -34,10 +40,7 @@ class CourseEditingViewModel(
         _courseState.update { course ->
             course.copy(
                 lessons = course.lessons.plus(
-                    Lesson(
-                        index = course.lessons.maxOf { it.index } + 1,
-                        name = ""
-                    )
+                    LessonDraftViewState()
                 )
             )
         }
@@ -53,22 +56,59 @@ class CourseEditingViewModel(
         }
     }
 
-    fun onSave(){
-
+    fun onSave() {
+        if (id == -1) {
+            courseInteractor.createCourse(_courseState.value.toCourse())
+        } else {
+            courseInteractor.updateCourse(_courseState.value.toCourse())
+        }
     }
 
 }
 
-
-data class Course(
-    val name: String = "",
-    val lessons: List<Lesson> = listOf(
-        Lesson(0,"")
+private fun Course.toViewState(): CourseDraftViewState {
+    return CourseDraftViewState(
+        id = id,
+        name = displayName,
+        lessons = lessons.map { it.toViewState() }
     )
+}
+
+private fun Lesson.toViewState(): LessonDraftViewState {
+    return LessonDraftViewState(
+        id = id,
+        name = name,
+        isChecked = isChecked
+    )
+}
+
+private fun CourseDraftViewState.toCourse(): Course {
+    return Course(
+        id = id,
+        displayName = name,
+        lessons = lessons.map { it.toLesson() }
+    )
+}
+
+private fun LessonDraftViewState.toLesson(): Lesson {
+    return Lesson(
+        id = id,
+        name = name,
+        isChecked = isChecked
+    )
+}
+
+data class CourseDraftViewState(
+    val id: Int = 0,
+    val name: String = "",
+    val lessons: List<LessonDraftViewState> = listOf(LessonDraftViewState())
+
 )
 
-data class Lesson(
-    val index: Int,
-    val name: String = ""
+data class LessonDraftViewState(
+    val id: Int = 0,
+    val name: String = "",
+    val isChecked: Boolean = false
 )
+
 

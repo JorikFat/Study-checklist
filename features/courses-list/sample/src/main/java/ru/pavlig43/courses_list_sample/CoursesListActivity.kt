@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.courses.CourseInteractor
+import com.example.courses.models.Course
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.koinViewModel
@@ -30,17 +29,14 @@ class CoursesListActivity : ComponentActivity() {
             androidContext(application)
             modules(
                 module {
-                    viewModel { CoursesViewModel() }
+                    single { CourseInteractor(Course.Stub.courses) }
+                    viewModel { CoursesViewModel(get()) }
                 }
             )
         }
         setContent {
             Study_checklistTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CoursesScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                CoursesScreen()
             }
         }
     }
@@ -49,6 +45,8 @@ class CoursesListActivity : ComponentActivity() {
 @Composable
 private fun CoursesScreen(
     modifier: Modifier = Modifier,
+    onContentScreen: (Int) -> Unit = {},
+    onEditScreen: (Int) -> Unit = {},
 ) {
     val viewModel: CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
@@ -57,7 +55,8 @@ private fun CoursesScreen(
         courses = courses,
         modifier = modifier,
         onAddButtonClick = {},
-        onCourseCardClick = {},
-        onCourseCardLongClick = {}
+        onEditScreen = { onEditScreen(it.id) },
+        onContentScreen = { onContentScreen(it.id) },
     )
 }
+
