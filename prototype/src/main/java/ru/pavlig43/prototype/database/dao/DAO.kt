@@ -13,7 +13,7 @@ interface DAO {
     @Query("select * from CourseEntity")
     suspend fun getCourses(): List<CourseEntity>
 
-    @Query("select * from CourseEntity join LessonEntity on LessonEntity.courseId = CourseEntity.`index` where CourseEntity.`index` like :courseId")
+    @Query("select * from CourseEntity join LessonEntity on LessonEntity.courseId = CourseEntity.id where CourseEntity.id like :courseId")
     suspend fun getCourseWithLessons(courseId: Int): CourseContentEntity
 
 
@@ -21,10 +21,10 @@ interface DAO {
     @Insert
     suspend fun courseCreate(courseEntity: CourseEntity)
 
-    @Query("delete from CourseEntity where `index` like :courseId")
+    @Query("delete from CourseEntity where id like :courseId")
     suspend fun courseDelete(courseId: Int)
 
-    @Query("update CourseEntity set name = :newName where `index` like :courseId")
+    @Query("update CourseEntity set name = :newName where id like :courseId")
     suspend fun courseUpdateName(courseId: Int, newName: String)
 
 

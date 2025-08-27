@@ -5,7 +5,7 @@ import ru.pavlig43.prototype.models.CourseViewState
 
 fun CourseEntity.toViewState(): CourseViewState {
     return CourseViewState(
-        index,
+        id,
         name
     )
 }

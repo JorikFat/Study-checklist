@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CourseEntity(
-    @PrimaryKey(autoGenerate = true) val index: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val name: String,
 )
