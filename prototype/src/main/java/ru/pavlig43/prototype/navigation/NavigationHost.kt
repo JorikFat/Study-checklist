@@ -14,9 +14,12 @@ import ru.pavlig43.prototype.ui.screens.DisplayingCourseContentScreen
 import ru.pavlig43.prototype.ui.screens.OverViewScreen
 
 @Composable
-fun NavigationHost(modifier: Modifier = Modifier) {
+fun NavigationHost() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Overview, modifier = modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = Overview
+    ) {
         composable<Overview>{
             OverViewScreen(
                 onDestination = {destination->
@@ -32,7 +35,8 @@ fun NavigationHost(modifier: Modifier = Modifier) {
         composable<Destination.Courses> {
             CoursesScreen(
                 onEditScreen = {navController.navigate(Destination.Edit(it))},
-                onContentScreen = {navController.navigate(Destination.Content(it))}
+                onContentScreen = {navController.navigate(Destination.Content(it))},
+                onAddClick = { navController.navigate(Destination.Create()) }
             )
         }
         composable<Destination.Edit> {
@@ -46,9 +50,7 @@ fun NavigationHost(modifier: Modifier = Modifier) {
         composable<Destination.Create> {
             CourseEditingScreen(-1,{navController.popBackStack()})
         }
-
     }
-
 }
 
 

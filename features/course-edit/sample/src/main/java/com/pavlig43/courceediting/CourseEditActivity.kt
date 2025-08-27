@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.courses.CourseInteractor
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -31,8 +32,9 @@ class CourseEditActivity : ComponentActivity() {
                 androidContext(application)
                 modules(
                     module {
+                        single { CourseInteractor() }
                         viewModel {(id:Int)->
-                            CourseEditingViewModel(id)
+                            CourseEditingViewModel(id, get())
                         }
                     }
                 )
@@ -42,7 +44,11 @@ class CourseEditActivity : ComponentActivity() {
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CourseEditScreen(Modifier.padding(innerPadding))
+                    CourseEditScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        onNavigateBack = {},
+                        id = 0
+                    )
                 }
             }
         }
@@ -52,16 +58,19 @@ class CourseEditActivity : ComponentActivity() {
 @Composable
 private fun CourseEditScreen(
     modifier: Modifier = Modifier,
-    onClosedScreen: () -> Unit = {},
-    ) {
-    val viewModel: CourseEditingViewModel = koinViewModel{parametersOf(0)}
+    id: Int = 0,
+    onNavigateBack :() -> Unit = {}
+) {
+    val viewModel: CourseEditingViewModel = koinViewModel{parametersOf(id)}
     val courseState by viewModel.courseState.collectAsState()
     CourseEditingLayout(
         course = courseState,
         onChangeCourseName = viewModel::onChangeCourseName,
         onChangeLessonName = viewModel::onChangeLessonName,
+        onAddLesson = viewModel::onAddLesson,
+        onDeleteLesson = viewModel::onDeleteLesson,
         onSave = viewModel::onSave,
-        onCloseScreen = onClosedScreen,
+        onNavigateBack = onNavigateBack,
         modifier = modifier,
     )
 }

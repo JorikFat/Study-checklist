@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 
 class CourseEditingViewModel(
     private val id: Int,
-    private val courseInteractor: CourseInteractor = CourseInteractor()
+    private val courseInteractor: CourseInteractor
 ) : ViewModel() {
 
     private val _courseState = MutableStateFlow(
@@ -22,14 +22,36 @@ class CourseEditingViewModel(
         _courseState.update { it.copy(name = name) }
     }
 
-
     fun onChangeLessonName(index: Int, value: String) {
         _courseState.update { course ->
-            val updateLesson = course.lessons.toMutableList()
-            val lesson = updateLesson.removeAt(index).copy(name = value)
-            updateLesson.add(index, lesson)
             course.copy(
-                lessons = updateLesson
+                lessons = course.lessons.mapIndexed { lessonIndex, lesson ->
+                    if (lessonIndex == index) {
+                        lesson.copy(name = value)
+                    } else {
+                        lesson
+                    }
+                }
+            )
+        }
+    }
+
+    fun onAddLesson() {
+        _courseState.update { course ->
+            course.copy(
+                lessons = course.lessons.plus(
+                    LessonDraftViewState()
+                )
+            )
+        }
+    }
+
+    fun onDeleteLesson(index: Int) {
+        _courseState.update { course ->
+            course.copy(
+                lessons = course.lessons.minus(
+                    course.lessons[index]
+                )
             )
         }
     }
@@ -51,6 +73,7 @@ private fun Course.toViewState(): CourseDraftViewState {
         lessons = lessons.map { it.toViewState() }
     )
 }
+
 private fun Lesson.toViewState(): LessonDraftViewState {
     return LessonDraftViewState(
         id = id,
@@ -58,6 +81,7 @@ private fun Lesson.toViewState(): LessonDraftViewState {
         isChecked = isChecked
     )
 }
+
 private fun CourseDraftViewState.toCourse(): Course {
     return Course(
         id = id,
@@ -65,6 +89,7 @@ private fun CourseDraftViewState.toCourse(): Course {
         lessons = lessons.map { it.toLesson() }
     )
 }
+
 private fun LessonDraftViewState.toLesson(): Lesson {
     return Lesson(
         id = id,
@@ -72,12 +97,14 @@ private fun LessonDraftViewState.toLesson(): Lesson {
         isChecked = isChecked
     )
 }
+
 data class CourseDraftViewState(
     val id: Int = 0,
     val name: String = "",
     val lessons: List<LessonDraftViewState> = listOf(LessonDraftViewState())
 
 )
+
 data class LessonDraftViewState(
     val id: Int = 0,
     val name: String = "",

@@ -10,17 +10,17 @@ import org.koin.androidx.compose.koinViewModel
 
 import org.koin.core.parameter.parametersOf
 
-
 @Composable
 fun DisplayingCourseContentScreen(
-    courseId:Int,
+    id: Int,
     modifier: Modifier = Modifier,
-    viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(courseId) }
 ) {
-
-    val course by viewModel.courseState.collectAsState()
+    val viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(id) }
+    val courseState by viewModel.courseState.collectAsState()
     DisplayCourseContentLayout(
-        course = course,
+        course = courseState,
+        onEditButtonClick = {},
+        onBackButtonClick = {},
         toggleLesson = viewModel::toggleLesson,
         modifier = modifier
     )

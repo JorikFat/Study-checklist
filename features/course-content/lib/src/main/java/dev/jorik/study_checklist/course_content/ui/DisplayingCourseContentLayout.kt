@@ -5,11 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,21 +27,67 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DisplayCourseContentLayout(
     course: CourseViewState,
+    onEditButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
     toggleLesson: (index: Int) -> Unit,
-    modifier: Modifier = Modifier){
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(course.name)
-        HorizontalDivider()
-        LessonsList(
-            lessons = course.lessons,
-            toggleLesson = toggleLesson
-        )
+    modifier: Modifier = Modifier
+) {
 
+    Scaffold(
+        topBar = {
+            AppBar(
+                course,
+                onBackButtonClick,
+                onEditButtonClick
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            LessonsList(
+                lessons = course.lessons,
+                toggleLesson = toggleLesson
+            )
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar(
+    courseContent: CourseViewState,
+    onBackButtonClick: () -> Unit,
+    onEditButtonClick: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(courseContent.name)
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackButtonClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null
+                )
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = onEditButtonClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = null
+                )
+            }
+        }
+    )
 }
 
 
@@ -44,15 +97,13 @@ private fun LessonsList(
     toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val lazyListState = rememberLazyListState()
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
     ) {
-        items(lessons.size){index->
+        items(lessons.size) { index ->
             LessonRow(
                 lesson = lessons[index],
-                toggleLesson = {toggleLesson(index)}
+                toggleLesson = { toggleLesson(index) }
             )
         }
     }
@@ -83,8 +134,9 @@ private fun DisplayCoursePreview() {
     MaterialTheme {
         DisplayCourseContentLayout(
             course = CourseViewState(),
-            toggleLesson = { _,->}
+            toggleLesson = {},
+            onEditButtonClick = {},
+            onBackButtonClick = {},
         )
     }
-
 }

@@ -19,10 +19,7 @@ class PrototypeActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavigationHost(modifier = Modifier.fillMaxSize().padding(innerPadding))
-
-                }
+                NavigationHost()
             }
         }
     }

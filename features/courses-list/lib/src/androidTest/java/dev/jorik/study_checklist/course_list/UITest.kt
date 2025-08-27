@@ -15,21 +15,41 @@ class UITest {
 
     @Test
     fun showStubCourses() {
-        val stubCourses = listOf(
-            CourseItemViewState(0, "SOLID"),
-            CourseItemViewState(1, "Clean Architecture"),
-            CourseItemViewState(2, "Design Patterns")
-        )
         composeTestRule.setContent {
             CoursesLayout(
-                courses = stubCourses,
+                courses = listOf(
+                    CourseItemViewState(1, "SOLID"),
+                    CourseItemViewState(2, "Clean Architecture"),
+                    CourseItemViewState(3, "Design Patterns"),
+                ),
                 onContentScreen = {},
-                onEditScreen = {}
+                onEditScreen = {},
+                onAddButtonClick = {}
             )
         }
 
         composeTestRule.onNodeWithText("SOLID").assertIsDisplayed()
         composeTestRule.onNodeWithText("Clean Architecture").assertIsDisplayed()
         composeTestRule.onNodeWithText("Design Patterns").assertIsDisplayed()
+    }
+
+    @Test
+    fun showStubCourses2() {
+        composeTestRule.setContent {
+            CoursesLayout(
+                courses = listOf(
+                    CourseItemViewState(1, "Dagger2"),
+                    CourseItemViewState(2, "Kotlin Coroutines"),
+                    CourseItemViewState(3, "Custom View"),
+                ),
+                onContentScreen = {},
+                onEditScreen = {},
+                onAddButtonClick = {}
+            )
+        }
+
+        composeTestRule.onNodeWithText("Dagger2").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Kotlin Coroutines").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Custom View").assertIsDisplayed()
     }
 }

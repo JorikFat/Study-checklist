@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class DisplayingCourseContentViewModel(
    private val id: Int,
-    private val courseInteractor: CourseInteractor = CourseInteractor(),
+    private val courseInteractor: CourseInteractor,
 ) : ViewModel() {
     val courseState = courseInteractor.courseMenuList
         .map {lst-> lst.first { it.id == id }.toViewState() }

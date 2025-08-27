@@ -2,15 +2,24 @@ package ru.pavlig.course_edit.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -24,39 +33,74 @@ fun CourseEditingLayout(
     course: CourseDraftViewState,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
+    onAddLesson: () -> Unit,
+    onDeleteLesson: (index: Int) -> Unit,
     onSave: () -> Unit,
-    onCloseScreen: () -> Unit,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
+    Scaffold(
+        topBar = {
+            AppBar(
+                course = course,
+                onChangeCourseName = onChangeCourseName,
+                onNavigateBack = onNavigateBack,
+                onSave = onSave
+            )
+        }) { paddingValues ->
 
-        TextField(
-            value = course.name,
-            onValueChange = onChangeCourseName,
-            placeholder = { Text("Название курса") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        HorizontalDivider()
-        LessonsList(
-            lessons = course.lessons.map { it.name },
-            onChangeLessonName = onChangeLessonName,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Button({
-            onSave()
-            onCloseScreen()
-        }) {
-            Text("Сохранить")
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            LessonsList(
+                lessons = course.lessons.map { it.name },
+                onChangeLessonName = onChangeLessonName,
+                modifier = Modifier.fillMaxWidth(),
+                onDeleteLesson = onDeleteLesson
+            )
+            Button(onAddLesson) {
+                Text("Добавить")
+            }
         }
-
     }
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar(
+    course: CourseDraftViewState,
+    onChangeCourseName: (String) -> Unit,
+    onNavigateBack: () -> Unit,
+    onSave: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            TextField(
+                value = course.name,
+                onValueChange = onChangeCourseName,
+                placeholder = { Text("Название курса") },
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onNavigateBack
+            ) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = onSave
+            ) {
+                Icon(Icons.Filled.Done, null)
+            }
+        }
+    )
 }
 
 
@@ -64,28 +108,58 @@ fun CourseEditingLayout(
 private fun LessonsList(
     lessons: List<String>,
     onChangeLessonName: (index: Int, value: String) -> Unit,
+    onDeleteLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
     LazyColumn(
         modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyListState
     ) {
-        itemsIndexed(lessons) { id, name ->
-            TextField(
-                value = name,
-                onValueChange = { onChangeLessonName(id, it) },
-                modifier = Modifier.fillMaxWidth()
-
+        itemsIndexed(lessons) { index, lesson ->
+            LessonItem(
+                modifier = Modifier.fillMaxWidth(),
+                lessonName = lesson,
+                onChangeLessonName = { value -> onChangeLessonName(index, value) },
+                onDeleteLesson = { onDeleteLesson(index) }
             )
         }
     }
+}
+
+@Composable
+private fun LessonItem(
+    lessonName: String,
+    onChangeLessonName: (value: String) -> Unit,
+    onDeleteLesson: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    Row(modifier) {
+        TextField(
+            value = lessonName,
+            onValueChange = { onChangeLessonName(it) },
+            modifier = Modifier.weight(1f)
+        )
+        IconButton(
+            modifier = Modifier.weight(0.2f),
+            onClick = onDeleteLesson
+        ) {
+            Icon(
+                imageVector = Icons.Default.Clear,
+                contentDescription = null
+            )
+        }
+    }
+
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun CourseEditingPreview() {
     MaterialTheme {
+
         CourseEditingLayout(
             course = CourseDraftViewState(
                 name = "Preview Course",
@@ -95,9 +169,10 @@ private fun CourseEditingPreview() {
             onChangeCourseName = {},
             onChangeLessonName = { _, _ -> },
             onSave = {},
-            onCloseScreen = {},
-
+            onDeleteLesson = {},
+            onAddLesson = {},
+            onNavigateBack = {},
+            modifier = Modifier,
         )
     }
-
 }

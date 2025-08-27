@@ -12,17 +12,17 @@ import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 fun CoursesScreen(
     onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
+    onAddClick: ()->Unit,
     modifier: Modifier = Modifier,
-    viewModel: CoursesViewModel = koinViewModel()
 ) {
-
+    val viewModel: CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
 
     CoursesLayout(
         courses = courses,
-        onEditScreen = onEditScreen,
-        onContentScreen = onContentScreen,
-        modifier = modifier
+        modifier = modifier,
+        onAddButtonClick = onAddClick,
+        onContentScreen = { onContentScreen(it.id) },
+        onEditScreen = { onEditScreen(it.id) },
     )
-
 }

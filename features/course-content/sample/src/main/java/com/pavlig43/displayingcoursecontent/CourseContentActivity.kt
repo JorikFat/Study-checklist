@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.courses.CourseInteractor
+import com.example.courses.models.Course
 import com.pavlig43.displayingcoursecontent.ui.theme.Study_checklistTheme
 import dev.jorik.study_checklist.course_content.ui.DisplayCourseContentLayout
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentViewModel
@@ -30,14 +32,17 @@ class CourseContentActivity : ComponentActivity() {
                 androidLogger()
                 androidContext(application)
                 modules(module {
-                    viewModel {(id:Int)-> DisplayingCourseContentViewModel(id) }
+                    single { CourseInteractor(Course.Stub.courses) }
+                    viewModel {(id:Int)-> DisplayingCourseContentViewModel(id, get()) }
                 })
             }
         enableEdgeToEdge()
         setContent {
             Study_checklistTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DisplayCourseContentScreen(Modifier.padding(innerPadding))
+                    CourseContentScreen(
+                        modifier = Modifier.padding(innerPadding),
+                    )
                 }
             }
         }
@@ -45,15 +50,18 @@ class CourseContentActivity : ComponentActivity() {
 }
 
 @Composable
-fun DisplayCourseContentScreen(
+private fun CourseContentScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(0) }
     val courseState by viewModel.courseState.collectAsState()
+
     DisplayCourseContentLayout(
         course = courseState,
-        toggleLesson = viewModel::toggleLesson,
-        modifier = modifier
+        modifier = modifier,
+        onEditButtonClick = {},
+        onBackButtonClick = {},
+        toggleLesson = viewModel::toggleLesson
     )
 }
 
