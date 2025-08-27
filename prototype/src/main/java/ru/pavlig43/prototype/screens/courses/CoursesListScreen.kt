@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.ui.screens
+package ru.pavlig43.prototype.screens.courses
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -9,13 +9,13 @@ import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
 @Composable
-fun CoursesScreen(
+fun CoursesListScreen(
     onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
-    onAddClick: ()->Unit,
+    onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: CoursesViewModel = koinViewModel()
+    val viewModel :CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
 
     CoursesLayout(

@@ -57,7 +57,7 @@ class CourseEditingViewModel(
     }
 
     fun onSave() {
-        if (id == -1) {
+        if (id == -1) {//TODO: change default to 0
             courseInteractor.createCourse(_courseState.value.toCourse())
         } else {
             courseInteractor.updateCourse(_courseState.value.toCourse())

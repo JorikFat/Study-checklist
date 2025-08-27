@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
-
+//TODO: rename to "CoursesListLayout"
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun CoursesLayout(
