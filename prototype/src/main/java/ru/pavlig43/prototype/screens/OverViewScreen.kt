@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.ui.screens
+package ru.pavlig43.prototype.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

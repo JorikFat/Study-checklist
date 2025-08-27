@@ -1,17 +1,16 @@
 package ru.pavlig43.prototype.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import ru.pavlig43.prototype.navigation.destination.Destination
 import ru.pavlig43.prototype.navigation.destination.Overview
+import ru.pavlig43.prototype.screens.OverViewScreen
+import ru.pavlig43.prototype.screens.courses.CoursesListScreen
 import ru.pavlig43.prototype.ui.screens.CourseEditingScreen
-import ru.pavlig43.prototype.ui.screens.CoursesScreen
 import ru.pavlig43.prototype.ui.screens.DisplayingCourseContentScreen
-import ru.pavlig43.prototype.ui.screens.OverViewScreen
 
 @Composable
 fun NavigationHost() {
@@ -33,7 +32,7 @@ fun NavigationHost() {
             )
         }
         composable<Destination.Courses> {
-            CoursesScreen(
+            CoursesListScreen(
                 onEditScreen = {navController.navigate(Destination.Edit(it))},
                 onContentScreen = {navController.navigate(Destination.Content(it))},
                 onAddClick = { navController.navigate(Destination.Create()) }

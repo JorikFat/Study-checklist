@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object Overview
+
 @Serializable
 internal sealed class Destination(val title: String) {
 
@@ -11,10 +12,10 @@ internal sealed class Destination(val title: String) {
     data object Courses : Destination("Курсы")
 
     @Serializable
-    data class Content(val id:Int = 0) : Destination("Содержание")
+    data class Content(val id :Int) : Destination("Содержание")
 
     @Serializable
-    data class Edit(val id:Int = 0) : Destination("Редактирование")
+    data class Edit(val id :Int) : Destination("Редактирование")
 
     @Serializable
     data class Create(val id:Int= 0) : Destination("Создание")
@@ -22,8 +23,8 @@ internal sealed class Destination(val title: String) {
     companion object {
         fun allDestinations(): List<Destination> = listOf(
             Courses,
-            Content(),
-            Edit(),
+            Content(0),//TODO: replace to 1
+            Edit(0),//TODO: replace to 1
             Create()
         )
     }
