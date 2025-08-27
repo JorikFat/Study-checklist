@@ -1,13 +1,13 @@
-package ru.pavlig43.prototype.database.dao
+package com.example.courses.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import ru.pavlig43.prototype.database.entities.CourseContentEntity
-import ru.pavlig43.prototype.database.entities.CourseEntity
-import ru.pavlig43.prototype.database.entities.LessonEntity
+import com.example.courses.database.entities.CourseContentEntity
+import com.example.courses.database.entities.CourseEntity
+import com.example.courses.database.entities.LessonEntity
 
 @Dao
 interface DAO {

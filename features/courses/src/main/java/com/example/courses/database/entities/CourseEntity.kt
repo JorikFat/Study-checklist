@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.database.entities
+package com.example.courses.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
