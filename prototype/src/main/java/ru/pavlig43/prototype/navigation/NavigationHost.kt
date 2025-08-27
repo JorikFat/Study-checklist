@@ -10,7 +10,7 @@ import ru.pavlig43.prototype.navigation.destination.Overview
 import ru.pavlig43.prototype.screens.OverViewScreen
 import ru.pavlig43.prototype.screens.content.ContentScreen
 import ru.pavlig43.prototype.screens.courses.CoursesListScreen
-import ru.pavlig43.prototype.ui.screens.CourseEditingScreen
+import ru.pavlig43.prototype.screens.edit.CourseEditingScreen
 
 @Composable
 fun NavigationHost() {

@@ -1,9 +1,9 @@
-package ru.pavlig43.prototype.di
+package ru.pavlig43.prototype.screens.edit
 
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.pavlig.course_edit.ui.CourseEditingViewModel
 
-internal val prototypeModule = module {
+val editModule = module {
     viewModel { (courseId: Int) -> CourseEditingViewModel(courseId, get()) }
 }

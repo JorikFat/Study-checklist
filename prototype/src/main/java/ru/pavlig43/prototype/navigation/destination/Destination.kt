@@ -20,6 +20,7 @@ internal sealed class Destination(val title: String) {
     @Serializable
     data class Create(val id:Int= 0) : Destination("Создание")
 
+    //TODO move to navigation
     companion object {
         fun allDestinations(): List<Destination> = listOf(
             Courses,
