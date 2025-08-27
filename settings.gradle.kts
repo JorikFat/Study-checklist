@@ -24,6 +24,7 @@ dependencyResolutionManagement {
 rootProject.name = "Study_checklist"
 include(":app")
 include(":prototype")
+include(":features:courses")
 include(
     ":features:courses-list:sample",
     ":features:courses-list:lib"

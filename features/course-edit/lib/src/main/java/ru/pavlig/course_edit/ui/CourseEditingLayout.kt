@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,10 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseEditingLayout(
-    course: Course,
+    course: CourseDraftViewState,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onAddLesson: () -> Unit,
@@ -42,31 +41,13 @@ fun CourseEditingLayout(
 ) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    TextField(
-                        value = course.name,
-                        onValueChange = onChangeCourseName,
-                        placeholder = { Text("Название курса") },
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateBack
-                    ) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = onSave
-                    ) {
-                        Icon(Icons.Filled.Done, null)
-                    }
-                }
+            AppBar(
+                course = course,
+                onChangeCourseName = onChangeCourseName,
+                onNavigateBack = onNavigateBack,
+                onSave = onSave
             )
-        }
-    ) { paddingValues ->
+        }) { paddingValues ->
 
         Column(
             modifier = modifier
@@ -77,7 +58,7 @@ fun CourseEditingLayout(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             LessonsList(
-                lessons = course.lessons,
+                lessons = course.lessons.map { it.name },
                 onChangeLessonName = onChangeLessonName,
                 modifier = Modifier.fillMaxWidth(),
                 onDeleteLesson = onDeleteLesson
@@ -85,15 +66,47 @@ fun CourseEditingLayout(
             Button(onAddLesson) {
                 Text("Добавить")
             }
-
         }
-
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar(
+    course: CourseDraftViewState,
+    onChangeCourseName: (String) -> Unit,
+    onNavigateBack: () -> Unit,
+    onSave: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            TextField(
+                value = course.name,
+                onValueChange = onChangeCourseName,
+                placeholder = { Text("Название курса") },
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onNavigateBack
+            ) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = onSave
+            ) {
+                Icon(Icons.Filled.Done, null)
+            }
+        }
+    )
+}
+
+
 @Composable
 private fun LessonsList(
-    lessons: List<Lesson>,
+    lessons: List<String>,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
@@ -104,12 +117,12 @@ private fun LessonsList(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyListState
     ) {
-        items(lessons, key = { it.index }) { lesson ->
+        itemsIndexed(lessons) { index, lesson ->
             LessonItem(
                 modifier = Modifier.fillMaxWidth(),
-                lessonName = lesson.name,
-                onChangeLessonName = { value -> onChangeLessonName(lesson.index, value) },
-                onDeleteLesson = { onDeleteLesson(lesson.index) }
+                lessonName = lesson,
+                onChangeLessonName = { value -> onChangeLessonName(index, value) },
+                onDeleteLesson = { onDeleteLesson(index) }
             )
         }
     }
@@ -117,10 +130,10 @@ private fun LessonsList(
 
 @Composable
 private fun LessonItem(
-    modifier: Modifier = Modifier,
     lessonName: String,
     onChangeLessonName: (value: String) -> Unit,
-    onDeleteLesson: () -> Unit
+    onDeleteLesson: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Row(modifier) {
@@ -129,7 +142,6 @@ private fun LessonItem(
             onValueChange = { onChangeLessonName(it) },
             modifier = Modifier.weight(1f)
         )
-
         IconButton(
             modifier = Modifier.weight(0.2f),
             onClick = onDeleteLesson
@@ -147,10 +159,11 @@ private fun LessonItem(
 @Composable
 private fun CourseEditingPreview() {
     MaterialTheme {
+
         CourseEditingLayout(
-            course = Course(
+            course = CourseDraftViewState(
                 name = "Preview Course",
-                lessons = List(3) { Lesson(it, "Preview Lesson $it") }
+                lessons = List(3) { LessonDraftViewState(it, "Preview Lesson $it", false) }
             ),
 
             onChangeCourseName = {},
@@ -162,5 +175,4 @@ private fun CourseEditingPreview() {
             modifier = Modifier,
         )
     }
-
 }

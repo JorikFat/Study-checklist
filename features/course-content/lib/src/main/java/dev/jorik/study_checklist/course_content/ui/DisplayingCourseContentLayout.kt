@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
@@ -26,76 +24,86 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DisplayCourseContentLayout(
-    courseContent: CourseContent,
-    onEditButtonClick: (CourseContent) -> Unit,
+    course: CourseViewState,
+    onEditButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
-    modifier: Modifier = Modifier){
+    toggleLesson: (index: Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(courseContent.name)
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackButtonClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = { onEditButtonClick(courseContent) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = null
-                        )
-                    }
-                }
+            AppBar(
+                course,
+                onBackButtonClick,
+                onEditButtonClick
             )
         }
     ) { paddingValues ->
         Column(
-            modifier = modifier.fillMaxSize().padding(paddingValues),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
             LessonsList(
-                lessons = courseContent.lessons,
-                onCheckedChange = onCheckedChange
+                lessons = course.lessons,
+                toggleLesson = toggleLesson
             )
-
         }
     }
+}
 
-
-
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar(
+    courseContent: CourseViewState,
+    onBackButtonClick: () -> Unit,
+    onEditButtonClick: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(courseContent.name)
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackButtonClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null
+                )
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = onEditButtonClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = null
+                )
+            }
+        }
+    )
 }
 
 
 @Composable
 private fun LessonsList(
-    lessons: List<Lesson>,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lessons: List<LessonViewState>,
+    toggleLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val lazyListState = rememberLazyListState()
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
     ) {
-        items(lessons, key = { it.index }) { lesson ->
+        items(lessons.size) { index ->
             LessonRow(
-                lesson = lesson,
-                onCheckedChange = onCheckedChange
+                lesson = lessons[index],
+                toggleLesson = { toggleLesson(index) }
             )
         }
     }
@@ -103,8 +111,8 @@ private fun LessonsList(
 
 @Composable
 private fun LessonRow(
-    lesson: Lesson,
-    onCheckedChange: (index: Int, isChecked: Boolean) -> Unit,
+    lesson: LessonViewState,
+    toggleLesson: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -113,7 +121,7 @@ private fun LessonRow(
     ) {
         Checkbox(
             checked = lesson.isChecked,
-            onCheckedChange = { onCheckedChange(lesson.index, it) }
+            onCheckedChange = { toggleLesson() }
         )
         Text(lesson.name)
     }
@@ -125,11 +133,10 @@ private fun LessonRow(
 private fun DisplayCoursePreview() {
     MaterialTheme {
         DisplayCourseContentLayout(
-            courseContent = CourseContent(),
-            onCheckedChange = { _, _ -> },
+            course = CourseViewState(),
+            toggleLesson = {},
             onEditButtonClick = {},
-            onBackButtonClick = {}
+            onBackButtonClick = {},
         )
     }
-
 }

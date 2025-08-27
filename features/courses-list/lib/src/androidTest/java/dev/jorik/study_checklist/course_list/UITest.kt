@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import ru.pavlig43.courses_list_impl.data.Course
+import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 
 class UITest {
@@ -18,10 +18,13 @@ class UITest {
         composeTestRule.setContent {
             CoursesLayout(
                 courses = listOf(
-                    Course("SOLID"),
-                    Course("Clean Architecture"),
-                    Course("Design Patterns"),
+                    CourseItemViewState(1, "SOLID"),
+                    CourseItemViewState(2, "Clean Architecture"),
+                    CourseItemViewState(3, "Design Patterns"),
                 ),
+                onContentScreen = {},
+                onEditScreen = {},
+                onAddButtonClick = {}
             )
         }
 
@@ -35,10 +38,13 @@ class UITest {
         composeTestRule.setContent {
             CoursesLayout(
                 courses = listOf(
-                    Course("Dagger2"),
-                    Course("Kotlin Coroutines"),
-                    Course("Custom View"),
+                    CourseItemViewState(1, "Dagger2"),
+                    CourseItemViewState(2, "Kotlin Coroutines"),
+                    CourseItemViewState(3, "Custom View"),
                 ),
+                onContentScreen = {},
+                onEditScreen = {},
+                onAddButtonClick = {}
             )
         }
 
