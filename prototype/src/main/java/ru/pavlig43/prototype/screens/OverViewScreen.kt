@@ -12,43 +12,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.pavlig43.prototype.navigation.destination.Destination
+import androidx.navigation.NavController
+import ru.pavlig43.prototype.Content
+import ru.pavlig43.prototype.Courses
+import ru.pavlig43.prototype.Create
+import ru.pavlig43.prototype.Edit
 
 @Composable
-internal fun OverViewScreen(
-    onDestination: (Destination) -> Unit,
+fun OverViewScreen(
+    navController: NavController
 ) {
-    Scaffold() { padding ->
+    Scaffold { padding ->
         Column(
-            modifier = Modifier.padding(padding)
+            modifier = Modifier
+                .padding(padding)
                 .fillMaxSize()
                 .padding(horizontal = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Destination.allDestinations().forEach { destination ->
-                DestinationButton(
-                    destination = destination,
-                    onDestination = onDestination,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            ScreenButton(title = "Курсы", navigate = { navController.navigate(Courses) })
+            ScreenButton(title = "Создание", navigate = { navController.navigate(Create) })
+            ScreenButton(title = "Редактирование", navigate = { navController.navigate(Edit(0)) })//TODO: replace to 1
+            ScreenButton(title = "Уроки", navigate = { navController.navigate(Content(0)) })//TODO: replace to 1
         }
     }
-
 }
 
 @Composable
-private fun DestinationButton(
-    destination: Destination,
-    onDestination: (Destination) -> Unit,
+private fun ScreenButton(
+    title: String,
+    navigate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Button(
-        onClick = { onDestination(destination) },
-        modifier
+        onClick = { navigate() },
+        modifier.fillMaxWidth()
     ) {
-        Text(destination.title)
+        Text(title)
     }
-
 }
