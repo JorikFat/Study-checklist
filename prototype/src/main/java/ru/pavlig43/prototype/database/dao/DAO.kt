@@ -1,8 +1,10 @@
 package ru.pavlig43.prototype.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import ru.pavlig43.prototype.database.entities.CourseContentEntity
 import ru.pavlig43.prototype.database.entities.CourseEntity
 import ru.pavlig43.prototype.database.entities.LessonEntity
@@ -21,25 +23,21 @@ interface DAO {
     @Insert
     suspend fun courseCreate(courseEntity: CourseEntity)
 
-    @Query("delete from CourseEntity where id like :courseId")
-    suspend fun courseDelete(courseId: Int)
+    @Delete
+    suspend fun courseDelete(courseEntity: CourseEntity)
 
-    @Query("update CourseEntity set name = :newName where id like :courseId")
-    suspend fun courseUpdateName(courseId: Int, newName: String)
+    @Update
+    suspend fun courseUpdate(courseEntity: CourseEntity)
 
 
     // lessons
     @Insert
     suspend fun lessonCreate(lessonEntity: LessonEntity)
 
-    @Query("delete from LessonEntity where `index` like :lessonId")
-    suspend fun lessonDelete(lessonId: Int)
+    @Delete
+    suspend fun lessonDelete(lessonEntity: LessonEntity)
 
-    @Query("update LessonEntity set isChecked = not isChecked where `index` like :lessonId")
-    suspend fun lessonSwitchChecked(lessonId: Int)
-
-    @Query("update LessonEntity set name = :newName where `index` like :lessonId")
-    suspend fun lessonUpdateName(lessonId: Int, newName: String)
-
+    @Update
+    suspend fun lessonUpdate(lessonEntity: LessonEntity)
 
 }

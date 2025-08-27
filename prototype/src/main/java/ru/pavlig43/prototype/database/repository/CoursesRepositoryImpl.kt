@@ -1,6 +1,9 @@
 package ru.pavlig43.prototype.database.repository
 
+import androidx.room.util.performInTransactionSuspending
 import ru.pavlig43.prototype.database.AppDatabase
+import ru.pavlig43.prototype.database.entities.CourseEntity
+import ru.pavlig43.prototype.database.entities.LessonEntity
 import ru.pavlig43.prototype.database.mappers.toEntity
 import ru.pavlig43.prototype.database.mappers.toViewState
 import ru.pavlig43.prototype.models.CourseContentViewState
@@ -27,13 +30,15 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
     }
 
     override suspend fun courseDelete(courseId: Int) {
-        dao.courseDelete(courseId)
+        dao.courseDelete(CourseEntity(courseId, ""))
     }
 
     override suspend fun courseUpdateName(courseId: Int, name: String) {
-        dao.courseUpdateName(
-            courseId = courseId,
-            newName = name
+        dao.courseUpdate(
+            CourseEntity(
+                id = courseId,
+                name = name
+            )
         )
     }
 
@@ -42,18 +47,23 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
     }
 
     override suspend fun lessonDelete(lessonId: Int) {
-        dao.lessonDelete(lessonId)
+        dao.lessonDelete(LessonEntity(lessonId, 0,"", false))
     }
 
     override suspend fun lessonUpdateName(lessonId: Int, name: String) {
-        dao.lessonUpdateName(
-            lessonId = lessonId,
-            newName = name
+        dao.lessonUpdate(
+            LessonEntity(
+                lessonId,
+                0,
+                name
+            )
         )
     }
 
     override suspend fun lessonCheck(lessonId: Int) {
-        dao.lessonSwitchChecked(lessonId)
+        dao.lessonUpdate(
+            LessonEntity(lessonId, 0, "")
+        )
     }
 
 }

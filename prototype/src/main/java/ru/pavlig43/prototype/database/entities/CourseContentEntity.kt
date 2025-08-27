@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class CourseContentEntity(
     @Embedded val course: CourseEntity,
     @Relation(
-        parentColumn = "index",
+        parentColumn = "id",
         entityColumn = "courseId"
     ) val lessons: List<LessonEntity>
 )
