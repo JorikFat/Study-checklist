@@ -8,9 +8,9 @@ import androidx.navigation.toRoute
 import ru.pavlig43.prototype.navigation.destination.Destination
 import ru.pavlig43.prototype.navigation.destination.Overview
 import ru.pavlig43.prototype.screens.OverViewScreen
+import ru.pavlig43.prototype.screens.content.ContentScreen
 import ru.pavlig43.prototype.screens.courses.CoursesListScreen
 import ru.pavlig43.prototype.ui.screens.CourseEditingScreen
-import ru.pavlig43.prototype.ui.screens.DisplayingCourseContentScreen
 
 @Composable
 fun NavigationHost() {
@@ -44,7 +44,7 @@ fun NavigationHost() {
         }
         composable<Destination.Content> {
             val id = it.toRoute<Destination.Content>().id
-            DisplayingCourseContentScreen(id)
+            ContentScreen(id)
         }
         composable<Destination.Create> {
             CourseEditingScreen(-1,{navController.popBackStack()})

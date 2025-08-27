@@ -9,6 +9,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import ru.pavlig43.prototype.di.prototypeModule
+import ru.pavlig43.prototype.screens.content.contentModule
 import ru.pavlig43.prototype.screens.courses.coursesListModule
 
 class PrototypeApp : Application() {
@@ -25,6 +26,7 @@ class PrototypeApp : Application() {
                     single { CourseInteractor(stubCourses) }
                 },
                 coursesListModule,
+                contentModule,
             )
         }
     }
