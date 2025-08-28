@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class LessonEntity(
-    @PrimaryKey(autoGenerate = true) val index: Int,
+    @PrimaryKey(autoGenerate = true) val index: Int = 0,
     val courseId: Int,
     val name: String,
     val isChecked: Boolean = false

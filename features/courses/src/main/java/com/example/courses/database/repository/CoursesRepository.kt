@@ -5,25 +5,20 @@ import com.example.courses.models.Lesson
 
 interface CoursesRepository {
 
-    suspend fun getCoursesOnly(): List<Course>
+    suspend fun getCourses(): List<Course>
 
     suspend fun getCourseWithLessons(courseId: Int): Course
 
-    suspend fun courseCreate(newCourse: Course)
+    suspend fun courseCreate(course: Course)
 
-    suspend fun courseDelete(courseId: Int)
+    suspend fun courseDelete(course: Course)
 
-    suspend fun courseUpdateName(courseId: Int, name: String)
+    suspend fun courseUpdate(course: Course)
 
-    suspend fun lessonCreate(courseId: Int, newLesson: Lesson)
+    suspend fun lessonCreate(courseId: Int, lesson: Lesson)
 
-    suspend fun lessonDelete(lessonId: Int)
+    suspend fun lessonDelete(courseId: Int, lesson: Lesson)
 
-    suspend fun lessonUpdateName(lessonId: Int, name: String)
-
-    suspend fun lessonCheck(lessonId: Int)
-
-
-
+    suspend fun lessonUpdate(courseId: Int, lesson: Lesson)
 
 }

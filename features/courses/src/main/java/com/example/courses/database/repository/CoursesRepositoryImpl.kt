@@ -2,7 +2,6 @@ package com.example.courses.database.repository
 
 import com.example.courses.database.AppDatabase
 import com.example.courses.database.entities.CourseEntity
-import com.example.courses.database.entities.LessonEntity
 import com.example.courses.database.mappers.toCourse
 import com.example.courses.database.mappers.toEntity
 import com.example.courses.models.Course
@@ -12,57 +11,43 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
 
     private val dao = db.getDao()
 
-    override suspend fun getCoursesOnly(): List<Course> {
-//        return dao.getCourses().map {  }
-        return emptyList()
+    override suspend fun getCourses(): List<Course> {
+       return dao.getCourses().map { it.toCourse() }
     }
 
     override suspend fun getCourseWithLessons(courseId: Int): Course {
         return dao.getCourseWithLessons(courseId).toCourse()
     }
 
-    override suspend fun courseCreate(newCourse: Course) {
-        with(newCourse.toEntity()) {
-            dao.courseCreate(course)
-            lessons.forEach { dao.lessonCreate(it) }
+    override suspend fun courseCreate(course: Course) {
+        with(course.toEntity()) {
+            dao.courseCreate(
+                course = this.course,
+                lessons = this.lessons
+            )
         }
     }
 
-    override suspend fun courseDelete(courseId: Int) {
-        dao.courseDelete(CourseEntity(courseId, ""))
+    override suspend fun courseDelete(course: Course) {
+        dao.courseDelete(CourseEntity(course.id, course.displayName))
     }
 
-    override suspend fun courseUpdateName(courseId: Int, name: String) {
+    override suspend fun courseUpdate(course: Course) {
         dao.courseUpdate(
-            CourseEntity(
-                id = courseId,
-                name = name
-            )
+            course.toEntity()
         )
     }
 
-    override suspend fun lessonCreate(courseId: Int, newLesson: Lesson) {
-        dao.lessonCreate(newLesson.toEntity(courseId))
+    override suspend fun lessonCreate(courseId: Int, lesson: Lesson) {
+        dao.lessonCreate(lesson.toEntity(courseId))
     }
 
-    override suspend fun lessonDelete(lessonId: Int) {
-        dao.lessonDelete(LessonEntity(lessonId, 0,"", false))
+    override suspend fun lessonDelete(courseId: Int, lesson: Lesson) {
+        dao.lessonDelete(lesson.toEntity(courseId))
     }
 
-    override suspend fun lessonUpdateName(lessonId: Int, name: String) {
-        dao.lessonUpdate(
-            LessonEntity(
-                lessonId,
-                0,
-                name
-            )
-        )
-    }
-
-    override suspend fun lessonCheck(lessonId: Int) {
-        dao.lessonUpdate(
-            LessonEntity(lessonId, 0, "")
-        )
+    override suspend fun lessonUpdate(courseId: Int, lesson: Lesson) {
+        dao.lessonUpdate(lesson.toEntity(courseId))
     }
 
 }
