@@ -101,10 +101,13 @@ private fun LessonsList(
         modifier = modifier,
     ) {
         items(lessons.size) { index ->
-            LessonRow(
-                lesson = lessons[index],
-                toggleLesson = { toggleLesson(index) }
-            )
+            with(lessons[index]) {
+                LessonRow(
+                    lesson = this,
+                    toggleLesson = { toggleLesson(this.index) }
+                )
+            }
+
         }
     }
 }

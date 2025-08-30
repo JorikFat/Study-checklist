@@ -15,17 +15,8 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
        return dao.getCourses().map { it.toCourse() }
     }
 
-    override suspend fun getCourseWithLessons(courseId: Int): Course {
-        return dao.getCourseWithLessons(courseId).toCourse()
-    }
-
     override suspend fun courseCreate(course: Course) {
-        with(course.toEntity()) {
-            dao.courseCreate(
-                course = this.course,
-                lessons = this.lessons
-            )
-        }
+        dao.courseCreate(course.toEntity())
     }
 
     override suspend fun courseDelete(course: Course) {
