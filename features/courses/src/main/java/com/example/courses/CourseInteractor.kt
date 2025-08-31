@@ -25,6 +25,9 @@ class CourseInteractor(initCourses:List<Course> = emptyList()) {
             lst.add(course)
         }
     }
+    fun deleteCourse(id: Int) {
+        updateCourseList { it.removeIf { course -> course.id == id } }
+    }
     fun toggleLesson(courseId: Int, lessonId: Int){
         val course = _courseMenuList.value.first { it.id == courseId}
         val updatedLessons = course.lessons.map { lesson ->

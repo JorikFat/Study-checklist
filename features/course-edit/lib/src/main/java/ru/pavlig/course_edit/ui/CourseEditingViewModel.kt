@@ -35,6 +35,9 @@ class CourseEditingViewModel(
             )
         }
     }
+    fun onDeleteCourse(){
+        courseInteractor.deleteCourse(id)
+    }
 
     fun onAddLesson() {
         _courseState.update { course ->
