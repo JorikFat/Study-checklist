@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.ui.screens
+package ru.pavlig43.prototype.screens.edit
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
