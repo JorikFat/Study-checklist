@@ -29,6 +29,10 @@ fun CourseEditingScreen(
             onCloseScreen()
         },
         onNavigateBack = onCloseScreen,
+        onDeleteCourse = {
+            viewModel.onDeleteCourse()
+            onCloseScreen()
+        },
         modifier = modifier,
     )
 }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class CourseInteractor(
     private val coursesRepository: CoursesRepository,
 ) {
-    private val _courseMenuList = MutableStateFlow<List<Course>>(initCourses)
+    private val _courseMenuList = MutableStateFlow<List<Course>>(emptyList())
     val courseMenuList = _courseMenuList.asStateFlow()
 
     init {

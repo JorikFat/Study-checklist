@@ -23,7 +23,7 @@ internal val prototypeModule = module {
         ).build()
     }
     factory<CoursesRepository> { CoursesRepositoryImpl(db = get()) }
-    single { CourseInteractor(coursesRepository = get(), initCourses = stubCourses) }
+    single { CourseInteractor(coursesRepository = get()) }
     viewModel { CoursesViewModel(get()) }
     viewModel { (courseId: Int) -> DisplayingCourseContentViewModel(courseId, get()) }
     viewModel { (courseId: Int) -> CourseEditingViewModel(courseId, get()) }
