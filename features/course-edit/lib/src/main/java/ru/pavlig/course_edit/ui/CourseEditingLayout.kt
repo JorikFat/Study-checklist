@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+
 @Composable
 fun CourseEditingLayout(
     course: CourseDraftViewState,
@@ -44,12 +45,13 @@ fun CourseEditingLayout(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Scaffold(
         topBar = {
             AppBar(
                 course = course,
                 onChangeCourseName = onChangeCourseName,
-                onNavigateBack = onNavigateBack,
+                onNavigateBack =onNavigateBack,
                 onSave = onSave
             )
         },
@@ -86,6 +88,7 @@ fun CourseEditingLayout(
             Button(onAddLesson) {
                 Text("Добавить")
             }
+
         }
     }
 }
@@ -175,6 +178,8 @@ private fun LessonItem(
 
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 private fun CourseEditingPreview() {
@@ -197,3 +202,5 @@ private fun CourseEditingPreview() {
         )
     }
 }
+
+
