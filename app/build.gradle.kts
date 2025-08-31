@@ -1,49 +1,30 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.pavlig43.application)
+    alias(libs.plugins.pavlig43.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.koin)
 }
 
 android {
     namespace = "dev.jorik.study_checklist"
-    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.jorik.study_checklist"
-        minSdk = 26
-        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        setProperty("archivesBaseName", "StudyChecklist v${versionName} [${versionCode}]")
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "StudyChecklist_prototype v${versionName} [${versionCode}]")
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.navigation.compose)
+
+    implementation(projects.features.coursesList.lib)
+    implementation(projects.features.courseEdit.lib)
+    implementation(projects.features.courseContent.lib)
+    implementation(projects.features.courses)
 }
