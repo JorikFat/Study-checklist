@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+
 @Composable
 fun CourseEditingLayout(
     course: CourseDraftViewState,
@@ -36,15 +37,16 @@ fun CourseEditingLayout(
     onAddLesson: () -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     onSave: () -> Unit,
-    onNavigateBack: () -> Unit,
+    showDialog: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Scaffold(
         topBar = {
             AppBar(
                 course = course,
                 onChangeCourseName = onChangeCourseName,
-                onNavigateBack = onNavigateBack,
+                onNavigateBack =showDialog,
                 onSave = onSave
             )
         }) { paddingValues ->
@@ -66,6 +68,7 @@ fun CourseEditingLayout(
             Button(onAddLesson) {
                 Text("Добавить")
             }
+
         }
     }
 }
@@ -155,6 +158,8 @@ private fun LessonItem(
 
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 private fun CourseEditingPreview() {
@@ -171,8 +176,10 @@ private fun CourseEditingPreview() {
             onSave = {},
             onDeleteLesson = {},
             onAddLesson = {},
-            onNavigateBack = {},
+            showDialog = {},
             modifier = Modifier,
         )
     }
 }
+
+
