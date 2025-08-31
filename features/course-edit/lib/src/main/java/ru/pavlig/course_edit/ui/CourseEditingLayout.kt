@@ -37,7 +37,7 @@ fun CourseEditingLayout(
     onAddLesson: () -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     onSave: () -> Unit,
-    showDialog: () -> Unit,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -46,7 +46,7 @@ fun CourseEditingLayout(
             AppBar(
                 course = course,
                 onChangeCourseName = onChangeCourseName,
-                onNavigateBack =showDialog,
+                onNavigateBack =onNavigateBack,
                 onSave = onSave
             )
         }) { paddingValues ->
@@ -176,7 +176,7 @@ private fun CourseEditingPreview() {
             onSave = {},
             onDeleteLesson = {},
             onAddLesson = {},
-            showDialog = {},
+            onNavigateBack = {},
             modifier = Modifier,
         )
     }
