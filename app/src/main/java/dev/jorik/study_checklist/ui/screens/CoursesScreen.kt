@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.ui.screens
+package dev.jorik.study_checklist.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

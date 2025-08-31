@@ -1,4 +1,4 @@
-package ru.pavlig43.prototype.di
+package dev.jorik.study_checklist.di
 
 import androidx.room.Room
 import com.example.courses.CourseInteractor

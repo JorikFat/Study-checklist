@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
+//TODO: rename to ContentViewModel
 class DisplayingCourseContentViewModel(
    private val id: Int,
     private val courseInteractor: CourseInteractor,

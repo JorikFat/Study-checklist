@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class CourseInteractor(
     private val coursesRepository: CoursesRepository,
-    initCourses: List<Course> = emptyList(),
 ) {
     private val _courseMenuList = MutableStateFlow<List<Course>>(initCourses)
     val courseMenuList = _courseMenuList.asStateFlow()
@@ -36,7 +35,25 @@ class CourseInteractor(
 //        updateCourseList { it.add(course.copy(id = lastIndex?.plus(1) ?: 0)) }
 //    }
 
-    fun updateCourse(course: Course) = useAsync { coursesRepository.courseUpdate(course) }
+    fun updateCourse(course: Course) {
+        updateCourseList { lst ->
+            lst.removeIf { course.id == it.id }
+            lst.add(course)
+        }
+    }
+
+    fun deleteCourse(id: Int) {
+        updateCourseList { it.removeIf { course -> course.id == id } }
+    }
+
+//    fun toggleLesson(courseId: Int, lessonId: Int){
+//        val course = _courseMenuList.value.first { it.id == courseId}
+//        val updatedLessons = course.lessons.map { lesson ->
+//            if (lesson.id == lessonId) {
+//                lesson.copy(isChecked = !lesson.isChecked)
+//            } else {
+//                lesson
+//    fun updateCourse(course: Course) = useAsync { coursesRepository.courseUpdate(course) }
 
 //    {
 //        updateCourseList { lst ->
@@ -82,5 +99,4 @@ class CourseInteractor(
         f?.invoke()
         initCourses()
     }
-
 }

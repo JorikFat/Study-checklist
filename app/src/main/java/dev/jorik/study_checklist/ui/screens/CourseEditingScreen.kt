@@ -1,10 +1,9 @@
-package ru.pavlig43.prototype.ui.screens
+package dev.jorik.study_checklist.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.example.courses.models.Course
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.pavlig.course_edit.ui.CourseEditingLayout
@@ -25,19 +24,12 @@ fun CourseEditingScreen(
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
         onDeleteLesson = viewModel::onDeleteLesson,
-        onSave = viewModel::onSave,
+        onSave = {
+            viewModel.onSave()
+            onCloseScreen()
+        },
         onNavigateBack = onCloseScreen,
         modifier = modifier,
     )
 }
 
-//private val sampleCourse = Course(
-//    name = "SOLID",
-//    lessons = listOf(
-//        "SRP",
-//        "OCP",
-//        "LSP",
-//        "ISP",
-//        "DIP",
-//    ).mapIndexed { index, lesson -> Lesson(index, lesson) }
-//)
