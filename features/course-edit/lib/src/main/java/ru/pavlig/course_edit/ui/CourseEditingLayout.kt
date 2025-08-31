@@ -12,12 +12,15 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,8 +28,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 
 @Composable
 fun CourseEditingLayout(
@@ -36,18 +41,35 @@ fun CourseEditingLayout(
     onAddLesson: () -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     onSave: () -> Unit,
+    onDeleteCourse: () -> Unit,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Scaffold(
         topBar = {
             AppBar(
                 course = course,
                 onChangeCourseName = onChangeCourseName,
-                onNavigateBack = onNavigateBack,
+                onNavigateBack =onNavigateBack,
                 onSave = onSave
             )
-        }) { paddingValues ->
+        },
+        floatingActionButton = {
+            IconButton(
+                onDeleteCourse,
+                colors = IconButtonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Red,
+                    disabledContentColor = Color.White
+                )
+            ) {
+                Icon(Icons.Default.Delete, "delete")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Start
+    ) { paddingValues ->
 
         Column(
             modifier = modifier
@@ -66,6 +88,7 @@ fun CourseEditingLayout(
             Button(onAddLesson) {
                 Text("Добавить")
             }
+
         }
     }
 }
@@ -155,6 +178,8 @@ private fun LessonItem(
 
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 private fun CourseEditingPreview() {
@@ -172,7 +197,10 @@ private fun CourseEditingPreview() {
             onDeleteLesson = {},
             onAddLesson = {},
             onNavigateBack = {},
+            onDeleteCourse = {},
             modifier = Modifier,
         )
     }
 }
+
+
