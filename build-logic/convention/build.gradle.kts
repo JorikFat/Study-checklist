@@ -48,9 +48,9 @@ gradlePlugin {
             id = libs.plugins.pavlig43.android.library.get().pluginId
             implementationClass = "AndroidLibraryPlugin"
         }
-        register("androidRoom") {
-            id = libs.plugins.pavlig43.android.room.get().pluginId
-            implementationClass = "AndroidRoomConventionPlugin"
+        register("roomPlugin") {
+            id = libs.plugins.room.get().pluginId
+            implementationClass = "RoomPlugin"
         }
 
         register("JvmLibraryPlugin") {
