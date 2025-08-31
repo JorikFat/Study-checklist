@@ -35,6 +35,7 @@ class UITest {
                 onAddLesson = {},
                 onDeleteLesson = {},
                 onSave = {},
+                onDeleteCourse = {},
                 onNavigateBack = {},
             )
         }
