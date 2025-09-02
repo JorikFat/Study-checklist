@@ -1,7 +1,7 @@
 package ru.pavlig43.courses_list_impl.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,11 +25,10 @@ import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
 //TODO: rename to "CoursesListLayout"
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoursesLayout(
     courses: List<CourseItemViewState>,
-    onEditScreen: (CourseItemViewState) -> Unit,
     onContentScreen: (CourseItemViewState) -> Unit,
     onAddButtonClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -64,10 +63,7 @@ fun CoursesLayout(
                     course = course,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .combinedClickable(
-                            onClick = { onContentScreen(course) },
-                            onLongClick = { onEditScreen(course) }
-                        )
+                        .clickable { onContentScreen(course) }
                 )
             }
         }
@@ -149,7 +145,6 @@ fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
 //        )
         CoursesLayout(
             onContentScreen = {},
-            onEditScreen = {},
             onAddButtonClick = {},
             courses = courseList,
         )
