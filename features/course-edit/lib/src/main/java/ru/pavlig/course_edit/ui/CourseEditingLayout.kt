@@ -26,6 +26,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -83,11 +89,9 @@ fun CourseEditingLayout(
                 lessons = course.lessons.map { it.name },
                 onChangeLessonName = onChangeLessonName,
                 modifier = Modifier.fillMaxWidth(),
+                onAddLesson = onAddLesson,
                 onDeleteLesson = onDeleteLesson
             )
-            Button(onAddLesson) {
-                Text("Добавить")
-            }
 
         }
     }
@@ -130,14 +134,24 @@ private fun AppBar(
 @Composable
 private fun LessonsList(
     lessons: List<String>,
+    onAddLesson: () -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
+    var previousSize by remember { mutableIntStateOf(lessons.size) }
+    LaunchedEffect(lessons.size) {
+        if (lessons.size > previousSize) {
+            lazyListState.animateScrollToItem(lessons.size)
+        }
+        previousSize = lessons.size
+    }
+    
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
         state = lazyListState
     ) {
         itemsIndexed(lessons) { index, lesson ->
@@ -148,6 +162,12 @@ private fun LessonsList(
                 onDeleteLesson = { onDeleteLesson(index) }
             )
         }
+        item {
+            Button(onAddLesson) {
+                Text("Добавить")
+            }
+        }
+
     }
 }
 
