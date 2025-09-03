@@ -105,7 +105,7 @@ private fun AppBar(
         title = {
             TextField(
                 value = course.name,
-                onValueChange = onChangeCourseName,
+                onValueChange = {value->onChangeCourseName(value.replaceFirstChar { it.titlecase() })},
                 placeholder = { Text("Название курса") },
             )
         },
@@ -162,7 +162,7 @@ private fun LessonItem(
     Row(modifier) {
         TextField(
             value = lessonName,
-            onValueChange = { onChangeLessonName(it) },
+            onValueChange = {value-> onChangeLessonName(value.replaceFirstChar { it.titlecase() }) },
             modifier = Modifier.weight(1f)
         )
         IconButton(
