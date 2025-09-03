@@ -33,8 +33,8 @@ fun OverViewScreen(
         ) {
             ScreenButton(title = "Курсы", navigate = { navController.navigate(Courses) })
             ScreenButton(title = "Создание", navigate = { navController.navigate(Create) })
-            ScreenButton(title = "Редактирование", navigate = { navController.navigate(Edit(0)) })//TODO: replace to 1
-            ScreenButton(title = "Уроки", navigate = { navController.navigate(Content(0)) })//TODO: replace to 1
+            ScreenButton(title = "Редактирование", navigate = { navController.navigate(Edit(1)) })
+            ScreenButton(title = "Уроки", navigate = { navController.navigate(Content(1)) })
         }
     }
 }
