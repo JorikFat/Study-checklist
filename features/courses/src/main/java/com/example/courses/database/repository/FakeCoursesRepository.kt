@@ -5,19 +5,7 @@ import com.example.courses.models.Lesson
 
 class FakeCoursesRepository :CoursesRepository {
 
-    private val stubLessons: MutableList<Lesson> = mutableListOf(
-        Lesson(1, "SRP"),
-        Lesson(2, "OCP"),
-        Lesson(3, "LSP"),
-        Lesson(4, "ISP"),
-        Lesson(5, "DIP"),
-    )
-
-    private val stubCourses :MutableList<Course> = mutableListOf(
-        Course(1,"SOLID", stubLessons),
-        Course(2,"Clean Architecture", listOf(Lesson(6,"Clean lesson"))),
-        Course(3,"Design Patterns", listOf(Lesson(7,"DP lesson")))
-    )
+    private val stubCourses :MutableList<Course> = Course.Stub.courses.toMutableList()
 
     override suspend fun getCourses(): List<Course> =
         stubCourses.toList()
