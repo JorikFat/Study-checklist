@@ -1,5 +1,4 @@
 import androidx.room.gradle.RoomExtension
-import com.android.build.gradle.tasks.detectAnnotationAndKspProcessors
 import com.google.devtools.ksp.gradle.KspExtension
 import com.pavlig43.convention.extension.implementation
 import com.pavlig43.convention.extension.libs
@@ -8,7 +7,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.plugins
 
 class RoomPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -29,8 +27,8 @@ class RoomPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("implementation", libs.room.kts)
-                add("implementation", libs.room.runtime)
+                implementation(libs.room.kts)
+                implementation(libs.room.runtime)
                 add("ksp", libs.room.compiler)
             }
         }
