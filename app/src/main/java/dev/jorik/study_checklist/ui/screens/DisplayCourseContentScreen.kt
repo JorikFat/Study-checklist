@@ -1,5 +1,6 @@
 package dev.jorik.study_checklist.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,11 +20,15 @@ fun DisplayingCourseContentScreen(
 ) {
     val viewModel: DisplayingCourseContentViewModel = koinViewModel { parametersOf(id) }
     val courseState by viewModel.courseState.collectAsState()
-    DisplayCourseContentLayout(
-        course = courseState,
-        onEditButtonClick = onEditButtonClick,
-        onBackButtonClick = onBackButtonClick,
-        toggleLesson = viewModel::toggleLesson,
-        modifier = modifier
-    )
+    courseState?.let {
+        DisplayCourseContentLayout(
+            course = courseState!!,
+            onEditButtonClick = onEditButtonClick,
+            onBackButtonClick = onBackButtonClick,
+            toggleLesson = viewModel::toggleLesson,
+            modifier = modifier
+        )
+    }?:Box {}
+
+
 }
