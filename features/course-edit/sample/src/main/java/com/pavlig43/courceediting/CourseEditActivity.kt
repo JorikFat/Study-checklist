@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
 import com.example.courses.repository.CoursesRepository
-import com.example.courses.repository.MemoryCoursesRepository
+import com.example.courses.repository.FakeCoursesRepository
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -33,7 +33,7 @@ class CourseEditActivity : ComponentActivity() {
                 androidContext(application)
                 modules(
                     module {
-                        singleOf(::MemoryCoursesRepository) { bind<CoursesRepository>() }
+                        singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
                         singleOf(::CourseInteractor)
                         viewModel { (id: Int) -> CourseEditingViewModel(id, get()) }
                     }

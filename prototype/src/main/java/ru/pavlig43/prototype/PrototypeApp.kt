@@ -3,7 +3,7 @@ package ru.pavlig43.prototype
 import android.app.Application
 import com.example.courses.CourseInteractor
 import com.example.courses.repository.CoursesRepository
-import com.example.courses.repository.MemoryCoursesRepository
+import com.example.courses.repository.FakeCoursesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -24,7 +24,7 @@ class PrototypeApp : Application() {
             androidContext(this@PrototypeApp)
             modules(
                 module {
-                    singleOf(::MemoryCoursesRepository) { bind<CoursesRepository>() }
+                    singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
                     singleOf(::CourseInteractor)
                 },
                 coursesListModule,

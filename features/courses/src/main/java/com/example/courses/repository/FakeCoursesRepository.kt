@@ -3,7 +3,7 @@ package com.example.courses.repository
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 
-class MemoryCoursesRepository : CoursesRepository {
+class FakeCoursesRepository : CoursesRepository {
 
     private val stubCourses :MutableList<Course> = Course.Stub.courses.toMutableList()
 

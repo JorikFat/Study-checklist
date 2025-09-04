@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
 import com.example.courses.repository.CoursesRepository
-import com.example.courses.repository.MemoryCoursesRepository
+import com.example.courses.repository.FakeCoursesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.koinViewModel
@@ -32,7 +32,7 @@ class CoursesListActivity : ComponentActivity() {
             androidContext(application)
             modules(
                 module {
-                    singleOf(::MemoryCoursesRepository) { bind<CoursesRepository>() }
+                    singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
                     singleOf(::CourseInteractor)
                     viewModelOf(::CoursesViewModel)
                 }
