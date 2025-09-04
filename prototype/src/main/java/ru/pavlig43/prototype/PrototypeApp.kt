@@ -2,11 +2,13 @@ package ru.pavlig43.prototype
 
 import android.app.Application
 import com.example.courses.CourseInteractor
-import com.example.courses.models.Course
-import com.example.courses.models.Lesson
+import com.example.courses.repository.CoursesRepository
+import com.example.courses.repository.FakeCoursesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import ru.pavlig43.prototype.screens.content.contentModule
 import ru.pavlig43.prototype.screens.courses.coursesListModule
@@ -22,7 +24,8 @@ class PrototypeApp : Application() {
             androidContext(this@PrototypeApp)
             modules(
                 module {
-                    single { CourseInteractor(stubCourses) }
+                    singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
+                    singleOf(::CourseInteractor)
                 },
                 coursesListModule,
                 contentModule,
@@ -31,17 +34,3 @@ class PrototypeApp : Application() {
         }
     }
 }
-
-private val stubLessons: List<Lesson> = listOf(
-    Lesson(0, "SRP"),
-    Lesson(1, "OCP"),
-    Lesson(2, "LSP"),
-    Lesson(3, "ISP"),
-    Lesson(4, "DIP"),
-)
-
-private val stubCourses = listOf(
-    Course(0,"SOLID", stubLessons),
-    Course(1,"Clean Architecture", listOf(Lesson(0,"Clean lesson"))),
-    Course(2,"Design Patterns", listOf(Lesson(0,"DP lesson")))
-)
