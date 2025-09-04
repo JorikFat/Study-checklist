@@ -7,6 +7,7 @@ internal fun Project.configureTest(){
     androidExtension.apply {
         dependencies {
             testImplementation(libs.junit)
+            testImplementation(libs.coroutines.test)
             androidTestImplementation(libs.androidx.junit)
             androidTestImplementation(libs.androidx.espresso.core)
             androidTestImplementation(libs.androidx.ui.test.junit4)
