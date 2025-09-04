@@ -9,12 +9,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
-import com.example.courses.models.Course
+import com.example.courses.database.repository.CoursesRepository
+import com.example.courses.database.repository.FakeCoursesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.context.GlobalContext.startKoin
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ru.pavlig43.courses_list_impl.ui.CoursesLayout
 import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
@@ -29,8 +32,9 @@ class CoursesListActivity : ComponentActivity() {
             androidContext(application)
             modules(
                 module {
-                    single { CourseInteractor(Course.Stub.courses) }
-                    viewModel { CoursesViewModel(get()) }
+                    singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
+                    singleOf(::CourseInteractor)
+                    viewModelOf(::CoursesViewModel)
                 }
             )
         }
