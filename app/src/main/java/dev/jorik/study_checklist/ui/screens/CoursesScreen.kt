@@ -10,9 +10,8 @@ import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
 @Composable
 fun CoursesScreen(
-    onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
-    onAddClick: ()->Unit,
+    onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: CoursesViewModel = koinViewModel()
@@ -20,9 +19,8 @@ fun CoursesScreen(
 
     CoursesLayout(
         courses = courses,
-        modifier = modifier,
-        onAddButtonClick = onAddClick,
         onContentScreen = { onContentScreen(it.id) },
-        onEditScreen = { onEditScreen(it.id) },
+        onAddButtonClick = onAddClick,
+        modifier = modifier,
     )
 }
