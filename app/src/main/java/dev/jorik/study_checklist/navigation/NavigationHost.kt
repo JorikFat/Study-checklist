@@ -20,7 +20,6 @@ fun NavigationHost() {
 
         composable<Destination.Courses> {
             CoursesScreen(
-                onEditScreen = {navController.navigate(Destination.Edit(it))},
                 onContentScreen = {navController.navigate(Destination.Content(it))},
                 onAddClick = { navController.navigate(Destination.Create()) }
             )

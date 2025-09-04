@@ -1,6 +1,6 @@
 package com.example.courses
 
-import com.example.courses.database.repository.CoursesRepository
+import com.example.courses.repository.CoursesRepository
 import com.example.courses.models.Course
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow

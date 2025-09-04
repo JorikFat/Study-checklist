@@ -40,7 +40,6 @@ fun NavigationHost() {
         }
         composable<Courses> {
             CoursesListScreen(
-                onEditScreen = {},
                 onContentScreen = {},
                 onAddClick = {}
             )
@@ -54,7 +53,7 @@ fun NavigationHost() {
             ContentScreen(id)
         }
         composable<Create> {
-            CourseEditingScreen(-1, { navController.popBackStack() })
+            CourseEditingScreen(0, { navController.popBackStack() })
         }
     }
 }
