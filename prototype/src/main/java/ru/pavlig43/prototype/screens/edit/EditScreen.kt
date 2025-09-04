@@ -55,7 +55,10 @@ fun CourseEditingScreen(
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
         onDeleteLesson = viewModel::onDeleteLesson,
-        onSave = viewModel::onSave,
+        onSave = {
+            viewModel.onSave()
+            onCloseScreen()
+        },
         onNavigateBack = { isDialogShow = true },
         onDeleteCourse = {
             viewModel.onDeleteCourse()
