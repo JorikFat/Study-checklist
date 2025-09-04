@@ -3,8 +3,8 @@ package dev.jorik.study_checklist.di
 import androidx.room.Room
 import com.example.courses.CourseInteractor
 import com.example.courses.database.AppDatabase
-import com.example.courses.database.repository.CoursesRepository
-import com.example.courses.database.repository.CoursesRepositoryImpl
+import com.example.courses.repository.CoursesRepository
+import com.example.courses.repository.CoursesRepositoryImpl
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentViewModel

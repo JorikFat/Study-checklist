@@ -1,4 +1,4 @@
-package com.example.courses.database.repository
+package com.example.courses.repository
 
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson

@@ -1,9 +1,9 @@
-package com.example.courses.database.repository
+package com.example.courses.repository
 
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 
-class FakeCoursesRepository :CoursesRepository {
+class MemoryCoursesRepository : CoursesRepository {
 
     private val stubCourses :MutableList<Course> = Course.Stub.courses.toMutableList()
 
@@ -54,7 +54,7 @@ class FakeCoursesRepository :CoursesRepository {
     private fun courseIndexById(id :Int) :Int = stubCourses.indexOfFirst { it.id == id }
 }
 
-fun <T, R> List<T>.replaceFirstBy(item :T, selector: (T)->R) : List<T> {
+private fun <T, R> List<T>.replaceFirstBy(item :T, selector: (T)->R) : List<T> {
     val mutable = toMutableList()
     val index = indexOfFirst { selector(item) == selector(it) }
     mutable[index] = item

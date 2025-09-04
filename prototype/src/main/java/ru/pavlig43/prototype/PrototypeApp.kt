@@ -2,11 +2,12 @@ package ru.pavlig43.prototype
 
 import android.app.Application
 import com.example.courses.CourseInteractor
-import com.example.courses.database.repository.CoursesRepository
-import com.example.courses.database.repository.FakeCoursesRepository
+import com.example.courses.repository.CoursesRepository
+import com.example.courses.repository.MemoryCoursesRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import ru.pavlig43.prototype.screens.content.contentModule
@@ -23,7 +24,7 @@ class PrototypeApp : Application() {
             androidContext(this@PrototypeApp)
             modules(
                 module {
-                    single <CoursesRepository> { FakeCoursesRepository() }//todo: rewrite to singleOf
+                    singleOf(::MemoryCoursesRepository) { bind<CoursesRepository>() }
                     singleOf(::CourseInteractor)
                 },
                 coursesListModule,

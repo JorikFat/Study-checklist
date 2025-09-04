@@ -9,8 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
-import com.example.courses.database.repository.CoursesRepository
-import com.example.courses.database.repository.FakeCoursesRepository
+import com.example.courses.repository.CoursesRepository
+import com.example.courses.repository.MemoryCoursesRepository
 import com.pavlig43.displayingcoursecontent.ui.theme.Study_checklistTheme
 import dev.jorik.study_checklist.course_content.ui.DisplayCourseContentLayout
 import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentViewModel
@@ -32,7 +32,7 @@ class CourseContentActivity : ComponentActivity() {
                 androidLogger()
                 androidContext(application)
                 modules(module {
-                    singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
+                    singleOf(::MemoryCoursesRepository) { bind<CoursesRepository>() }
                     singleOf(::CourseInteractor)
                     viewModel { (id: Int) -> DisplayingCourseContentViewModel(id, get()) }
                 })
