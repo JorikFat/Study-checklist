@@ -37,3 +37,4 @@ include(
     ":features:course-edit:sample",
     ":features:course-edit:lib"
 )
+include(":core")
