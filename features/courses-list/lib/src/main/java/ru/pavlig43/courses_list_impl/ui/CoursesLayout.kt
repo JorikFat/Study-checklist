@@ -1,7 +1,7 @@
 package ru.pavlig43.courses_list_impl.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,11 +25,10 @@ import androidx.compose.ui.unit.dp
 import ru.pavlig43.courses_list_impl.data.CourseItemViewState
 
 //TODO: rename to "CoursesListLayout"
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoursesLayout(
     courses: List<CourseItemViewState>,
-    onEditScreen: (CourseItemViewState) -> Unit,
     onContentScreen: (CourseItemViewState) -> Unit,
     onAddButtonClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -64,10 +63,8 @@ fun CoursesLayout(
                     course = course,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .combinedClickable(
-                            onClick = { onContentScreen(course) },
-                            onLongClick = { onEditScreen(course) }
-                        )
+                        .padding(16.dp)
+                        .clickable { onContentScreen(course) }
                 )
             }
         }
@@ -75,58 +72,19 @@ fun CoursesLayout(
 }
 
 
-//@Composable
-//fun CoursesLayout(
-//    courses: List<CourseItemViewState>,
-//    onEditScreen: (Int) -> Unit,
-//    onContentScreen: (Int) -> Unit,
-//    modifier: Modifier = Modifier
-//) {
-//    Column(
-//        modifier
-//            .fillMaxSize()
-//            .padding(24.dp)
-//    ) {
-//        courses.forEach { course ->
-//            CourseCard(
-//                course = course,
-//                onEditScreen = onEditScreen,
-//                onContentScreen = onContentScreen,
-//                modifier = Modifier.fillMaxWidth()
-//            )
-//        }
-//    }
-//}
 
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 private fun CourseCard(
     course: CourseItemViewState,
     modifier: Modifier = Modifier
 ) {
     OutlinedCard(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier,
     ) {
         Text(course.displayName, modifier = Modifier.padding(16.dp))
     }
-//    course: CourseItemViewState,
-//    onEditScreen: (Int) -> Unit,
-//    onContentScreen: (Int) -> Unit,
-//    modifier: Modifier = Modifier
-//)
-//        {
-//    Column(modifier.fillMaxWidth()) {
-//        OutlinedCard(
-//            modifier = modifier.padding(16.dp).combinedClickable(
-//                onClick = {onContentScreen(course.id)},
-//                onLongClick = {onEditScreen(course.id)}
-//            ),
-//        ) {
-//            Text(course.displayName, modifier = Modifier.padding(16.dp))
-//        }
-//
-//    }
-//
+
 }
 
 
@@ -149,7 +107,6 @@ fun CoursesLayoutPreview(modifier: Modifier = Modifier) {
 //        )
         CoursesLayout(
             onContentScreen = {},
-            onEditScreen = {},
             onAddButtonClick = {},
             courses = courseList,
         )

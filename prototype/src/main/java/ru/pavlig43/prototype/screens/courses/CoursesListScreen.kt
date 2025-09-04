@@ -10,7 +10,6 @@ import ru.pavlig43.courses_list_impl.ui.CoursesViewModel
 
 @Composable
 fun CoursesListScreen(
-    onEditScreen: (Int) -> Unit,
     onContentScreen: (Int) -> Unit,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -20,9 +19,8 @@ fun CoursesListScreen(
 
     CoursesLayout(
         courses = courses,
-        modifier = modifier,
-        onAddButtonClick = onAddClick,
         onContentScreen = { onContentScreen(it.id) },
-        onEditScreen = { onEditScreen(it.id) },
+        onAddButtonClick = onAddClick,
+        modifier = modifier,
     )
 }
