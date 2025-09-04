@@ -40,7 +40,6 @@ fun NavigationHost() {
         }
         composable<Courses> {
             CoursesListScreen(
-                onEditScreen = {},
                 onContentScreen = {},
                 onAddClick = {}
             )

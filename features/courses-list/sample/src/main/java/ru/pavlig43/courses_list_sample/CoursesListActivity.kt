@@ -50,17 +50,15 @@ class CoursesListActivity : ComponentActivity() {
 private fun CoursesScreen(
     modifier: Modifier = Modifier,
     onContentScreen: (Int) -> Unit = {},
-    onEditScreen: (Int) -> Unit = {},
 ) {
     val viewModel: CoursesViewModel = koinViewModel()
     val courses by viewModel.courses.collectAsState()
 
     CoursesLayout(
         courses = courses,
-        modifier = modifier,
-        onAddButtonClick = {},
-        onEditScreen = { onEditScreen(it.id) },
         onContentScreen = { onContentScreen(it.id) },
+        onAddButtonClick = {},
+        modifier = modifier,
     )
 }
 
