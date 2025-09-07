@@ -2,6 +2,7 @@ package com.example.courses
 
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.models.Course
+import com.example.courses.models.Lesson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,10 +37,17 @@ class CourseInteractor(
 //    }
 
     fun updateCourse(course: Course) {
-        updateCourseList { lst ->
-            lst.removeIf { course.id == it.id }
-            lst.add(course)
+
+        _courseMenuList.value.find { it.id == course.id }?.let { old ->
+            val diff = old.lessons.filterNot { course.lessons.contains(it) }
+            useAsync {coursesRepository.courseUpdate(course, diff) }
         }
+
+//        updateCourseList { lst ->
+//            lst.removeIf { course.id == it.id }
+//            lst.add(course)
+//        }
+
     }
 
     fun deleteCourse(id: Int) {
