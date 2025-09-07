@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import androidx.room.Upsert
 import com.example.courses.database.entities.CourseContentEntity
 import com.example.courses.database.entities.CourseEntity
 import com.example.courses.database.entities.LessonEntity
@@ -57,5 +58,21 @@ interface DAO {
         courseUpdate(courseContent.course)
         courseContent.lessons.forEach { lessonUpdate(it) }
     }
+
+    @Transaction
+    suspend fun courseFullUpdate(
+        course: CourseEntity,
+        lessonsToDelete: List<LessonEntity>,
+        lessonsToUpsert: List<LessonEntity>
+    ) {
+        courseUpdate(course)
+        lessonsToDelete.forEach { lessonDelete(it) }
+        lessonsToUpsert.forEach { upsertLesson(it) }
+    }
+
+    @Upsert
+    suspend fun upsertLesson(lessonEntity: LessonEntity)
+
+
 
 }
