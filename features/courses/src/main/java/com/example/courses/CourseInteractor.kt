@@ -2,7 +2,6 @@ package com.example.courses
 
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.models.Course
-import com.example.courses.models.Lesson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,10 +15,10 @@ class CourseInteractor(
     val courseMenuList = _courseMenuList.asStateFlow()
 
     init {
-        useAsync()
+        launchOnGlobalScope { initCourses() }
     }
 
-    suspend fun initCourses() {
+    private suspend fun initCourses() {
         _courseMenuList.update {
             coursesRepository.getCourses()
         }
@@ -29,82 +28,8 @@ class CourseInteractor(
         return _courseMenuList.value.find { it.id == id }
     }
 
-    fun createCourse(course: Course) = useAsync { coursesRepository.courseCreate(course) }
 
-//    {
-//        val lastIndex = _courseMenuList.value.maxOfOrNull { it.id }
-//        updateCourseList { it.add(course.copy(id = lastIndex?.plus(1) ?: 0)) }
-//    }
-
-    fun updateCourse(course: Course) {
-
-        _courseMenuList.value.find { it.id == course.id }?.let { old ->
-            val diff = old.lessons.filterNot { course.lessons.contains(it) }
-            useAsync {coursesRepository.courseUpdate(course, diff) }
-        }
-
-//        updateCourseList { lst ->
-//            lst.removeIf { course.id == it.id }
-//            lst.add(course)
-//        }
-
-    }
-
-    fun deleteCourse(id: Int) {
-        updateCourseList { it.removeIf { course -> course.id == id } }
-    }
-
-//    fun toggleLesson(courseId: Int, lessonId: Int){
-//        val course = _courseMenuList.value.first { it.id == courseId}
-//        val updatedLessons = course.lessons.map { lesson ->
-//            if (lesson.id == lessonId) {
-//                lesson.copy(isChecked = !lesson.isChecked)
-//            } else {
-//                lesson
-//    fun updateCourse(course: Course) = useAsync { coursesRepository.courseUpdate(course) }
-
-//    {
-//        updateCourseList { lst ->
-//            lst.removeIf { course.id == it.id }
-//            lst.add(course)
-//        }
-//    }
-
-    fun toggleLesson(courseId: Int, lessonId: Int) = useAsync {
-
-        _courseMenuList.value
-            .flatMap { it.lessons }
-            .find { it.id == lessonId }
-            ?.let { lesson ->
-                coursesRepository.lessonUpdate(
-                    courseId = courseId,
-                    lesson = lesson.copy(isChecked = !lesson.isChecked)
-                )
-            }
-    }
-//    {
-//        val course = _courseMenuList.value.first { it.id == courseId}
-//        val updatedLessons = course.lessons.map { lesson ->
-//            if (lesson.id == lessonId) {
-//                lesson.copy(isChecked = !lesson.isChecked)
-//            } else {
-//                lesson
-//            }
-//        }
-//        val updatedCourse = course.copy(
-//            lessons = updatedLessons
-//        )
-//        updateCourse(updatedCourse)
-//    }
-
-    private fun updateCourseList(action: (MutableList<Course>) -> Unit) {
-        val updatedList = _courseMenuList.value.toMutableList()
-        action(updatedList)
-        _courseMenuList.update { updatedList }
-    }
-
-    private fun useAsync(f: (suspend () -> Unit)? = null) = GlobalScope.launch {
-        f?.invoke()
-        initCourses()
+    private fun launchOnGlobalScope(block: suspend () -> Unit) = GlobalScope.launch {
+        block.invoke()
     }
 }
