@@ -1,7 +1,6 @@
 package ru.pavlig.course_edit.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +29,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,25 +75,20 @@ fun CourseEditingLayout(
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValues ->
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
             LessonsList(
                 lessons = course.lessons.map { it.name },
                 onChangeLessonName = onChangeLessonName,
-                modifier = Modifier.fillMaxWidth(),
                 onAddLesson = onAddLesson,
-                onDeleteLesson = onDeleteLesson
+                onDeleteLesson = onDeleteLesson,
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
             )
 
         }
     }
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -152,7 +145,7 @@ private fun LessonsList(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        state = lazyListState
+        state = lazyListState,
     ) {
         itemsIndexed(lessons) { index, lesson ->
             LessonItem(
