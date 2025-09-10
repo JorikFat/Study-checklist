@@ -17,12 +17,15 @@ import com.example.courses.database.entities.LessonEntity
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getDao(): DAO
+    companion object{
+        fun createAppDataBase(context: Context): AppDatabase {
+            return Room.databaseBuilder(
+                context = context,
+                klass = AppDatabase::class.java,
+                name = "app_db"
+            ).build()
+        }
+    }
 }
 
-fun createAppDataBase(context: Context): AppDatabase {
-    return Room.databaseBuilder(
-        context = context,
-        klass = AppDatabase::class.java,
-        name = "app_db"
-    ).build()
-}
+

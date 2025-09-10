@@ -27,8 +27,8 @@ class RoomPlugin : Plugin<Project> {
             }
 
             dependencies {
-                implementation(libs.room.kts)
-                implementation(libs.room.runtime)
+                add("api",libs.room.kts)
+                add("api",libs.room.runtime)
                 add("ksp", libs.room.compiler)
             }
         }
