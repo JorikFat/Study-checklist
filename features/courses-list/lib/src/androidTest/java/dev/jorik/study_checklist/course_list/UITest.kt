@@ -23,7 +23,6 @@ class UITest {
                     CourseItemViewState(3, "Design Patterns"),
                 ),
                 onContentScreen = {},
-                onEditScreen = {},
                 onAddButtonClick = {}
             )
         }
@@ -43,7 +42,6 @@ class UITest {
                     CourseItemViewState(3, "Custom View"),
                 ),
                 onContentScreen = {},
-                onEditScreen = {},
                 onAddButtonClick = {}
             )
         }
