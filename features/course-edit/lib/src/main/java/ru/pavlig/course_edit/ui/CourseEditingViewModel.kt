@@ -1,20 +1,21 @@
 package ru.pavlig.course_edit.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.courses.CourseInteractor
+import androidx.lifecycle.viewModelScope
+import com.example.courses.CourseEditInteractor
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class CourseEditingViewModel(
-    private val id: Int,
-    private val courseInteractor: CourseInteractor
+    private val courseEditInteractor: CourseEditInteractor
 ) : ViewModel() {
 
     private val _courseState = MutableStateFlow(
-        courseInteractor.findCourseById(id)?.toViewState() ?: CourseDraftViewState()
+        courseEditInteractor.initialCourse.toViewState()
     )
     val courseState = _courseState.asStateFlow()
 
@@ -35,8 +36,11 @@ class CourseEditingViewModel(
             )
         }
     }
-    fun onDeleteCourse(){
-        courseInteractor.deleteCourse(id)
+
+    fun onDeleteCourse() {
+        viewModelScope.launch {
+            courseEditInteractor.deleteCourse()
+        }
     }
 
     fun onAddLesson() {
@@ -60,10 +64,8 @@ class CourseEditingViewModel(
     }
 
     fun onSave() {
-        if (id == 0) {
-            courseInteractor.createCourse(_courseState.value.toCourse())
-        } else {
-            courseInteractor.updateCourse(_courseState.value.toCourse())
+        viewModelScope.launch {
+            courseEditInteractor.updateCourse(_courseState.value.toCourse())
         }
     }
 

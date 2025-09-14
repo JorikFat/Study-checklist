@@ -2,22 +2,19 @@ package com.example.courses
 
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CourseEditInteractor(
     val initialCourse: Course,
     private val coursesRepository: CoursesRepository
 ) {
 
-    suspend fun createCourse(course: Course) {
-        coursesRepository.courseCreate(course)
-    }
-
     suspend fun updateCourse(course: Course) {
-        initialCourse.lessons.filterNot { course.lessons.contains(it) }.let {
-            coursesRepository.courseUpdate(course, it)
-        }
+        if (initialCourse.id == 0) coursesRepository.courseCreate(course)
+        else initialCourse.lessons
+            .filterNot { course.lessons.contains(it) }
+            .let {
+                coursesRepository.courseUpdate(course, it)
+            }
     }
 
     suspend fun deleteCourse() {
