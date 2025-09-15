@@ -8,26 +8,29 @@ import com.example.courses.models.Lesson
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 //TODO: rename to ContentViewModel
 class DisplayingCourseContentViewModel(
-   private val id: Int,
+    private val id: Int,
     private val courseInteractor: CourseInteractor,
 ) : ViewModel() {
     val courseState = courseInteractor.courseMenuList
-        .map {lst-> lst.first { it.id == id }.toViewState() }
-            .stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        CourseViewState()
-    )
-
-
-    fun toggleLesson(lessonId: Int){
-        courseInteractor.toggleLesson(
-            courseId = id,
-            lessonId = lessonId
+        .map { lst -> lst.first { it.id == id }.toViewState() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            CourseViewState()
         )
+
+
+    fun toggleLesson(lessonId: Int) {
+        viewModelScope.launch {
+            courseInteractor.toggleLesson(
+                courseId = id,
+                lessonId = lessonId
+            )
+        }
     }
 
 }

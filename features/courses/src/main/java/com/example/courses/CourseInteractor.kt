@@ -28,6 +28,18 @@ class CourseInteractor(
         return _courseMenuList.value.find { it.id == id }
     }
 
+    suspend fun toggleLesson(courseId: Int, lessonId: Int) {
+        findCourseById(courseId)!!.lessons
+            .find { it.id == lessonId }
+            ?.let { lesson ->
+                coursesRepository.lessonUpdate(
+                    courseId = courseId,
+                    lesson = lesson.copy(isChecked = !lesson.isChecked)
+                )
+            }
+        initCourses()
+    }
+
 
     private fun launchOnGlobalScope(block: suspend () -> Unit) = GlobalScope.launch {
         block.invoke()
