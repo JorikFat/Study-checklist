@@ -11,7 +11,7 @@ interface CoursesRepository {
 
     suspend fun courseDelete(course: Course)
 
-    suspend fun courseUpdate(course: Course)
+    suspend fun courseUpdate(course: Course, ld: List<Lesson>)
 
     suspend fun lessonCreate(courseId: Int, lesson: Lesson)
 

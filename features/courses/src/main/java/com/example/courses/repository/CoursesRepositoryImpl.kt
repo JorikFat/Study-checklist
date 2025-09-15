@@ -23,10 +23,18 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
         dao.courseDelete(CourseEntity(course.id, course.displayName))
     }
 
-    override suspend fun courseUpdate(course: Course) {
-        dao.courseUpdate(
-            course.toEntity()
-        )
+    override suspend fun courseUpdate(course: Course, ld: List<Lesson>) {
+//        dao.courseUpdate(
+//            course.toEntity()
+//        )
+        with(course.toEntity()) {
+            dao.courseFullUpdate(
+                course = this.course,
+                lessonsToDelete = ld.map { it.toEntity(this.course.id) },
+                lessonsToUpsert = this.lessons
+            )
+        }
+
     }
 
     override suspend fun lessonCreate(courseId: Int, lesson: Lesson) {

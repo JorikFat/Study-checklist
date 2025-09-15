@@ -19,7 +19,7 @@ class FakeCoursesRepository : CoursesRepository {
         stubCourses.removeIf { it.id == course.id }
     }
 
-    override suspend fun courseUpdate(course: Course) {
+    override suspend fun courseUpdate(course: Course, ld: List<Lesson>) {
         val courseIndex = courseIndexById(course.id)
         stubCourses[courseIndex] = course
     }
