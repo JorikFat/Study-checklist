@@ -56,16 +56,8 @@ fun CourseEditingLayout(
             )
         },
         floatingActionButton = {
-            IconButton(
-                onDeleteCourse,
-                colors = IconButtonColors(
-                    containerColor = Color.Red,
-                    contentColor = Color.White,
-                    disabledContainerColor = Color.Red,
-                    disabledContentColor = Color.White
-                )
-            ) {
-                Icon(Icons.Default.Delete, "delete")
+            if (course.id !=0 ){
+                FabDelete(onDeleteCourse)
             }
         },
         floatingActionButtonPosition = FabPosition.Start
@@ -92,6 +84,25 @@ fun CourseEditingLayout(
         }
     }
 }
+@Composable
+private fun FabDelete(
+    onDeleteCourse: () -> Unit,
+    modifier: Modifier = Modifier
+){
+        IconButton(
+            onDeleteCourse,
+            modifier = modifier,
+            colors = IconButtonColors(
+                containerColor = Color.Red,
+                contentColor = Color.White,
+                disabledContainerColor = Color.Red,
+                disabledContentColor = Color.White
+            )
+        ) {
+            Icon(Icons.Default.Delete, "delete")
+        }
+    }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
