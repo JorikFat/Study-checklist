@@ -8,11 +8,18 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import ru.pavlig.course_edit.CourseEditingViewModel
+import ru.pavlig.course_edit.logic.CourseDraftEditor
 
 val editModule = module {
-    factory { (courseId: Int) ->
+    factory<CourseDraftEditor> { (courseId :Int) ->
         val course :Course? = get<CourseInteractor>().findCourseById(courseId)
-        CourseEditInteractor(course, get<CoursesRepository>())
+        CourseDraftEditor(course)
+    }
+    factory { (courseId: Int) ->
+        CourseEditInteractor(
+            get<CourseDraftEditor> { parametersOf(courseId) },
+            get<CoursesRepository>()
+        )
     }
     viewModel { (courseId: Int) ->
         CourseEditingViewModel(get<CourseEditInteractor> {

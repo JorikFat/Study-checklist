@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
+import com.example.courses.models.Course
 import ru.pavlig.course_edit.logic.CourseEditInteractor
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.FakeCoursesRepository
@@ -24,6 +25,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.pavlig.course_edit.CourseEditingLayout
 import ru.pavlig.course_edit.CourseEditingViewModel
+import ru.pavlig.course_edit.logic.CourseDraftEditor
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +38,12 @@ class CourseEditActivity : ComponentActivity() {
                     module {
                         singleOf(::FakeCoursesRepository) bind(CoursesRepository::class)
                         single<CourseInteractor> { CourseInteractor(get<CoursesRepository>()) }
+                        factory { (course : Course?) -> CourseDraftEditor(course) }
                         factory { (id: Int) ->
+                            val course :Course? = get<CourseInteractor>().findCourseById(id)
                             CourseEditInteractor(
-                                initialCourse = get<CourseInteractor>().findCourseById(id),
-                                coursesRepository = get()
+                                get<CourseDraftEditor> { parametersOf(course) },
+                                repository = get<CoursesRepository>()
                             )
                         }
                         viewModel { (id: Int) -> CourseEditingViewModel(get { parametersOf(id) }) }

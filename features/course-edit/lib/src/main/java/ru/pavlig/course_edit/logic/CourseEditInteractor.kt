@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 
 class CourseEditInteractor(
     private val editor: CourseDraftEditor,
-    private val coursesRepository: CoursesRepository
+    private val repository: CoursesRepository
 ) {
 
     private val state = MutableStateFlow(editor.draft)
@@ -15,16 +15,16 @@ class CourseEditInteractor(
 
     suspend fun updateCourse() {
         val newCourse = editor.course
-        if (newCourse.id == 0) coursesRepository.courseCreate(newCourse)
+        if (newCourse.id == 0) repository.courseCreate(newCourse)
         else newCourse.lessons
             .filterNot { newCourse.lessons.contains(it) }
             .let {
-                coursesRepository.courseUpdate(newCourse, it)
+                repository.courseUpdate(newCourse, it)
             }
     }
 
     suspend fun deleteCourse() =
-        coursesRepository.courseDelete(editor.course)
+        repository.courseDelete(editor.course)
 
     fun changeCourseName(name :String){
         editor.changeCourseName(name)
