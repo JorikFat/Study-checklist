@@ -29,4 +29,5 @@ dependencies {
     implementation(projects.features.courseEdit.lib)
     implementation(projects.features.courseContent.lib)
     implementation(projects.features.courses)
+    implementation(projects.core)
 }
