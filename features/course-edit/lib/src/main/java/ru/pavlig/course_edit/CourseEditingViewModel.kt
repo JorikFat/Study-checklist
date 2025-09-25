@@ -13,24 +13,7 @@ import kotlinx.coroutines.launch
 class CourseEditingViewModel(
     private val interactor: CourseEditInteractor
 ) : ViewModel() {
-
-    private val _courseState :MutableStateFlow<CourseDraft> = MutableStateFlow(
-        interactor.initialCourse?.let(::CourseDraft) ?: CourseDraft()
-    )
-    val courseState = _courseState.asStateFlow()
-
-    fun onChangeCourseName(name: String) {
-        _courseState.update { it.copy(name = name) }
-    }
-
-    fun onChangeLessonName(index :Int, name: String) {
-        _courseState.update { course ->
-            course.copy(
-                lessons = course.lessons.toMutableList()
-                    .also { it[index] = it[index].copy(name = name) }
-            )
-        }
-    }
+    val courseState = interactor.flow
 
     fun onDeleteCourse() {
         viewModelScope.launch {
@@ -38,28 +21,21 @@ class CourseEditingViewModel(
         }
     }
 
-    fun onAddLesson() {
-        _courseState.update { course ->
-            course.copy(
-                lessons = course.lessons.plus(LessonDraft())
-            )
-        }
-    }
-
-    fun onDeleteLesson(index: Int) {
-        _courseState.update { course ->
-            course.copy(
-                lessons = course.lessons.minus(
-                    course.lessons[index]
-                )
-            )
-        }
-    }
-
     fun onSave() {
         viewModelScope.launch {
-            interactor.updateCourse(_courseState.value)
+            interactor.updateCourse()
         }
     }
 
+    fun onChangeCourseName(name: String) =
+        interactor.changeCourseName(name)
+
+    fun onChangeLessonName(index :Int, name: String) =
+        interactor.changeLessonName(index, name)
+
+    fun onAddLesson() =
+        interactor.addLesson()
+
+    fun onDeleteLesson(index: Int) =
+        interactor.deleteLesson(index)
 }

@@ -2,6 +2,7 @@ package dev.jorik.study_checklist.di
 
 import com.example.courses.CourseInteractor
 import com.example.courses.database.AppDatabase
+import com.example.courses.edit.CourseDraftEditor
 import com.example.courses.edit.CourseEditInteractor
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
@@ -18,16 +19,22 @@ internal val prototypeModule = module {
     single<AppDatabase> { AppDatabase.createAppDataBase(androidContext()) }
     factory<CoursesRepository> { CoursesRepositoryImpl(db = get()) }
     single { CourseInteractor(coursesRepository = get()) }
+    factory<CourseDraftEditor> { (courseId: Int) ->
+        val course: Course? = get<CourseInteractor>().findCourseById(courseId)
+        CourseDraftEditor(course)
+    }
     factory { (courseId: Int) ->
-        val course :Course? = get<CourseInteractor>().findCourseById(courseId)
-        CourseEditInteractor(course, get<CoursesRepository>())
+        CourseEditInteractor(
+            get<CourseDraftEditor> { parametersOf(courseId) },
+            get<CoursesRepository>()
+        )
     }
     viewModel { CoursesViewModel(get()) }
     viewModel { (courseId: Int) -> DisplayingCourseContentViewModel(courseId, get()) }
     viewModel { (courseId: Int) ->
-        CourseEditingViewModel(get<CourseEditInteractor> {
-            parametersOf(courseId)
-        })
+        CourseEditingViewModel(
+            get<CourseEditInteractor> { parametersOf(courseId) }
+        )
     }
 
 }
