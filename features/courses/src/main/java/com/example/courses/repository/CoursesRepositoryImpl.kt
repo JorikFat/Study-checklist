@@ -6,10 +6,16 @@ import com.example.courses.database.mappers.toCourse
 import com.example.courses.database.mappers.toEntity
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
 
     private val dao = db.getDao()
+
+    override fun listen(): Flow<List<Course>> {
+        return dao.listen().map { it.map { it.toCourse() } }
+    }
 
     override suspend fun getCourses(): List<Course> {
        return dao.getCourses().map { it.toCourse() }

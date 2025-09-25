@@ -10,9 +10,13 @@ import androidx.room.Upsert
 import com.example.courses.database.entities.CourseContentEntity
 import com.example.courses.database.entities.CourseEntity
 import com.example.courses.database.entities.LessonEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DAO {
+
+    @Query("SELECT * FROM CourseEntity")
+    fun listen() : Flow<List<CourseContentEntity>>
 
     // queries
     @Transaction
