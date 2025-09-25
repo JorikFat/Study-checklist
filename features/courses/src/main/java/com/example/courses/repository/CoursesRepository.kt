@@ -2,8 +2,11 @@ package com.example.courses.repository
 
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
+import kotlinx.coroutines.flow.Flow
 
 interface CoursesRepository {
+
+    fun listen(): Flow<List<Course>>
 
     suspend fun getCourses(): List<Course>
 
