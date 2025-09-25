@@ -10,8 +10,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.CourseEditingViewModel
+import ru.pavlig.course_edit.CourseEditingLayout
+import ru.pavlig.course_edit.CourseEditingViewModel
 import ru.pavlig43.core.UnsavedChangesDialog
 
 @Composable
@@ -34,7 +34,7 @@ fun CourseEditingScreen(
         )
     }
     CourseEditingLayout(
-        course = courseState,
+        draft = courseState,
         onChangeCourseName = viewModel::onChangeCourseName,
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
