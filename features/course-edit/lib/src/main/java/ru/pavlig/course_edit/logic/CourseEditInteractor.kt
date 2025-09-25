@@ -15,12 +15,13 @@ class CourseEditInteractor(
 
     suspend fun updateCourse() {
         val newCourse = editor.course
-        if (newCourse.id == 0) repository.courseCreate(newCourse)
-        else newCourse.lessons
-            .filterNot { newCourse.lessons.contains(it) }
-            .let {
-                repository.courseUpdate(newCourse, it)
-            }
+        if (editor.srcCourse == null) {
+            repository.courseCreate(newCourse)
+        } else {
+            editor.srcCourse.lessons
+                .filterNot { newCourse.lessons.contains(it) }
+                .let { repository.courseUpdate(newCourse, it) }
+        }
     }
 
     suspend fun deleteCourse() =

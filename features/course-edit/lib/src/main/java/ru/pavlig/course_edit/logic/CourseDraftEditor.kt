@@ -5,8 +5,8 @@ import ru.pavlig.course_edit.logic.models.LessonDraft
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 
-class CourseDraftEditor(course: Course?) {
-    var draft: CourseDraft = course?.let(::CourseDraft) ?: CourseDraft()
+class CourseDraftEditor(val srcCourse: Course?) {
+    var draft: CourseDraft = srcCourse?.let(::CourseDraft) ?: CourseDraft()
         private set
     val course: Course get() = draft.course
 
