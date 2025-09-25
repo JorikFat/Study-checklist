@@ -1,6 +1,6 @@
 package ru.pavlig43.prototype.screens.edit
 
-import com.example.courses.edit.CourseEditInteractor
+import ru.pavlig.course_edit.logic.CourseEditInteractor
 import com.example.courses.CourseInteractor
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository

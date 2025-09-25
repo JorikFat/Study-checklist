@@ -2,12 +2,7 @@ package ru.pavlig.course_edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.courses.edit.CourseEditInteractor
-import com.example.courses.edit.models.CourseDraft
-import com.example.courses.edit.models.LessonDraft
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import ru.pavlig.course_edit.logic.CourseEditInteractor
 import kotlinx.coroutines.launch
 
 class CourseEditingViewModel(

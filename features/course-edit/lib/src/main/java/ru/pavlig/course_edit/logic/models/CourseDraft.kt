@@ -1,4 +1,4 @@
-package com.example.courses.edit.models
+package ru.pavlig.course_edit.logic.models
 
 import com.example.courses.models.Course
 

@@ -35,8 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.courses.edit.models.CourseDraft
-import com.example.courses.edit.models.LessonDraft
+import ru.pavlig.course_edit.logic.models.CourseDraft
+import ru.pavlig.course_edit.logic.models.LessonDraft
 
 @Composable
 fun CourseEditingLayout(

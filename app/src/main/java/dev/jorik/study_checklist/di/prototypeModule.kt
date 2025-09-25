@@ -2,8 +2,8 @@ package dev.jorik.study_checklist.di
 
 import com.example.courses.CourseInteractor
 import com.example.courses.database.AppDatabase
-import com.example.courses.edit.CourseDraftEditor
-import com.example.courses.edit.CourseEditInteractor
+import ru.pavlig.course_edit.logic.CourseDraftEditor
+import ru.pavlig.course_edit.logic.CourseEditInteractor
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.CoursesRepositoryImpl

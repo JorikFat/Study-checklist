@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
-import com.example.courses.edit.CourseEditInteractor
+import ru.pavlig.course_edit.logic.CourseEditInteractor
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.FakeCoursesRepository
 import com.pavlig43.courceediting.ui.theme.Study_checklistTheme

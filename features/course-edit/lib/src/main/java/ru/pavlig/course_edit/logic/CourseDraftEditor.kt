@@ -1,7 +1,7 @@
-package com.example.courses.edit
+package ru.pavlig.course_edit.logic
 
-import com.example.courses.edit.models.CourseDraft
-import com.example.courses.edit.models.LessonDraft
+import ru.pavlig.course_edit.logic.models.CourseDraft
+import ru.pavlig.course_edit.logic.models.LessonDraft
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 

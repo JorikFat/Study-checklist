@@ -3,8 +3,8 @@ package ru.pavlig.course_edit
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.courses.edit.models.CourseDraft
-import com.example.courses.edit.models.LessonDraft
+import ru.pavlig.course_edit.logic.models.CourseDraft
+import ru.pavlig.course_edit.logic.models.LessonDraft
 import org.junit.Rule
 import org.junit.Test
 

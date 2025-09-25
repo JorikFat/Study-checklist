@@ -1,4 +1,4 @@
-package com.example.courses.edit
+package ru.pavlig.course_edit.logic
 
 import com.example.courses.repository.CoursesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
