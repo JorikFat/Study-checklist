@@ -4,42 +4,36 @@ import com.example.courses.edit.models.CourseDraft
 import com.example.courses.edit.models.LessonDraft
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class CourseDraftEditor(course: Course?) {
+    var draft: CourseDraft = course?.let(::CourseDraft) ?: CourseDraft()
+        private set
+    val course: Course get() = draft.course
 
-    private val state = MutableStateFlow(course?.let(::CourseDraft) ?: CourseDraft())
-    val flow = state.asStateFlow()
-    val course: Course get() = state.value.course
+    fun changeCourseName(name: String) {
+        draft = draft.copy(name = name)
+    }
 
-    fun changeCourseName(name: String) =
-        state.update { it.copy(name = name) }
+    fun changeLessonName(index: Int, name: String) {
+        draft = draft.copy(
+            lessons = draft.lessons.toMutableList()
+                .also { it[index] = it[index].copy(name = name) }
+        )
+    }
 
-    fun changeLessonName(index: Int, name: String) =
-        state.update { course ->
-            course.copy(
-                lessons = course.lessons.toMutableList()
-                    .also { it[index] = it[index].copy(name = name) }
+    fun addLesson() {
+        draft = draft.copy(
+            lessons = draft.lessons.plus(LessonDraft())
+        )
+    }
+
+    fun deleteLesson(index: Int) {
+        draft = draft.copy(
+            lessons = draft.lessons.minus(
+                draft.lessons[index]
             )
-        }
-
-    fun addLesson() =
-        state.update { course ->
-            course.copy(
-                lessons = course.lessons.plus(LessonDraft())
-            )
-        }
-
-    fun deleteLesson(index: Int) =
-        state.update { course ->
-            course.copy(
-                lessons = course.lessons.minus(
-                    course.lessons[index]
-                )
-            )
-        }
+        )
+    }
 
     private val CourseDraft.course: Course
         get() = Course(
