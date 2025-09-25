@@ -21,6 +21,9 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
        return dao.getCourses().map { it.toCourse() }
     }
 
+    override suspend fun getCourse(id: Int): Course =
+        dao.getCourse(id).toCourse()
+
     override suspend fun courseCreate(course: Course) {
         dao.courseCreate(course.toEntity())
     }

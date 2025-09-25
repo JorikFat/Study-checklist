@@ -2,23 +2,32 @@ package ru.pavlig.course_edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.StateFlow
 import ru.pavlig.course_edit.logic.CourseEditInteractor
 import kotlinx.coroutines.launch
+import ru.pavlig.course_edit.logic.CourseEditState
 
 class CourseEditingViewModel(
+    courseId :Int,
     private val interactor: CourseEditInteractor
 ) : ViewModel() {
-    val courseState = interactor.flow
+    val courseState :StateFlow<CourseEditState> = interactor.flow
 
-    fun onDeleteCourse() {
+    init {
         viewModelScope.launch {
-            interactor.deleteCourse()
+            interactor.init(courseId)
         }
     }
 
     fun onSave() {
         viewModelScope.launch {
             interactor.updateCourse()
+        }
+    }
+
+    fun onDeleteCourse() {
+        viewModelScope.launch {
+            interactor.deleteCourse()
         }
     }
 

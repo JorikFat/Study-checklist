@@ -5,10 +5,17 @@ import ru.pavlig.course_edit.logic.models.LessonDraft
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 
-class CourseDraftEditor(val srcCourse: Course?) {
-    var draft: CourseDraft = srcCourse?.let(::CourseDraft) ?: CourseDraft()
+class CourseDraftEditor {
+    var srcCourse :Course? = null
+        private set
+    lateinit var draft: CourseDraft
         private set
     val course: Course get() = draft.course
+
+    fun init(course: Course? = null){
+        srcCourse = course
+        this.draft = srcCourse?.let(::CourseDraft) ?: CourseDraft()
+    }
 
     fun changeCourseName(name: String) {
         draft = draft.copy(name = name)

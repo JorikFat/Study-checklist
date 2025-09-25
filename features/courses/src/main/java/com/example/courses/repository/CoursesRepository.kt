@@ -10,6 +10,8 @@ interface CoursesRepository {
 
     suspend fun getCourses(): List<Course>
 
+    suspend fun getCourse(id :Int) :Course
+
     suspend fun courseCreate(course: Course)
 
     suspend fun courseDelete(course: Course)

@@ -47,7 +47,7 @@ fun NavigationHost() {
         }
         composable<Destination.Create> {
             CourseEditingScreen(
-                courseId = -1,
+                courseId = 0,
                 onCoursesScreen = {
                     navController.navigate(Destination.Courses) {
                         popUpTo(0) { inclusive = true }
