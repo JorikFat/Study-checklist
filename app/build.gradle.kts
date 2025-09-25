@@ -11,9 +11,9 @@ android {
 
     defaultConfig {
         applicationId = "dev.jorik.study_checklist"
-        versionCode = 1
-        versionName = "1.0"
-        setProperty("archivesBaseName", "StudyChecklist_prototype v${versionName} [${versionCode}]")
+        versionCode = 3
+        versionName = "1.0.1"
+        setProperty("archivesBaseName", "StudyChecklist v${versionName} [${versionCode}]")
     }
 
 
@@ -23,6 +23,7 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.navigation.compose)
+    implementation(libs.androidx.ui.test.junit4)//FIXME: connect via modules
 
     implementation(projects.features.coursesList.lib)
     implementation(projects.features.courseEdit.lib)

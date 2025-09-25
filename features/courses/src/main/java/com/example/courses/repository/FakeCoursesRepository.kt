@@ -2,10 +2,15 @@ package com.example.courses.repository
 
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class FakeCoursesRepository : CoursesRepository {
 
     private val stubCourses :MutableList<Course> = Course.Stub.courses.toMutableList()
+    override fun listen(): Flow<List<Course>> {
+        return flow { stubCourses.toList() }
+    }
 
     override suspend fun getCourses(): List<Course> =
         stubCourses.toList()
@@ -19,7 +24,7 @@ class FakeCoursesRepository : CoursesRepository {
         stubCourses.removeIf { it.id == course.id }
     }
 
-    override suspend fun courseUpdate(course: Course) {
+    override suspend fun courseUpdate(course: Course, ld: List<Lesson>) {
         val courseIndex = courseIndexById(course.id)
         stubCourses[courseIndex] = course
     }

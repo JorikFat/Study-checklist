@@ -38,10 +38,12 @@ class DisplayingCourseContentViewModel(
 
 
     fun toggleLesson(lessonId: Int) {
-        courseInteractor.toggleLesson(
-            courseId = id,
-            lessonId = lessonId
-        )
+        viewModelScope.launch {
+            courseInteractor.toggleLesson(
+                courseId = id,
+                lessonId = lessonId
+            )
+        }
     }
 
 }
