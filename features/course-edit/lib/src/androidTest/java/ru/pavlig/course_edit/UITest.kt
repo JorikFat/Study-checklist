@@ -3,11 +3,10 @@ package ru.pavlig.course_edit
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import com.example.courses.edit.models.CourseDraft
+import com.example.courses.edit.models.LessonDraft
 import org.junit.Rule
 import org.junit.Test
-import ru.pavlig.course_edit.ui.CourseDraftViewState
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.LessonDraftViewState
 
 class UITest {
     @get:Rule
@@ -16,22 +15,22 @@ class UITest {
     @Test
     fun showStubCourse() {
         composeTestRule.setContent {
-            val stubCourse = CourseDraftViewState(
+            val stubCourse = CourseDraft(
                 name = "SOLID",
                 lessons = listOf(
-                    "SRP",
-                    "OCP",
-                    "LSP",
-                    "ISP",
-                    "DIP",
-                ).mapIndexed { index, s -> LessonDraftViewState(index,s) }
+                    LessonDraft(1, "SRP", false),
+                    LessonDraft(2, "OCP", false),
+                    LessonDraft(3, "LSP", false),
+                    LessonDraft(4, "ISP", false),
+                    LessonDraft(5, "DIP", false),
+                )
             )
 
 
             CourseEditingLayout(
-                course = stubCourse,
+                draft = stubCourse,
                 onChangeCourseName = {},
-                onChangeLessonName = {_, _ -> },
+                onChangeLessonName = { _, _ -> },
                 onAddLesson = {},
                 onDeleteLesson = {},
                 onSave = {},

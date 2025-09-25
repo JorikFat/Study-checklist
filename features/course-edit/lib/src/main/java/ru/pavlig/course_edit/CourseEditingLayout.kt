@@ -1,4 +1,4 @@
-package ru.pavlig.course_edit.ui
+package ru.pavlig.course_edit
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -35,11 +35,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import com.example.courses.edit.models.CourseDraft
+import com.example.courses.edit.models.LessonDraft
 
 @Composable
 fun CourseEditingLayout(
-    course: CourseDraftViewState,
+    draft: CourseDraft,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onAddLesson: () -> Unit,
@@ -53,7 +54,7 @@ fun CourseEditingLayout(
     Scaffold(
         topBar = {
             AppBar(
-                course = course,
+                draft = draft,
                 onChangeCourseName = onChangeCourseName,
                 onNavigateBack =onNavigateBack,
                 onSave = onSave
@@ -76,7 +77,7 @@ fun CourseEditingLayout(
     ) { paddingValues ->
 
             LessonsList(
-                lessons = course.lessons.map { it.name },
+                lessons = draft.lessons.map { it.name },
                 onChangeLessonName = onChangeLessonName,
                 onAddLesson = onAddLesson,
                 onDeleteLesson = onDeleteLesson,
@@ -93,7 +94,7 @@ fun CourseEditingLayout(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppBar(
-    course: CourseDraftViewState,
+    draft: CourseDraft,
     onChangeCourseName: (String) -> Unit,
     onNavigateBack: () -> Unit,
     onSave: () -> Unit
@@ -101,7 +102,7 @@ private fun AppBar(
     CenterAlignedTopAppBar(
         title = {
             TextField(
-                value = course.name,
+                value = draft.name,
                 onValueChange = {value->onChangeCourseName(value.replaceFirstChar { it.titlecase() })},
                 placeholder = { Text("Название курса") },
             )
@@ -199,9 +200,9 @@ private fun CourseEditingPreview() {
     MaterialTheme {
 
         CourseEditingLayout(
-            course = CourseDraftViewState(
+            draft = CourseDraft(
                 name = "Preview Course",
-                lessons = List(3) { LessonDraftViewState(it, "Preview Lesson $it", false) }
+                lessons = List(3) { LessonDraft(it, "Preview Lesson $it", false) }
             ),
 
             onChangeCourseName = {},
