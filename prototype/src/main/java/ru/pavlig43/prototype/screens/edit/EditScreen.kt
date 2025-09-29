@@ -31,8 +31,6 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.pavlig.course_edit.CourseEditingLayout
 import ru.pavlig.course_edit.CourseEditingViewModel
-import ru.pavlig.course_edit.logic.CourseEditState
-import ru.pavlig43.core.LoadingLayout
 
 @Composable
 fun CourseEditingScreen(
@@ -52,28 +50,24 @@ fun CourseEditingScreen(
         )
     }
 
-    when (courseState) {
-        CourseEditState.Loading -> LoadingLayout()
-        is CourseEditState.Data ->
-            CourseEditingLayout(
-                draft = (courseState as CourseEditState.Data).draft,
-                onChangeCourseName = viewModel::onChangeCourseName,
-                onChangeLessonName = viewModel::onChangeLessonName,
-                onAddLesson = viewModel::onAddLesson,
-                onDeleteLesson = viewModel::onDeleteLesson,
-                onSave = {
-                    viewModel.onSave()
-                    onCloseScreen()
-                },
-                onNavigateBack = { isDialogShow = true },
-                onDeleteCourse = {
-                    viewModel.onDeleteCourse()
-                    onCloseScreen()
-                },
+    CourseEditingLayout(
+        draft = courseState,
+        onChangeCourseName = viewModel::onChangeCourseName,
+        onChangeLessonName = viewModel::onChangeLessonName,
+        onAddLesson = viewModel::onAddLesson,
+        onDeleteLesson = viewModel::onDeleteLesson,
+        onSave = {
+            viewModel.onSave()
+            onCloseScreen()
+        },
+        onNavigateBack = { isDialogShow = true },
+        onDeleteCourse = {
+            viewModel.onDeleteCourse()
+            onCloseScreen()
+        },
 
-                modifier = modifier,
-            )
-    }
+        modifier = modifier,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

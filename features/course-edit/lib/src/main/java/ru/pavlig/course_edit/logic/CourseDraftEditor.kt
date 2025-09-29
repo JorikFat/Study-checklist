@@ -5,42 +5,37 @@ import ru.pavlig.course_edit.logic.models.LessonDraft
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
 
-class CourseDraftEditor {
-    var srcCourse :Course? = null
-        private set
-    lateinit var draft: CourseDraft
-        private set
-    val course: Course get() = draft.course
+class CourseDraftEditor(
+    val srcCourse: Course?
+) {
+    private var name: String = srcCourse?.displayName ?: ""
+    private val lessons: MutableList<LessonDraft> = srcCourse
+        ?.lessons
+        ?.map(::LessonDraft)
+        ?.toMutableList()
+        ?: mutableListOf(LessonDraft())
 
-    fun init(course: Course? = null){
-        srcCourse = course
-        this.draft = srcCourse?.let(::CourseDraft) ?: CourseDraft()
-    }
+    val state: CourseDraft
+        get() = CourseDraft(
+            id = srcCourse?.id ?: 0,
+            name = name,
+            lessons = lessons
+        )
+    val course: Course get() = state.course
 
     fun changeCourseName(name: String) {
-        draft = draft.copy(name = name)
+        this.name = name
     }
 
     fun changeLessonName(index: Int, name: String) {
-        draft = draft.copy(
-            lessons = draft.lessons.toMutableList()
-                .also { it[index] = it[index].copy(name = name) }
-        )
+        lessons[index] = lessons[index].copy(name = name)
     }
 
-    fun addLesson() {
-        draft = draft.copy(
-            lessons = draft.lessons.plus(LessonDraft())
-        )
-    }
+    fun addLesson() =
+        lessons.add(LessonDraft())
 
-    fun deleteLesson(index: Int) {
-        draft = draft.copy(
-            lessons = draft.lessons.minus(
-                draft.lessons[index]
-            )
-        )
-    }
+    fun deleteLesson(index: Int) =
+        lessons.removeAt(index)
 
     private val CourseDraft.course: Course
         get() = Course(

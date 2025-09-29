@@ -5,19 +5,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.StateFlow
 import ru.pavlig.course_edit.logic.CourseEditInteractor
 import kotlinx.coroutines.launch
-import ru.pavlig.course_edit.logic.CourseEditState
+import ru.pavlig.course_edit.logic.models.CourseDraft
 
 class CourseEditingViewModel(
-    courseId :Int,
     private val interactor: CourseEditInteractor
 ) : ViewModel() {
-    val courseState :StateFlow<CourseEditState> = interactor.flow
-
-    init {
-        viewModelScope.launch {
-            interactor.init(courseId)
-        }
-    }
+    val courseState :StateFlow<CourseDraft> = interactor.flow
 
     fun onSave() {
         viewModelScope.launch {

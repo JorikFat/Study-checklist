@@ -2,8 +2,7 @@ package com.example.courses
 
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,10 +10,9 @@ import kotlinx.coroutines.flow.stateIn
 
 class CourseInteractor(
     private val coursesRepository: CoursesRepository,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 ) {
     private val _courseMenuList : StateFlow<List<Course>> = coursesRepository.listen().stateIn(
-        coroutineScope,
+        GlobalScope,
         SharingStarted.Eagerly,
         initialValue = emptyList()
     )
