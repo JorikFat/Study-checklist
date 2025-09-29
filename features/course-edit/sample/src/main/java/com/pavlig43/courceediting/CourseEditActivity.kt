@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.FakeCoursesRepository
@@ -66,9 +65,7 @@ class CourseEditActivity : ComponentActivity() {
 }
 
 @Composable
-private fun CourseEditScreen(
-    modifier: Modifier = Modifier,
-) {
+private fun CourseEditScreen() {
     val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(1) }
     val courseState by viewModel.courseState.collectAsState()
 
@@ -81,7 +78,6 @@ private fun CourseEditScreen(
         onSave = viewModel::onSave,
         onNavigateBack = {},
         onDeleteCourse = {},
-        modifier = modifier,
     )
 }
 

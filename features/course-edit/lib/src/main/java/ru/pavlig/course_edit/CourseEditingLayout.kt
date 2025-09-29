@@ -48,7 +48,6 @@ fun CourseEditingLayout(
     onSave: () -> Unit,
     onDeleteCourse: () -> Unit,
     onNavigateBack: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     Scaffold(
@@ -81,7 +80,7 @@ fun CourseEditingLayout(
                 onChangeLessonName = onChangeLessonName,
                 onAddLesson = onAddLesson,
                 onDeleteLesson = onDeleteLesson,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
                     .padding(horizontal = 8.dp, vertical = 8.dp),
@@ -212,7 +211,6 @@ private fun CourseEditingPreview() {
             onAddLesson = {},
             onNavigateBack = {},
             onDeleteCourse = {},
-            modifier = Modifier,
         )
     }
 }

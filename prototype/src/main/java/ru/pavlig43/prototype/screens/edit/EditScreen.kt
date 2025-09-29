@@ -36,7 +36,6 @@ import ru.pavlig.course_edit.CourseEditingViewModel
 fun CourseEditingScreen(
     courseId: Int,
     onCloseScreen: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     var isDialogShow by remember { mutableStateOf(false) }
@@ -66,7 +65,6 @@ fun CourseEditingScreen(
             onCloseScreen()
         },
 
-        modifier = modifier,
     )
 }
 

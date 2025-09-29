@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.pavlig.course_edit.CourseEditingLayout
@@ -19,7 +18,6 @@ fun CourseEditingScreen(
     courseId: Int,
     onContentScreen: () -> Unit,
     onCoursesScreen: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
     var isDialogShow by remember { mutableStateOf(false) }
     val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(courseId) }
@@ -49,6 +47,5 @@ fun CourseEditingScreen(
             viewModel.onDeleteCourse()
             onCoursesScreen()
         },
-        modifier = modifier,
     )
 }
