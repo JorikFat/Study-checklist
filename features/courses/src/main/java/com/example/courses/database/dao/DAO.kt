@@ -26,6 +26,9 @@ interface DAO {
     @Query("select id from CourseEntity where rowid = :rowId")
     suspend fun courseIdByRowId(rowId: Long): Int
 
+    @Query("SELECT * FROM CourseEntity where id = :courseId")
+    suspend fun getCourse(courseId :Int) :CourseContentEntity
+
     // courses
     @Insert
     suspend fun courseCreate(courseEntity: CourseEntity): Long

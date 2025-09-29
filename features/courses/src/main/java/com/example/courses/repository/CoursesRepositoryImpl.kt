@@ -21,6 +21,9 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
        return dao.getCourses().map { it.toCourse() }
     }
 
+    override suspend fun getCourse(id: Int): Course =
+        dao.getCourse(id).toCourse()
+
     override suspend fun courseCreate(course: Course) {
         dao.courseCreate(course.toEntity())
     }
@@ -29,18 +32,14 @@ class CoursesRepositoryImpl(db: AppDatabase): CoursesRepository {
         dao.courseDelete(CourseEntity(course.id, course.displayName))
     }
 
-    override suspend fun courseUpdate(course: Course, ld: List<Lesson>) {
-//        dao.courseUpdate(
-//            course.toEntity()
-//        )
+    override suspend fun courseUpdate(course: Course, deleteLessons: List<Lesson>) {
         with(course.toEntity()) {
             dao.courseFullUpdate(
                 course = this.course,
-                lessonsToDelete = ld.map { it.toEntity(this.course.id) },
+                lessonsToDelete = deleteLessons.map { it.toEntity(this.course.id) },
                 lessonsToUpsert = this.lessons
             )
         }
-
     }
 
     override suspend fun lessonCreate(courseId: Int, lesson: Lesson) {

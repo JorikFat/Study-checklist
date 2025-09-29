@@ -2,23 +2,23 @@ package com.example.courses
 
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.runBlocking
 
 class CourseInteractor(
     private val coursesRepository: CoursesRepository,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 ) {
-    private val _courseMenuList : StateFlow<List<Course>> = coursesRepository.listen().stateIn(
-        coroutineScope,
-        SharingStarted.Eagerly,
-        initialValue = emptyList()
-    )
-    val courseMenuList :Flow <List<Course>> = _courseMenuList
+    private val _courseMenuList: StateFlow<List<Course>> = coursesRepository.listen()
+        .stateIn(
+            GlobalScope,
+            SharingStarted.Eagerly,
+            initialValue = runBlocking { coursesRepository.getCourses() }
+        )
+    val courseMenuList: Flow<List<Course>> = _courseMenuList
 
     fun findCourseById(id: Int): Course? {
         return _courseMenuList.value.find { it.id == id }

@@ -15,6 +15,10 @@ class FakeCoursesRepository : CoursesRepository {
     override suspend fun getCourses(): List<Course> =
         stubCourses.toList()
 
+    override suspend fun getCourse(id: Int): Course {
+        return stubCourses.find { it.id == id } ?: throw IllegalArgumentException()
+    }
+
     override suspend fun courseCreate(course: Course) {
         val lastId = stubCourses.lastOrNull()?.id ?: 0
         stubCourses.add(course.copy(id = lastId + 1))
@@ -24,7 +28,7 @@ class FakeCoursesRepository : CoursesRepository {
         stubCourses.removeIf { it.id == course.id }
     }
 
-    override suspend fun courseUpdate(course: Course, ld: List<Lesson>) {
+    override suspend fun courseUpdate(course: Course, deleteLessons: List<Lesson>) {
         val courseIndex = courseIndexById(course.id)
         stubCourses[courseIndex] = course
     }

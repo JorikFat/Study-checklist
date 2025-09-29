@@ -7,11 +7,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.CourseEditingViewModel
+import ru.pavlig.course_edit.CourseEditingLayout
+import ru.pavlig.course_edit.CourseEditingViewModel
 import ru.pavlig43.core.UnsavedChangesDialog
 
 @Composable
@@ -19,7 +18,6 @@ fun CourseEditingScreen(
     courseId: Int,
     onContentScreen: () -> Unit,
     onCoursesScreen: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
     var isDialogShow by remember { mutableStateOf(false) }
     val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(courseId) }
@@ -33,8 +31,9 @@ fun CourseEditingScreen(
             onDismissRequest = { isDialogShow = false }
         )
     }
+
     CourseEditingLayout(
-        course = courseState,
+        draft = courseState,
         onChangeCourseName = viewModel::onChangeCourseName,
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
@@ -48,7 +47,5 @@ fun CourseEditingScreen(
             viewModel.onDeleteCourse()
             onCoursesScreen()
         },
-        modifier = modifier,
     )
 }
-
