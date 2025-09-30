@@ -27,7 +27,10 @@ fun CourseEditingScreen(
 
     if (isDialogShow) {
         UnsavedChangesDialog(
-            onConfirm = onContentScreen,
+            onConfirm = {
+                isDialogShow = false
+                onContentScreen()
+            },
             onDismissRequest = { isDialogShow = false }
         )
     }
