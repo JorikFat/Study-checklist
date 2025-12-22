@@ -2,16 +2,21 @@ package com.example.courses.repository
 
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
+import kotlinx.coroutines.flow.Flow
 
 interface CoursesRepository {
 
+    fun listen(): Flow<List<Course>>
+
     suspend fun getCourses(): List<Course>
+
+    suspend fun getCourse(id :Int) :Course
 
     suspend fun courseCreate(course: Course)
 
     suspend fun courseDelete(course: Course)
 
-    suspend fun courseUpdate(course: Course)
+    suspend fun courseUpdate(course: Course, deleteLessons: List<Lesson>)
 
     suspend fun lessonCreate(courseId: Int, lesson: Lesson)
 

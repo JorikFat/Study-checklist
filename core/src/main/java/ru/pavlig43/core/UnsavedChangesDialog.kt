@@ -1,6 +1,5 @@
-package ru.pavlig43.prototype.screens.edit
+package ru.pavlig43.core
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,59 +17,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
-import ru.pavlig.course_edit.CourseEditingLayout
-import ru.pavlig.course_edit.CourseEditingViewModel
-
-@Composable
-fun CourseEditingScreen(
-    courseId: Int,
-    onCloseScreen: () -> Unit,
-) {
-
-    var isDialogShow by remember { mutableStateOf(false) }
-    val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(courseId) }
-    val courseState by viewModel.courseState.collectAsState()
-    BackHandler { isDialogShow = true }
-    if (isDialogShow) {
-        UnsavedChangesDialog(
-            onConfirm = onCloseScreen,
-            onDismissRequest = { isDialogShow = false }
-        )
-    }
-
-    CourseEditingLayout(
-        draft = courseState,
-        onChangeCourseName = viewModel::onChangeCourseName,
-        onChangeLessonName = viewModel::onChangeLessonName,
-        onAddLesson = viewModel::onAddLesson,
-        onDeleteLesson = viewModel::onDeleteLesson,
-        onSave = {
-            viewModel.onSave()
-            onCloseScreen()
-        },
-        onNavigateBack = { isDialogShow = true },
-        onDeleteCourse = {
-            viewModel.onDeleteCourse()
-            onCloseScreen()
-        },
-
-    )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun UnsavedChangesDialog(//TODO: use from core
+fun UnsavedChangesDialog(
     onConfirm: () -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier

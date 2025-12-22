@@ -1,6 +1,5 @@
 import androidx.room.gradle.RoomExtension
 import com.google.devtools.ksp.gradle.KspExtension
-import com.pavlig43.convention.extension.implementation
 import com.pavlig43.convention.extension.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -27,8 +26,8 @@ class RoomPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("api",libs.room.kts)
-                add("api",libs.room.runtime)
+                add("api", libs.room.kts)
+                add("api", libs.room.runtime)
                 add("ksp", libs.room.compiler)
             }
         }
