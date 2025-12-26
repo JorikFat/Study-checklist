@@ -55,50 +55,49 @@ fun CourseEditingLayout(
             AppBar(
                 draft = draft,
                 onChangeCourseName = onChangeCourseName,
-                onNavigateBack =onNavigateBack,
+                onNavigateBack = onNavigateBack,
                 onSave = onSave
             )
         },
         floatingActionButton = {
-            if (course.id !=0 ){
+            if (draft.id != 0) {
                 FabDelete(onDeleteCourse)
             }
         },
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValues ->
 
-            LessonsList(
-                lessons = draft.lessons.map { it.name },
-                onChangeLessonName = onChangeLessonName,
-                onAddLesson = onAddLesson,
-                onDeleteLesson = onDeleteLesson,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
-            )
-
-        }
+        LessonsList(
+            lessons = draft.lessons.map { it.name },
+            onChangeLessonName = onChangeLessonName,
+            onAddLesson = onAddLesson,
+            onDeleteLesson = onDeleteLesson,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+        )
     }
 }
+
 @Composable
 private fun FabDelete(
     onDeleteCourse: () -> Unit,
     modifier: Modifier = Modifier
-){
-        IconButton(
-            onDeleteCourse,
-            modifier = modifier,
-            colors = IconButtonColors(
-                containerColor = Color.Red,
-                contentColor = Color.White,
-                disabledContainerColor = Color.Red,
-                disabledContentColor = Color.White
-            )
-        ) {
-            Icon(Icons.Default.Delete, "delete")
-        }
+) {
+    IconButton(
+        onDeleteCourse,
+        modifier = modifier,
+        colors = IconButtonColors(
+            containerColor = Color.Red,
+            contentColor = Color.White,
+            disabledContainerColor = Color.Red,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Icon(Icons.Default.Delete, "delete")
     }
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +112,7 @@ private fun AppBar(
         title = {
             TextField(
                 value = draft.name,
-                onValueChange = {value->onChangeCourseName(value.replaceFirstChar { it.titlecase() })},
+                onValueChange = { value -> onChangeCourseName(value.replaceFirstChar { it.titlecase() }) },
                 placeholder = { Text("Название курса") },
             )
         },
@@ -186,7 +185,7 @@ private fun LessonItem(
     Row(modifier) {
         TextField(
             value = lessonName,
-            onValueChange = {value-> onChangeLessonName(value.replaceFirstChar { it.titlecase() }) },
+            onValueChange = { value -> onChangeLessonName(value.replaceFirstChar { it.titlecase() }) },
             modifier = Modifier.weight(1f)
         )
         IconButton(
@@ -201,7 +200,6 @@ private fun LessonItem(
     }
 
 }
-
 
 
 @Preview(showBackground = true)
