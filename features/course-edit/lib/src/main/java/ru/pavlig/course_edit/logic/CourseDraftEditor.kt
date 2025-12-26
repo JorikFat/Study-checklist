@@ -19,7 +19,7 @@ class CourseDraftEditor(
         get() = CourseDraft(
             id = srcCourse?.id ?: 0,
             name = name,
-            lessons = lessons
+            lessons = lessons.toList()
         )
     val course: Course get() = state.course
 
