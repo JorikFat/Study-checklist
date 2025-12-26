@@ -5,29 +5,45 @@ import androidx.lifecycle.viewModelScope
 import com.example.courses.CourseInteractor
 import com.example.courses.models.Course
 import com.example.courses.models.Lesson
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 //TODO: rename to ContentViewModel
 class DisplayingCourseContentViewModel(
-   private val id: Int,
+    private val id: Int,
     private val courseInteractor: CourseInteractor,
 ) : ViewModel() {
-    val courseState = courseInteractor.courseMenuList
-        .map {lst-> lst.first { it.id == id }.toViewState() }
-            .stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        CourseViewState()
-    )
+    private val courseStateList = courseInteractor.courseMenuList
+
+    private val _courseState = MutableStateFlow(CourseViewState())
+    val courseState = _courseState.asStateFlow()
+
+    private var job: Job? = null
+
+    fun startJob() {
+        job?.cancel()
+        job = viewModelScope.launch {
+            courseStateList.collect { lst ->
+                _courseState.update { lst.first { it.id == id }.toViewState() }
+            }
+        }
+    }
+    fun stopJob() {
+        job?.cancel()
+        job = null
+    }
 
 
-    fun toggleLesson(lessonId: Int){
-        courseInteractor.toggleLesson(
-            courseId = id,
-            lessonId = lessonId
-        )
+    fun toggleLesson(lessonId: Int) {
+        viewModelScope.launch {
+            courseInteractor.toggleLesson(
+                courseId = id,
+                lessonId = lessonId
+            )
+        }
     }
 
 }

@@ -26,7 +26,16 @@ fun NavigationHost() {
         }
         composable<Destination.Edit> {
             val id = it.toRoute<Destination.Edit>().id
-            CourseEditingScreen(id,{navController.popBackStack()})
+            CourseEditingScreen(
+                courseId = id,
+                onCoursesScreen = {
+                    navController.navigate(Destination.Courses) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onContentScreen = { navController.popBackStack() },
+            )
         }
         composable<Destination.Content> {
             val id = it.toRoute<Destination.Content>().id
@@ -37,7 +46,16 @@ fun NavigationHost() {
                 )
         }
         composable<Destination.Create> {
-            CourseEditingScreen(-1,{navController.popBackStack()})
+            CourseEditingScreen(
+                courseId = 0,
+                onCoursesScreen = {
+                    navController.navigate(Destination.Courses) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onContentScreen = { navController.popBackStack() },
+            )
         }
     }
 }

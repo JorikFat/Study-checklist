@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.pavlig43.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.koin)
-    alias(libs.plugins.room)
 }
 
 android {
@@ -26,4 +25,5 @@ dependencies {
     implementation(projects.features.courseEdit.lib)
     implementation(projects.features.courseContent.lib)
     implementation(projects.features.courses)
+    implementation(projects.core)
 }

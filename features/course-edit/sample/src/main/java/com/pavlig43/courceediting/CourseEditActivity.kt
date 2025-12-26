@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import com.example.courses.CourseInteractor
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.FakeCoursesRepository
@@ -16,13 +15,15 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.context.startKoin
-import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
-import ru.pavlig.course_edit.ui.CourseEditingLayout
-import ru.pavlig.course_edit.ui.CourseEditingViewModel
+import ru.pavlig.course_edit.CourseEditingLayout
+import ru.pavlig.course_edit.CourseEditingViewModel
+import ru.pavlig.course_edit.logic.CourseDraftEditor
+import ru.pavlig.course_edit.logic.CourseEditInteractor
 
 class CourseEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +34,23 @@ class CourseEditActivity : ComponentActivity() {
                 androidContext(application)
                 modules(
                     module {
-                        singleOf(::FakeCoursesRepository) { bind<CoursesRepository>() }
+                        singleOf(::FakeCoursesRepository) bind(CoursesRepository::class)
                         singleOf(::CourseInteractor)
-                        viewModel { (id: Int) -> CourseEditingViewModel(id, get()) }
+                        factory<CourseDraftEditor> { (id: Int) ->
+                            val course = get<CourseInteractor>().findCourseById(id)
+                            CourseDraftEditor(course)
+                        }
+                        factory<CourseEditInteractor> { (id: Int) ->
+                            CourseEditInteractor(
+                                get<CourseDraftEditor> { parametersOf(id) },
+                                get<CoursesRepository>()
+                            )
+                        }
+                        viewModel<CourseEditingViewModel> { (id: Int) ->
+                            CourseEditingViewModel(
+                                get<CourseEditInteractor> { parametersOf(id) }
+                            )
+                        }
                     }
                 )
             }
@@ -50,13 +65,12 @@ class CourseEditActivity : ComponentActivity() {
 }
 
 @Composable
-private fun CourseEditScreen(
-    modifier: Modifier = Modifier,
-) {
+private fun CourseEditScreen() {
     val viewModel: CourseEditingViewModel = koinViewModel { parametersOf(1) }
     val courseState by viewModel.courseState.collectAsState()
+
     CourseEditingLayout(
-        course = courseState,
+        draft = courseState,
         onChangeCourseName = viewModel::onChangeCourseName,
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
@@ -64,7 +78,6 @@ private fun CourseEditScreen(
         onSave = viewModel::onSave,
         onNavigateBack = {},
         onDeleteCourse = {},
-        modifier = modifier,
     )
 }
 

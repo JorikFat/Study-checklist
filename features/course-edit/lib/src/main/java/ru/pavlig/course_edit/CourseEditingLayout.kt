@@ -1,7 +1,6 @@
-package ru.pavlig.course_edit.ui
+package ru.pavlig.course_edit
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,16 +25,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import ru.pavlig.course_edit.logic.models.CourseDraft
+import ru.pavlig.course_edit.logic.models.LessonDraft
 
 @Composable
 fun CourseEditingLayout(
-    course: CourseDraftViewState,
+    draft: CourseDraft,
     onChangeCourseName: (String) -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onAddLesson: () -> Unit,
@@ -43,13 +48,12 @@ fun CourseEditingLayout(
     onSave: () -> Unit,
     onDeleteCourse: () -> Unit,
     onNavigateBack: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     Scaffold(
         topBar = {
             AppBar(
-                course = course,
+                draft = draft,
                 onChangeCourseName = onChangeCourseName,
                 onNavigateBack =onNavigateBack,
                 onSave = onSave
@@ -63,23 +67,16 @@ fun CourseEditingLayout(
         floatingActionButtonPosition = FabPosition.Start
     ) { paddingValues ->
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
             LessonsList(
-                lessons = course.lessons.map { it.name },
+                lessons = draft.lessons.map { it.name },
                 onChangeLessonName = onChangeLessonName,
-                modifier = Modifier.fillMaxWidth(),
-                onDeleteLesson = onDeleteLesson
+                onAddLesson = onAddLesson,
+                onDeleteLesson = onDeleteLesson,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
             )
-            Button(onAddLesson) {
-                Text("Добавить")
-            }
 
         }
     }
@@ -107,7 +104,7 @@ private fun FabDelete(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppBar(
-    course: CourseDraftViewState,
+    draft: CourseDraft,
     onChangeCourseName: (String) -> Unit,
     onNavigateBack: () -> Unit,
     onSave: () -> Unit
@@ -115,7 +112,7 @@ private fun AppBar(
     CenterAlignedTopAppBar(
         title = {
             TextField(
-                value = course.name,
+                value = draft.name,
                 onValueChange = {value->onChangeCourseName(value.replaceFirstChar { it.titlecase() })},
                 placeholder = { Text("Название курса") },
             )
@@ -141,15 +138,25 @@ private fun AppBar(
 @Composable
 private fun LessonsList(
     lessons: List<String>,
+    onAddLesson: () -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
+    var previousSize by remember { mutableIntStateOf(lessons.size) }
+    LaunchedEffect(lessons.size) {
+        if (lessons.size > previousSize) {
+            lazyListState.animateScrollToItem(lessons.size)
+        }
+        previousSize = lessons.size
+    }
+
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        state = lazyListState
+        horizontalAlignment = Alignment.CenterHorizontally,
+        state = lazyListState,
     ) {
         itemsIndexed(lessons) { index, lesson ->
             LessonItem(
@@ -159,6 +166,12 @@ private fun LessonsList(
                 onDeleteLesson = { onDeleteLesson(index) }
             )
         }
+        item {
+            Button(onAddLesson) {
+                Text("Добавить")
+            }
+        }
+
     }
 }
 
@@ -197,9 +210,9 @@ private fun CourseEditingPreview() {
     MaterialTheme {
 
         CourseEditingLayout(
-            course = CourseDraftViewState(
+            draft = CourseDraft(
                 name = "Preview Course",
-                lessons = List(3) { LessonDraftViewState(it, "Preview Lesson $it", false) }
+                lessons = List(3) { LessonDraft(it, "Preview Lesson $it", false) }
             ),
 
             onChangeCourseName = {},
@@ -209,7 +222,6 @@ private fun CourseEditingPreview() {
             onAddLesson = {},
             onNavigateBack = {},
             onDeleteCourse = {},
-            modifier = Modifier,
         )
     }
 }
