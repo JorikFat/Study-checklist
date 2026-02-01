@@ -114,6 +114,7 @@ private fun AppBar(
                 value = draft.name,
                 onValueChange = { value -> onChangeCourseName(value.replaceFirstChar { it.titlecase() }) },
                 placeholder = { Text("Название курса") },
+                singleLine = true
             )
         },
         navigationIcon = {
@@ -186,6 +187,7 @@ private fun LessonItem(
         TextField(
             value = lessonName,
             onValueChange = { value -> onChangeLessonName(value.replaceFirstChar { it.titlecase() }) },
+            singleLine = true,
             modifier = Modifier.weight(1f)
         )
         IconButton(
