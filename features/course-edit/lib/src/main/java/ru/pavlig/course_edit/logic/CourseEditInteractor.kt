@@ -13,7 +13,9 @@ class CourseEditInteractor(
     private val state = MutableStateFlow<CourseDraft>(editor.state)
     val flow = state.asStateFlow()
 
-    suspend fun updateCourse() {
+    suspend fun updateCourseSuccess(): Boolean {
+        if (!validateCourse()) return false
+
         if (editor.srcCourse == null) {
             repository.courseCreate(editor.course)
         } else {
@@ -22,6 +24,29 @@ class CourseEditInteractor(
                 .let { repository.courseUpdate(editor.course, it) }
         }
         state.update { editor.state }
+        return true
+    }
+
+    private fun validateCourse(): Boolean {
+        state.update { editor.state} // refresh error fields to default values
+
+        var hasNoError = true
+        if (editor.state.name.isBlank()) {
+            hasNoError = false
+            state.value = state.value.copy(hasCourseNameError = true)
+        }
+        val updatedLessons = editor.state.lessons.map { lesson ->
+            if (lesson.name.isBlank()) {
+                hasNoError = false
+                lesson.copy(isError = true)
+            } else {
+                lesson.copy(isError = false)
+            }
+        }
+        state.value = state.value.copy(
+            lessons = updatedLessons
+        )
+        return hasNoError
     }
 
     suspend fun deleteCourse() =

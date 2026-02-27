@@ -49,11 +49,11 @@ fun CourseEditingLayout(
     onDeleteCourse: () -> Unit,
     onNavigateBack: () -> Unit,
 ) {
-
     Scaffold(
         topBar = {
             AppBar(
                 draft = draft,
+                isError = draft.hasCourseNameError,
                 onChangeCourseName = onChangeCourseName,
                 onNavigateBack = onNavigateBack,
                 onSave = onSave
@@ -68,7 +68,7 @@ fun CourseEditingLayout(
     ) { paddingValues ->
 
         LessonsList(
-            lessons = draft.lessons.map { it.name },
+            lessons = draft.lessons,
             onChangeLessonName = onChangeLessonName,
             onAddLesson = onAddLesson,
             onDeleteLesson = onDeleteLesson,
@@ -104,6 +104,7 @@ private fun FabDelete(
 @Composable
 private fun AppBar(
     draft: CourseDraft,
+    isError: Boolean,
     onChangeCourseName: (String) -> Unit,
     onNavigateBack: () -> Unit,
     onSave: () -> Unit
@@ -112,6 +113,10 @@ private fun AppBar(
         title = {
             TextField(
                 value = draft.name,
+                isError = isError,
+                label = if (isError) {
+                    { Text("Поле пустое") }
+                } else null,
                 onValueChange = { value -> onChangeCourseName(value.replaceFirstChar { it.titlecase() }) },
                 placeholder = { Text("Название курса") },
                 singleLine = true
@@ -137,7 +142,7 @@ private fun AppBar(
 
 @Composable
 private fun LessonsList(
-    lessons: List<String>,
+    lessons: List<LessonDraft>,
     onAddLesson: () -> Unit,
     onChangeLessonName: (index: Int, value: String) -> Unit,
     onDeleteLesson: (index: Int) -> Unit,
@@ -161,7 +166,8 @@ private fun LessonsList(
         itemsIndexed(lessons) { index, lesson ->
             LessonItem(
                 modifier = Modifier.fillMaxWidth(),
-                lessonName = lesson,
+                lessonName = lesson.name,
+                isError = lesson.isError,
                 onChangeLessonName = { value -> onChangeLessonName(index, value) },
                 onDeleteLesson = { onDeleteLesson(index) }
             )
@@ -178,6 +184,7 @@ private fun LessonsList(
 @Composable
 private fun LessonItem(
     lessonName: String,
+    isError: Boolean,
     onChangeLessonName: (value: String) -> Unit,
     onDeleteLesson: () -> Unit,
     modifier: Modifier = Modifier
@@ -186,6 +193,10 @@ private fun LessonItem(
     Row(modifier) {
         TextField(
             value = lessonName,
+            isError = isError,
+            label = if (isError) {
+                { Text("Поле пустое") }
+            } else null,
             onValueChange = { value -> onChangeLessonName(value.replaceFirstChar { it.titlecase() }) },
             singleLine = true,
             modifier = Modifier.weight(1f)
@@ -225,5 +236,3 @@ private fun CourseEditingPreview() {
         )
     }
 }
-
-

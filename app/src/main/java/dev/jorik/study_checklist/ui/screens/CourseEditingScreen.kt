@@ -2,6 +2,7 @@ package dev.jorik.study_checklist.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import ru.pavlig.course_edit.CourseEditingEvents
 import ru.pavlig.course_edit.CourseEditingLayout
 import ru.pavlig.course_edit.CourseEditingViewModel
 import ru.pavlig43.core.UnsavedChangesDialog
@@ -32,16 +34,21 @@ fun CourseEditingScreen(
         )
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.eventsFlow.collect { event ->
+            when (event) {
+                is CourseEditingEvents.NavigateContentScreen -> onContentScreen()
+            }
+        }
+    }
+
     CourseEditingLayout(
         draft = courseState,
         onChangeCourseName = viewModel::onChangeCourseName,
         onChangeLessonName = viewModel::onChangeLessonName,
         onAddLesson = viewModel::onAddLesson,
         onDeleteLesson = viewModel::onDeleteLesson,
-        onSave = {
-            viewModel.onSave()
-            onContentScreen()
-        },
+        onSave = viewModel::onSave,
         onNavigateBack = { isDialogShow = true },
         onDeleteCourse = {
             viewModel.onDeleteCourse()

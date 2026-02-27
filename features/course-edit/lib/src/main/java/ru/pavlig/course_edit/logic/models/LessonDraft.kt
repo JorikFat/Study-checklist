@@ -5,7 +5,8 @@ import com.example.courses.models.Lesson
 data class LessonDraft(
     val id: Int = 0,
     val name: String = "",
-    val isChecked: Boolean = false
+    val isChecked: Boolean = false,
+    val isError: Boolean = false
 ) {
     constructor(lesson : Lesson) :this(
         id = lesson.id,
