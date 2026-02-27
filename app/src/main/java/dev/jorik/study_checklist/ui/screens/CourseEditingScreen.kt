@@ -29,7 +29,7 @@ fun CourseEditingScreen(
 
     if (isDialogShow) {
         UnsavedChangesDialog(
-            onConfirm = onContentScreen,
+            onConfirm = { isDialogShow = false; viewModel.onNavigateBack() },
             onDismissRequest = { isDialogShow = false }
         )
     }
@@ -38,6 +38,7 @@ fun CourseEditingScreen(
         viewModel.eventsFlow.collect { event ->
             when (event) {
                 is CourseEditingEvents.NavigateContentScreen -> onContentScreen()
+                is CourseEditingEvents.NavigateBack -> onContentScreen()
             }
         }
     }

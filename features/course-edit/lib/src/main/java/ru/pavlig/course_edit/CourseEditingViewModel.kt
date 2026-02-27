@@ -10,8 +10,10 @@ import ru.pavlig.course_edit.logic.CourseEditInteractor
 import ru.pavlig.course_edit.logic.models.CourseDraft
 
 sealed class CourseEditingEvents() {
+    object NavigateBack : CourseEditingEvents()
     object NavigateContentScreen : CourseEditingEvents()
 }
+
 class CourseEditingViewModel(
     private val interactor: CourseEditInteractor
 ) : ViewModel() {
@@ -44,4 +46,10 @@ class CourseEditingViewModel(
 
     fun onDeleteLesson(index: Int) =
         interactor.deleteLesson(index)
+
+    fun onNavigateBack() {
+        viewModelScope.launch {
+            _eventsFlow.emit(CourseEditingEvents.NavigateBack)
+        }
+    }
 }
