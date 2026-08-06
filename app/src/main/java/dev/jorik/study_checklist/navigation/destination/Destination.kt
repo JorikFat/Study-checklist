@@ -10,7 +10,7 @@ internal sealed class Destination {
     data object Courses : Destination()
 
     @Serializable
-    data class Content(val id:Int = 0) : Destination()
+    data class Lessons(val id:Int = 0) : Destination()
 
     @Serializable
     data class Edit(val id:Int = 0) : Destination()

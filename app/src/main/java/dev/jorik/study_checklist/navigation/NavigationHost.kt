@@ -7,8 +7,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.jorik.study_checklist.navigation.destination.Destination
 import dev.jorik.study_checklist.ui.screens.CourseEditingScreen
+import dev.jorik.study_checklist.ui.screens.CourseLessonsScreen
 import dev.jorik.study_checklist.ui.screens.CoursesScreen
-import dev.jorik.study_checklist.ui.screens.DisplayingCourseContentScreen
 
 @Composable
 fun NavigationHost() {
@@ -20,7 +20,7 @@ fun NavigationHost() {
 
         composable<Destination.Courses> {
             CoursesScreen(
-                onContentScreen = {navController.navigate(Destination.Content(it))},
+                onSelectCourse = { navController.navigate(Destination.Lessons(it)) },
                 onAddClick = { navController.navigate(Destination.Create()) }
             )
         }
@@ -37,13 +37,13 @@ fun NavigationHost() {
                 onContentScreen = { navController.popBackStack() },
             )
         }
-        composable<Destination.Content> {
-            val id = it.toRoute<Destination.Content>().id
-            DisplayingCourseContentScreen(
+        composable<Destination.Lessons> {
+            val id = it.toRoute<Destination.Lessons>().id
+            CourseLessonsScreen(
                 id = id,
-                onBackButtonClick = {navController.popBackStack()},
-                onEditButtonClick = {navController.navigate(Destination.Edit(id))}
-                )
+                onBackButtonClick = { navController.popBackStack() },
+                onEditButtonClick = { navController.navigate(Destination.Edit(id)) }
+            )
         }
         composable<Destination.Create> {
             CourseEditingScreen(
