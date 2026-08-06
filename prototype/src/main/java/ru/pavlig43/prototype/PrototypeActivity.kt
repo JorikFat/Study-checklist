@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import ru.pavlig43.prototype.screens.OverViewScreen
-import ru.pavlig43.prototype.screens.content.ContentScreen
+import ru.pavlig43.prototype.screens.lessons.ContentScreen
 import ru.pavlig43.prototype.screens.courses.CoursesListScreen
 import ru.pavlig43.prototype.screens.edit.CourseEditingScreen
 import ru.pavlig43.prototype.ui.theme.Study_checklistTheme

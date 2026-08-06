@@ -10,7 +10,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import ru.pavlig43.prototype.screens.content.contentModule
+import ru.pavlig43.prototype.screens.lessons.contentModule
 import ru.pavlig43.prototype.screens.courses.coursesListModule
 import ru.pavlig43.prototype.screens.edit.editModule
 

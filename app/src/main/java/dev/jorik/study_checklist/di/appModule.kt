@@ -5,7 +5,7 @@ import com.example.courses.database.AppDatabase
 import com.example.courses.models.Course
 import com.example.courses.repository.CoursesRepository
 import com.example.courses.repository.CoursesRepositoryImpl
-import dev.jorik.study_checklist.course_content.ui.DisplayingCourseContentViewModel
+import dev.jorik.study_checklist.course_lessons.ui.CourseLessonsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
@@ -20,7 +20,7 @@ internal val prototypeModule = module {
     factory<CoursesRepository> { CoursesRepositoryImpl(db = get()) }
     single { CourseInteractor(coursesRepository = get()) }
     viewModel { CoursesViewModel(get()) }
-    viewModel { (courseId: Int) -> DisplayingCourseContentViewModel(courseId, get()) }
+    viewModel { (courseId: Int) -> CourseLessonsViewModel(courseId, get()) }
     //edit
     factory<CourseDraftEditor> {(id :Int) ->
         val course : Course? = get<CourseInteractor>().findCourseById(id)

@@ -30,8 +30,8 @@ include(
     ":features:courses-list:lib"
 )
 include(
-    ":features:course-content:sample",
-    ":features:course-content:lib"
+    ":features:course-lessons:sample",
+    ":features:course-lessons:lib"
 )
 include(
     ":features:course-edit:sample",
